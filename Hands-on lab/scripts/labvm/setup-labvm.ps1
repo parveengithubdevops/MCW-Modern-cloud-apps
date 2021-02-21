@@ -9,20 +9,6 @@ function Disable-InternetExplorerESC {
     Write-Host "IE Enhanced Security Configuration (ESC) has been disabled." -ForegroundColor Green
 }
 
-# To resolve the error of https://github.com/microsoft/MCW-Modern-cloud-apps/issues/79
-# The cause of the error is that Powershell uses TLS 1.0 to connect to a website, but website security requires TLS 1.2.
-# You can change this behavior by running any of the below commands to use all protocols. You can also specify a single protocol.
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Ssl3
-[Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Ssl3"
-
-# Disable IE ESC
-Disable-InternetExplorerESC
-
-# Chocolatey has been used for SMSS install. Now SMMS is being set up as a stand-alone install. 
-# Still leaving Chocolatey in case one of the labs uses it.
-iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')) 
-
-# We are waiting for other potential MSI installs to finish.
 function Wait-Install {
     $msiRunning = 1
     $msiMessage = ""
@@ -45,10 +31,12 @@ function Wait-Install {
     }
 }
 
-Wait-Install
-(New-Object System.Net.WebClient).DownloadFile('https://aka.ms/ssmsfullsetup', 'C:\SSMS-Setup.exe')
-$pathArgs = {C:\SSMS-Setup.exe /Install /Quiet /Norestart /Logs logSSMS.txt}
-Invoke-Command -ScriptBlock $pathArgs
+# To resolve the error of https://github.com/microsoft/MCW-App-modernization/issues/68. The cause of the error is Powershell by default uses TLS 1.0 to connect to website, but website security requires TLS 1.2. You can change this behavior with running any of the below command to use all protocols. You can also specify single protocol.
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls, [Net.SecurityProtocolType]::Tls11, [Net.SecurityProtocolType]::Tls12, [Net.SecurityProtocolType]::Ssl3
+[Net.ServicePointManager]::SecurityProtocol = "Tls, Tls11, Tls12, Ssl3"
+
+# Disable IE ESC
+Disable-InternetExplorerESC
 
 # Download and extract the starter solution files
 # ZIP File sometimes gets corrupted
@@ -58,3 +46,12 @@ while((Get-ChildItem -Directory C:\MCW | Measure-Object).Count -eq 0 )
     (New-Object System.Net.WebClient).DownloadFile($labFilesName, 'C:\MCW.zip')
     Expand-Archive -LiteralPath 'C:\MCW.zip' -DestinationPath 'C:\MCW' -Force
 }
+
+# Download and install SQL Server Management Studio
+Wait-Install
+(New-Object System.Net.WebClient).DownloadFile('https://aka.ms/ssmsfullsetup', 'C:\SSMS-Setup.exe')
+$pathArgs = {C:\SSMS-Setup.exe /Install /Quiet /Norestart /Logs logSSMS.txt}
+Invoke-Command -ScriptBlock $pathArgs
+
+
+
