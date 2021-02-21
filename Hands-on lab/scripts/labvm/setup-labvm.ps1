@@ -1,10 +1,5 @@
 param($labFilesName="")
 
-# Install Chocolatey
-# Previously, SMSS was being installed through chocolatey. 
-# It is now installed as a stand-alone install. Leaving chocolatey in case it can be used during the Lab.
-iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')) 
-
 # We are waiting for other potential MSI installs to finish.
 function Wait-Install {
     $msiRunning = 1
