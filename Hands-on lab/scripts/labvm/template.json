@@ -10,9 +10,7 @@
         }
     },
     "variables": {
-        "GitHubScriptRepo": "microsoft/MCW-Modern-cloud-apps",
         "GitHubScriptRepoBranch": "master",
-        "GitHubScriptRepoBranchURL": "[concat('https://raw.githubusercontent.com/', variables('GitHubScriptRepo'), '/', variables('GitHubScriptRepoBranch'), '/Hands-on lab/')]",  
 
         "uniqueString": "[uniqueString(resourceGroup().id)]",
 
@@ -30,9 +28,9 @@
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', variables('subnetName'))]",
 
         "labVMCustomScriptFilename": "setup-labvm.ps1",
-        "labVMCustomScriptUri": "[concat(variables('GitHubScriptRepoBranchURL'), '/scripts/labvm/', variables('labVMCustomScriptFilename'))]",
+        "labVMCustomScriptUri": "[concat('https://raw.githubusercontent.com/microsoft/MCW-Modern-cloud-apps/', variables('GitHubScriptRepoBranch'),'/Hands-on%20lab/scripts/labvm/', variables('labVMCustomScriptFilename'))]",
         "labVMLabFilesName": "Modern%20Cloud%20Apps%20Student%20Files.zip",
-        "labVMLabFilesUri": "[concat(variables('GitHubScriptRepoBranchURL'), '/Lab-files/', variables('labVMLabFilesName'))]",
+        "labVMLabFilesUri": "[concat('https://raw.githubusercontent.com/microsoft/MCW-Modern-cloud-apps/', variables('GitHubScriptRepoBranch'),'/Hands-on%20lab/Lab-files/', variables('labVMLabFilesName'))]",
 
         "virtualMachineSize": "Standard_D4s_v3",
         "virtualMachineImageReference": {
@@ -176,10 +174,10 @@
             },
             "resources": [
                 {
-                    "name": "CustomSciptExtension1",
+                    "name": "SetupLabVM",
                     "type": "extensions",
                     "location": "[resourceGroup().location]",
-                    "apiVersion": "2016-03-30",
+                    "apiVersion": "2019-03-01",
                     "dependsOn": [
                       "[resourceId('Microsoft.Compute/virtualMachines', variables('virtualMachineName'))]"
                     ],
@@ -189,14 +187,14 @@
                     "properties": {
                       "publisher": "Microsoft.Compute",
                       "type": "CustomScriptExtension",
-                      "typeHandlerVersion": "1.8",
-                      "autoUpgradeMinorVersion": false,
+                      "typeHandlerVersion": "1.9",
+                      "autoUpgradeMinorVersion": true,
                       "settings": {
                         "fileUris": [
                           "[variables('labVMCustomScriptUri')]",
                           "[variables('labVMLabFilesUri')]"
                         ],
-                        "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ./', variables('labVMCustomScriptFilename'), ' -labFilesName \"', variables('labVMLabFilesName'), '\"')]"
+                        "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('labVMCustomScriptFilename'), ' -labFilesName \"', variables('labVMLabFilesName'), '\"')]"
                       }
                     }
                   }
