@@ -41,11 +41,7 @@ Disable-InternetExplorerESC
 # Download and extract the starter solution files
 # ZIP File sometimes gets corrupted
 New-Item -ItemType directory -Path C:\MCW
-while((Get-ChildItem -Directory C:\MCW | Measure-Object).Count -eq 0 )
-{
-    (New-Object System.Net.WebClient).DownloadFile($labFilesName, 'C:\MCW.zip')
-    Expand-Archive -LiteralPath 'C:\MCW.zip' -DestinationPath 'C:\MCW' -Force
-}
+Expand-Archive -Path $labFilesName -DestinationPath 'C:\MCW' -Force
 
 # Download and install SQL Server Management Studio
 Wait-Install
