@@ -1,4 +1,4 @@
-![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/master/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
+![Microsoft Cloud Workshops](https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/main/Media/ms-cloud-workshop.png "Microsoft Cloud Workshops")
 
 <div class="MCWHeader1">
 Modern cloud apps
@@ -61,11 +61,11 @@ Before initiating the hands-on lab, you will setup an environment to use for the
 
 2. Select **Clone or download**, then select **Download Zip**.
 
-    ![The GitHub Clone or download menu is expanded with the Download ZIP button highlighted.](images/Setup/2019-06-24-17-08-18.png "The GitHub clone or download menu.")
+    ![The GitHub Clone or download menu is expanded with the Download ZIP button highlighted.](media/github-download-zip.png "The GitHub clone or download menu.")
 
 3. Extract the zip file to your local machine, be sure to keep note of where you have extracted the files. You should now see a set of folders:
 
-    ![Windows Explorer showing the extracted files.](images/Setup/2019-06-24-17-10-56.png "Windows Explorer")
+    ![Windows Explorer showing the extracted files.](media/file-explorer-hands-on-lab.png "Windows Explorer")
 
 ### Task 2: Deploy Lab VM Resources to Azure
 
@@ -77,7 +77,7 @@ Before initiating the hands-on lab, you will setup an environment to use for the
 
 2. On the **Custom deployment** form, select **Edit parameters**.
 
-    ![A portion of the Custom deployment form is displayed with the Edit parameters button highlighted.](images/Setup/2019-06-24-17-17-05.png "The Edit parameters button")
+    ![A portion of the Custom deployment form is displayed with the Edit parameters button highlighted.](media/custom-deployment-edit.png "The Edit parameters button")
 
 3. On the **Edit parameters** pane, select the **Load file** button.
 
@@ -85,23 +85,23 @@ Before initiating the hands-on lab, you will setup an environment to use for the
 
 5. Select **Save**.
 
-6. In the **Subscription** field, select the appropriate subscription. 
+6. In the **Subscription** field, select the appropriate subscription.
 
-7. Select **Create new** for the **Resource group** field, and enter `ContosoSports-[your initials or first name]`. 
+7. Select **Create new** for the **Resource group** field, and enter `ContosoSports-[your initials or first name]`.
 
-8. Select your desired region in the **Region** field. 
+8. Select your desired region in the **Region** field.
 
 9. Select **Review + create**.
 
-    ![The Custom deployment form is shown populated with the values described above.](images/Setup/2019-06-24-17-20-12.png "The custom deployment form") 
+    ![The Custom deployment form is shown populated with the values described above.](media/custom-deployment.png "The custom deployment form")
 
 10. Once validation has succeeded, select the **Create** button.
-    
+
 11. The deployment will take 15-30 minutes to complete. Continue to the next Task while this is deploying.
 
     To view the progress, select the **Deployments** link, then select the **Microsoft.Template** deployment.
 
-    ![The template deployment status is shown.](images/Setup/2019-06-24-17-22-19.png "Resource group deployments")
+    ![The template deployment status is shown.](media/deployments-microsoft-template.png "Resource group deployments")
 
     > **Note**: A configuration script to install SSMS and the requires lab files will run after the deployment of the LabVM completes. The task will be listed on the deployment progress screen as `LabVM/CustomScriptExtension`. You should wait for this task to complete before attempting to log into the LabVM in the next task, as it downloads and installs files you will need.
     >
@@ -117,7 +117,7 @@ Before initiating the hands-on lab, you will setup an environment to use for the
 
 2. Select **Edit parameters**.
 
-    ![A portion of the Custom deployment form is displayed with the Edit parameters button highlighted.](images/Setup/2019-06-24-17-17-05.png "The Edit parameters button.")
+    ![A portion of the Custom deployment form is displayed with the Edit parameters button highlighted.](media/custom-deployment-edit.png "The Edit parameters button.")
 
 3. On the **Edit parameters** pane, select the **Load file** button.
 
@@ -133,13 +133,13 @@ Before initiating the hands-on lab, you will setup an environment to use for the
 
     > **Note**: For this lab, it is recommended you use the **East US**, **North Europe**, or **Australia East** Azure Region. There are certain Azure regions that don't support all the resources provisioned by the ARM Template. This limitation can also vary depending on restrictions applied to the type of Azure Subscription you are using.
 
-9.  Select **Review + create**.
+9. Select **Review + create**.
 
-    ![The Custom deployment form is shown populated with the values described above.](images/Setup/2019-06-24-17-20-12.png "The Custom deployment form")
+    ![The Custom deployment form is shown populated with the values described above.](media/custom-deployment.png "The Custom deployment form")
 
     > **Note**: The deployment may fail if you have not registered the `Microsoft.AppConfiguration` resource provider for the subscription you are using. To fix this, just navigate to your subscription and locate **Settings --> Resource providers**. Then search for `Microsoft.AppConfiguration`, select the resource provider, and select **Register**.
     >
-    > ![Demonstrating how to register the AppConfiguration resource provider.](images/Setup/registering-appconfiguration-resource-provider.png "Registering Microsoft.AppConfiguration within portal")
+    > ![Demonstrating how to register the AppConfiguration resource provider.](media/registering-appconfiguration-resource-provider.png "Registering Microsoft.AppConfiguration within portal")
 
 10. The deployment will take 5 - 10 minutes to complete.
 
@@ -150,23 +150,23 @@ Before initiating the hands-on lab, you will setup an environment to use for the
 2. Locate and select the **LabVM** resource.
 
 3. From the top toolbar, expand the **Connect** button and select **RDP**.
-   
-   ![The Connect button is expanded with the RDP item selected.](images/Setup/connectvm-rdp.png "The LabVM Connect menu")
+
+   ![The Connect button is expanded with the RDP item selected.](media/connectvm-rdp.png "The LabVM Connect menu")
 
 4. From the **Connect** screen, select the **Download RDP File** button and save it to the desired location on your local computer.
- 
-6. Connect to the **LabVM** that was deployed using the previous template using Remote Desktop by double-clicking the RDP file that you downloaded in the previous step. Authenticate to the VM using these credentials:
+
+5. Connect to the **LabVM** that was deployed using the previous template using Remote Desktop by double-clicking the RDP file that you downloaded in the previous step. Authenticate to the VM using these credentials:
 
     - **Admin username**: `demouser`
     - **Admin password**: `demo@pass123`
 
     > **Note**: Be sure to wait until the **Lab VM** ARM Template deployment has completed before connecting to the **LabVM** virtual machine.
 
-7. Using **File Explorer**, open the `C:\MCW` folder.
+6. Using **File Explorer**, open the `C:\MCW` folder.
 
-8. From the **Contoso Sports League** folder under **MCW**, open the Visual Studio Solution file: `Contoso.Apps.SportsLeague.sln`. Be sure to sign into Visual Studio using your Azure credentials.
+7. From the **Contoso Sports League** folder under **MCW**, open the Visual Studio Solution file: `Contoso.Apps.SportsLeague.sln`. Be sure to sign into Visual Studio using your Azure credentials.
 
-9. The solution contains the following projects:
+8. The solution contains the following projects:
 
     | Project | Description |
     |:----------|:-------------|
