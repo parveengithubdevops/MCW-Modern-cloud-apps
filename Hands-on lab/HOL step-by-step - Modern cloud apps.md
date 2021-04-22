@@ -53,7 +53,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
     - [Task 6: Modify the Contoso.App.SportsLeague.Web](#task-6-modify-the-contosoappsportsleagueweb)
     - [Task 7: Send authentication requests to Azure AD](#task-7-send-authentication-requests-to-azure-ad)
     - [Task 8: Display user information](#task-8-display-user-information)
-    - [Task 9: Run the sample app](#task-9-run-the-sample-app)
+    - [Task 9: Update App Service configuration](#task-9-update-app-service-configuration)
+    - [Task 10: Run the sample app](#task-10-run-the-sample-app)
   - [Exercise 4: Enabling Telemetry with Application Insights](#exercise-4-enabling-telemetry-with-application-insights)
     - [Task 1: Configure the application for telemetry](#task-1-configure-the-application-for-telemetry)
     - [Task 2: View the Application Insights logs](#task-2-view-the-application-insights-logs)
@@ -1272,218 +1273,264 @@ In this exercise, you will configure an Azure AD Business to Consumer (B2C) inst
 
     ![On the Azure Active Directory create a tenant blade, the tenant creation was successful, click here to navigate to your new tenant link is highlighted.](media/create-aad-b2c-tenant-success-link.png)
 
-5. The new Azure AD Directory that was created will now be open in new browser tab. Keep this tab open for the next few steps.
-
-6. Back in the browser tab where you created the Azure AD Directory from, open the new Azure AD B2C tenant by selecting **Resource Groups** in the navigation menu to the left and then, **contososports**. Then, in the new blade, select the **B2C tenant** you just created.
-
-    ![In the contososports resource group, the new B2C tenant is highlighted.](media/b2ctenant_in_rg.png "Azure AD B2C Settings window")
-
-7. In the new blade, select the **Azure AD B2C Settings** tile for the new B2C tenant. You will be taken to the new subscription for this tenant.
-
-    ![In the Azure AD B2C tenant window, on the left, All Settings is selected. In the bottom right section, the Azure AD B2C Settings tile is selected.](media/image160.png "Azure AD B2C Settings window")
-
-8. In the new tab that opened, under the **MANAGE** menu area of the open **Azure AD B2C** blade, select **App registrations**. Then, in the new pane, select **+New registration**.
-
-    ![In the Azure AD B2C Settings window, on the left, All Settings is selected. In the middle, under Settings, under Manage, App registrations is selected. On the right, the New registration button is selected.](media/b2c-add-app-link.png "Azure AD B2C Settings window")
+5. The new Azure AD Directory that was created will now be open in new browser tab.
 
 ### Task 2: Add a new application
 
-1. Specify the following configuration options for the new Application registration:
+1. In the **Azure AD B2C** browser tab, select **App registrations** under the **MANAGE** menu area and then select **New registration**.
 
-    - Name: **Contoso B2C Application**
+    ![In the Azure AD B2C Settings window, on the left, All Settings is selected. In the middle, under Settings, under Manage, App registrations is selected. On the right, the New registration button is selected.](media/b2c-add-app-link.png "Azure AD B2C Settings window")
 
-    - Supported account types: **Accounts in any identity provider or organizational directory (for authenticating users with user flows)**.
+2. Specify the following configuration options for the new Application registration:
 
-    - Redirect URI: Set to **Web**, then set the URL to the following format: `https://[your web url].azurewebsites.net/signin-oidc-b2c` _(This should be the HTTPS URL to the Contoso E-Commerce Site.)_
+    - **Name**: Enter `Contoso B2C Application`.
+    - **Supported account types**: Choose **Accounts in any identity provider or organizational directory (for authenticating users with user flows)**.
+    - **Redirect URI**: Select **Web** and then enter the URL using the format, `https://[your-web-app-name].azurewebsites.net/signin-oidc-b2c`, replacing `[your-web-app-name] with the name of the App Service hosting the Contoso E-Commerce Site.
+    - **Permissions**: Leave the **Grant admin consent to openid and offline_access permissions** checkbox checked.
 
-        ![The New application fields are set to the previously defined values.](media/image161.png "New application")
+        ![The New application fields are set to the previously defined values.](media/aad-b2c-register-an-application.png "New application")
 
-2. Select **Register**.
+3. Select **Register**.
 
-3. Once App registration has completed, copy the **Application (client) ID** of your new application to Notepad to use later. Keep this tab open for the next task.
+4. Once App registration has completed, copy the **Application (client) ID** of your new application to Notepad to use later. Keep this tab open for the next task.
 
-     ![B2C application name and ID values are shown.](media/2020-06-20-23-36-30.png "Azure AD B2C screen")
+     ![B2C application name and ID values are shown.](media/contoso-b2c-application-client-id.png "Azure AD B2C screen")
+
+5. Next, select **Authentication** from the left-hand navigation menu of the **Contoso B2C Application** page.
+
+    ![The Authentication item is highlighted and selected under Manage in the left-hand menu on the Contoso B2C Application blade.](media/b2c-app-authentication.png "Authentication")
+
+6. On the **Authentication** blade, scroll down and locate the **Implicit grant and hybrid flows** section. Within that section, check the **Access tokens** and **ID tokens** boxes and then select **Save** in the toolbar at the top of the blade.
+
+    ![On the Authentication blade, the Implicit grant and hybrid flows section header is highlighted, and within that section, the Access tokens and ID tokens checkboxes are checked and highlighted. The Save button in the toolbar at the top of the blade is highlighted.](media/authentication-implicit-grant-and-hybrid-flows.png "Authentication")
 
 ### Task 3: Create Policies, Sign up and sign in
 
 1. Navigate back to the **Azure AD B2C** screen.
 
-2. To enable sign-up on your application, you will need to create a sign-up policy. This policy describes the experiences consumers will go through during sign-up and the contents of tokens the application will receive on successful sign-ups. Select **User flows** link on the left menu and then **+New user flow** link at the top of the blade.
+2. To enable sign-up on your application, you will need to create a sign-up policy. This policy describes the experiences consumers will go through during sign-up and the contents of tokens the application will receive on successful sign-ups. Select **User flows** link on the left menu and then **New user flow** link at the top of the blade.
 
-    ![On the Azure AD B2C screen, User Flows selected from the left menu and the +New user flow button is highlighted in the toolbar.](media/2020-06-20-23-39-59.png "Azure AD B2C - User Flows selected")
+    ![On the Azure AD B2C screen, User Flows selected from the left menu and the +New user flow button is highlighted in the toolbar.](media/aad-b2c-user-flows.png "Azure AD B2C - User Flows selected")
 
 3. Select the **Sign up and sign in** tile, then under Version, select **Recommended**, then select the **Create** button.
   
-    ![The Select a user flow type section is displayed with the Sign up and sign in tile highlighted.](media/2019-03-28-12-20-42.png "Sign up and sign in tile")
+    ![The Select a user flow type section is displayed with the Sign up and sign in tile highlighted.](media/create-user-flow-select-type.png "Sign up and sign in tile")
 
-4. Enter **SignUp** in the **Name** field.
+4. On the **Create** screen, enter the following:
 
-    ![The unique Azure AD B2C user flow name is displayed.](media/2019-04-11-08-40-58.png "User Flow Name")
+    **Name**:
 
-5. Beneath **Identity providers**, check **Email Signup**. Optionally, you can also select social identity providers (if previously configured for the tenant).
-
-    ![In the Add policy blade, Identity providers is selected. In the Select identity providers blade, Email signup is selected.](media/2019-03-28-12-25-35.png "Add policy and Select identity providers blades")
-
-6. In the **Multifactor authentication** section, ensure **MFA enforcement** is set to **Conditional (Recommended)**, this will disable MFA for this exercise.
-
-    ![The Multifactor authentication section of the form is displayed with MFA enforcement set to Conditional.](media/mfa_conditional.png "MFA enforcement form")
-
-7. In the **Conditional Access** section. Uncheck the **Enforce conditional access policies** checkbox.
-
-    ![The Conditional Access section of the form is displayed with the enforce conditional access policies checkbox unchecked.](media/uncheck_conditionalaccess.png "Conditional Access form")
-
-8. In the **User attributes and claims** section, select the **Show more...** link.
-
-    ![In the Azure AD B2C - User flow policy - create user flow pane, the Show more link is highlighted after the default user attributes and claims.](media/2019-03-28-12-38-39.png "Show more link")
-
-9. In the **User attributes and token claims** section, select the following **Collect attribute** checkboxes:
-
-    - **Country/Region**
-    - **Display Name**
-    - **Postal Code**
-
-10. Select the following **Return claim** checkboxes:
-
-    - **Display Name**
-    - **Identity Provider**
-    - **Postal Code**
-    - **User is new**
-    - **User's Object ID**
+    - **B2C_1_**: Enter `SignUp`.
   
-11. Review your selections, then select **OK**.
+    **Identity providers**:
 
-    ![The user attributes and claims section is displayed showing the appropriate checkbox selections described in the previous two steps.](media/2019-03-28-12-44-04.png "User attributes and claims listing")
+    - **Local accounts**: Select **Email signup**.
 
-12. Select **Create**. Observe the policy just created appears as **B2C\_1\_SignUp** (the **B2C\_1\_** fragment is automatically added) in the **Sign-up policies** blade.
+    **Multifactor authentication**:
 
-    >**Note**: The page may take a few minutes to load/refresh after you start creating the policy.
+    - **Type of method**: Leave **Email** selected.
+    - **MFA enforcement**: Choose **Conditional (preview)**. This will disable MFA for this exercise.
 
-    ![Azure AD B2C - User flows list.  Shows the newly created flow.](media/2019-03-28-12-46-48.png "Azure AD B2C User Flow List")
+    **Conditional access (preview)**:
 
-13. Open the policy by selecting the link in the list e.g. **B2C\_1\_SignUp**.
+    - **Enforce conditional access policies**: Ensure this box is **unchecked**.
 
-14. Select **Run user flow** and open the dialog.
+    **User attributes and token claims**:
+
+    - Select **Show more...** and on the **User attributes and token claims** dialog, set the following and then select **OK**:
+
+    | Attribute name                 | Collect Attribute | Return claim |
+    | ------------------------------ | ----------------- | ------------ |
+    | City                           | Unchecked         | Unchecked    |
+    | Country/Region                 | **Checked**       | Unchecked    |
+    | Display Name                   | **Checked**       | **Checked**  |
+    | Email Address                  | Unchecked         | Unchecked    |
+    | Given Name                     | Unchecked         | Unchecked    |
+    | Identify Provider              | Unchecked         | **Checked**  |
+    | Identify Provider Access Token | Unchecked         | Unchecked    |
+    | Job Title                      | Unchecked         | Unchecked    |
+    | Legal Age Group Classification | Unchecked         | Unchecked    |
+    | Postal Code                    | **Checked**       | **Checked**  |
+    | State/Province                 | Unchecked         | Unchecked    |
+    | Street Address                 | Unchecked         | Unchecked    |
+    | Surname                        | Unchecked         | Unchecked    |
+    | User is new                    | Unchecked         | **Checked**  |
+    | User's Object ID               | Unchecked         | **Checked**  |
+
+    ![The create user flow dialog is populated with the values specified above.](media/user-flow-create-sign-up-sign-in.png "Create User Flow")
+
+5. Select **Create**. The sign-in/sign-up policy appears as **B2C_1_SignUp** (the **B2C_1_** fragment is automatically added) in the **User flows** blade.
+
+    > **Note**: The page may take a few minutes to load/refresh after you start creating the policy.
+
+    ![Azure AD B2C - User flows list. Shows the newly created flow.](media/2019-03-28-12-46-48.png "Azure AD B2C User Flow List")
+
+6. Open the policy by selecting **B2C_1_SignUp**.
+
+7. Select **Run user flow** and open the dialog.
 
     ![In the Policies section, Sign-in policies is selected.](media/2019-03-28-12-52-27.png "Policies section")
 
-15. Select **Run user flow** - Choose application and run user flow. 
+8. Select **Run user flow** on the **Run user flow** dialog.
 
     ![Choose application options are displayed. Contoso B2C Application option is selected. Run user flow button is displayed.](media/2019-03-28-12-55-51.png "Test the user flow")
 
-16. A browser tab/window will open that looks like the following screenshot.
+9. In the browser window that opens, select **Sign up now**.
 
-    ![Test the user flow.  Sample sign in presented in the browser.](media/2019-03-28-13-00-01.png "Test the user flow")
+    ![Sign up now fields are presented to the user.](media/user-flow-sign-up-now.png "Sign up now")
 
-17. Select **Sign up now**.
+10. On the sign up dialog, enter your email address and select **Send verification code**.
 
-    ![Sign up now fields are presented to the user.](media/2019-03-28-13-02-25.png "Sign up now")
+    > **Important**: You must enter a valid email address that you have access to for this lab.
+
+    ![An email address is entered and the send verification code button is highlighted.](media/user-flow-sign-up-send-verification-code.png "Send verification code")
+
+11. Check your email for a message from **Microsoft on behalf of ContosoB2C** and copy the code provided.
+
+    ![The verification email is displayed and the provided verification code is highlighted.](media/verification-email.png "Verify your email address")
+
+12. Return to the **Sign Up** browser window and enter the code into the provided field, then select **Verify code**.
+
+    ![The code retrieved from the verification email is entered into the sign up form and the verify code button is highlighted.](media/sign-up-verify-code.png "Verify code")
+
+13. Enter a password and complete the remaining fields on the form and then select **Create**.
+
+    ![The sign up form is fully populated.](media/sign-up-create.png "Sign up")
+
+14. After you select **Create**, you will get a 404 error page which should look something like the below screenshot. This happens because the Contoso web app has not yet been configured to use Azure AD B2C. You will do this below, so **the error can be ignored**.
+
+    ![Screenshot of 404 error message.](media/sign-up-error.png "Error")
 
 ### Task 4: Create a profile editing policy
 
 To enable profile editing on your application, you will need to create a profile editing policy. This policy describes the experiences that consumers will go through during profile editing and the contents of tokens that the application will receive on successful completion.
 
-1. Select **User flows** link on the left blade.
+1. On the **User flows** blade, select **New user flow** again on the toolbar.
 
-2. Select **+ New user flow** link at the top of the blade.
+2. For the **Select a user flow type**, select the **Profile editing** tile, then select **Recommended**, and then select **Create**.
 
-3. For the **Select a user flow type**, select the **Profile editing** card.
+    ![On the create a user flow dialog, profile editing is selected and highlighted under select a user flow type. Under version, recommended is selected and highlighted. The create button is highlighted.](media/create-user-flow-profile-editing.png "Create a user flow")
 
-    ![The Create a user flow screen is displayed with the Profile editing card selected.](media/2019-03-28-16-19-55.png "Select Profile Editing")
+3. On the **Create** screen, enter the following:
 
-4. For the **Version**, select **Recommended**, then select **Create**.
+    **Name**:
 
-5. The Name determines the profile editing policy name used by your application. For example, enter **EditProfile**.
+    - **B2C_1_**: Enter `EditProfile`.
+  
+    **Identity providers**:
 
-    ![In the Add policy blade, Identity providers (1 Selected) is selected. Identities providers - select Local Account SignIn.](media/2019-03-28-16-24-26.png "select Local Account SignIn")
+    - **Local accounts**: Select **Email signin**.
 
-6. In the **Identity providers** section, select **Email signin**.
+    **Multifactor authentication**:
 
-   ![The Identity providers section of the form is displayed with Email signin selected.](media/profile_identityproviders.png "Identity providers")
+    - **Type of method**: Leave **Email** selected.
+    - **MFA enforcement**: Choose **Conditional (preview)**. This will disable MFA for this exercise.
 
-7. In the **Multifactor authentication** section, ensure the MFA enforcement is set to **Conditional (Recommended)**.
+    **Conditional access (preview)**:
 
-   ![The Multifactor authentication section of the form is displayed with the MFA enforcement field set to Conditional.](media/profile_mfaauth.png "Multifactor authentication")
+    - **Enforce conditional access policies**: Ensure this box is **unchecked**.
 
-8. For the **Conditional Access** section, uncheck the **Enforce conditional access policies** checkbox.
+    **User attributes and token claims**:
 
-   ![The Conditional Access section of the form is displayed with the Enforce conditional access policies checkbox unchecked.](media/profile_conditionalaccess.png "Conditional Access")
+    - Select **Show more...** and on the **User attributes and token claims** dialog, set the following and then select **OK**:
 
-9. In the **User attributes** section, select the **Show more...** link at the bottom of the checkbox lists.
+    | Attribute name                 | Collect Attribute | Return claim |
+    | ------------------------------ | ----------------- | ------------ |
+    | City                           | Unchecked         | Unchecked    |
+    | Country/Region                 | **Checked**       | Unchecked    |
+    | Display Name                   | **Checked**       | **Checked**  |
+    | Email Address                  | Unchecked         | Unchecked    |
+    | Given Name                     | Unchecked         | Unchecked    |
+    | Identify Provider              | Unchecked         | Unchecked    |
+    | Identify Provider Access Token | Unchecked         | Unchecked    |
+    | Job Title                      | **Checked**       | Unchecked    |
+    | Legal Age Group Classification | Unchecked         | Unchecked    |
+    | Postal Code                    | **Checked**       | **Checked**  |
+    | State/Province                 | **Checked**       | Unchecked    |
+    | Street Address                 | **Checked**       | Unchecked    |
+    | Surname                        | Unchecked         | Unchecked    |
+    | User's Object ID               | Unchecked         | Unchecked    |
 
-10. For the **Collect attribute** section, you choose attributes the consumer can view and edit.
+    ![The create user flow dialog is populated with the values specified above.](media/user-flow-create-edit-profile.png "Create User Flow")
 
-    For now, select the following:
+4. Select **Create**. The edit profile policy appears as **B2C_1_EditProfile** in the **User flows** blade.
 
-    - **Country/Region**
-    - **Display Name**
-    - **Job Title**
-    - **Postal Code**
-    - **State/Province**
-    - **Street Address**
+5. Optionally, you can run the edit profile user flow by selecting the **B2C_1_EditProfile** flow and then selecting **Run user flow**.
 
-11. For the **Return claims** section, you choose claims you want returned in the tokens sent back to your application after a successful profile editing experience.
+6. Select **Run user flow** and in the new browser window, sign in with the email address and password you used to sign up for an account, and then you can edit your profile details.
 
-    For now, select the following:
-
-    - **Display Name**
-    - **Postal Code**
-
-    ![Sign up - User attributes selected blade.](media/2019-03-28-16-28-53.png "Sign up - User attributes selected blade")
-
-12. Select **OK**.
-
-13. Select **Create**. Observe the policy just created appears as \"**B2C\_1\_EditProfile**\" (the **B2C\_1\_** fragment is automatically added) in the **Profile editing policies** blade.
-
-14. Open the policy by selecting **B2C\_1\_EditProfile**, then **Run user flow**.
-
-15. Select **Contoso B2C application** in the **Select Application** drop-down.
-
-16. Select **Run user flow**. A new browser tab opens, and you can run through the profile editing consumer experience in your application.
+    > **Important**: As with the sign-up user flow, you will get an error after saving any profile updates, as the Contoso Sports web app has not yet been updated to use Azure AD B2C.
 
 ### Task 5: Create a password reset policy
 
 To enable profile editing on your application, you will need to create a profile password reset. This policy describes the experiences that consumers will go through during password reset and the contents of tokens that the application will receive on successful completion.
 
-1. Select **User flows** link on the left blade.
+1. On the **User flows** blade, select **New user flow** again on the toolbar.
 
-2. Select **+ New user flow** link at the top of the blade.
+2. For the **Select a user flow type**, select the **Password reset** tile, then select **Recommended**, and then select **Create**.
 
-3. From the **Select a user flow type**, select the **Password reset** card.
+    ![On the create a user flow dialog, password reset is selected and highlighted under select a user flow type. Under version, recommended is selected and highlighted. The create button is highlighted.](media/create-user-flow-password-reset.png "Create a user flow")
 
-    ![The Create a user flow form is displayed with the Password reset card highlighted.](media/2020-03-19-09-47-15.png "Select Password reset")
+3. On the **Create** screen, enter the following:
 
-4. For **Version**, select **Recommended**. Select **Create**.
+    **Name**:
 
-5. The Name determines the profile editing policy name used by your application. For example, enter **SSPR**.
+    - **B2C_1_**: Enter `PasswordReset`.
+  
+    **Identity providers**:
 
-6. Under Identity providers, select **Reset password using email address**.
+    - **Local accounts**: Select **Reset password using email address**.
 
-7. In the **Multifactor authentication** section, ensure **MFA enforcement** is set to **Conditional**.
+    **Multifactor authentication**:
 
-8. In the **Conditional Access** section, uncheck the **Enforce conditional access policies** checkbox.
+    - **Type of method**: Leave **Email** selected.
+    - **MFA enforcement**: Choose **Conditional (preview)**. This will disable MFA for this exercise.
 
-9. In the **Application claims** section, select the **Show more** link at the bottom of the checklist box.
+    **Conditional access (preview)**:
 
-10. In the **Return claim** column, choose attributes about the user that are returned to the application in the token.
+    - **Enforce conditional access policies**: Ensure this box is **unchecked**.
 
-    For now, select the following:
+    **User attributes and token claims**:
 
-    - **Email Addresses**
-    - **Given Name**
+    - Select **Show more...** and on the **User attributes and token claims** dialog, set the following and then select **OK**:
 
-11. Select **OK**.
+    | Attribute name                 | Return claim |
+    | ------------------------------ | ------------ |
+    | City                           | Unchecked    |
+    | Country/Region                 | Unchecked    |
+    | Display Name                   | Unchecked    |
+    | Email Address                  | **Checked**  |
+    | Given Name                     | **Checked**  |
+    | Job Title                      | Unchecked    |
+    | Legal Age Group Classification | Unchecked    |
+    | Postal Code                    | Unchecked    |
+    | State/Province                 | Unchecked    |
+    | Street Address                 | Unchecked    |
+    | Surname                        | Unchecked    |
+    | User's Object ID               | Unchecked    |
 
-12. Select **Create**. Observe the policy just created appears as \"**B2C\_1\_SSPR**\" (the **B2C\_1\_** fragment is automatically added) in the **Profile editing policies** blade.
+    ![The create user flow dialog is populated with the values specified above.](media/user-flow-create-reset-password.png "Create User Flow")
 
-13. Open the policy by selecting **B2C\_1\_SSPR**, then **Run user flow**.
+4. Select **Create**. The edit profile policy appears as **B2C_1_PasswordReset** in the **User flows** blade.
 
-14. Select **Contoso B2C application** in the **Select Application** drop-down.
+5. Optionally, you can run the password reset user flow by selecting the **B2C_1_PasswordReset** flow and then selecting **Run user flow**.
 
-15. Select **Run user flow**. A new browser tab opens, and you can run through the profile editing consumer experience in your application.
+6. Select **Run user flow** and in the new browser window, enter the email address you used to sign up for an account, select **Send verification code** and then follow the remaining steps to reset your password.
+
+    > **Important**: As with the sign-up user flow, you will get an error after saving any profile updates, as the Contoso Sports web app has not yet been updated to use Azure AD B2C.
 
 ### Task 6: Modify the Contoso.App.SportsLeague.Web
 
-1. Expand the **Contoso.Apps.SportsLeague.Web** project. Find the **Startup.cs** code file, locate the `public void ConfigureServices(` method declaration, then add the following line of code to the bottom of this method:
+1. In Visual Studio, expand the **Contoso.Apps.SportsLeague.Web** project within the Solution Explorer. then locate and open the `Startup.cs` code file.
+
+2. Add the following `using` directives to the top of the `Startup.cs` code file:
+
+    ```csharp
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+    ```
+
+3. Locate the `public void ConfigureServices` method declaration and add the following line of code to the bottom of this method:
 
     ```csharp
     services.AddAuthentication(Microsoft.AspNetCore.Authentication.AzureADB2C.UI.AzureADB2CDefaults.AuthenticationScheme)
@@ -1492,60 +1539,35 @@ To enable profile editing on your application, you will need to create a profile
 
     ![The Startup.cs file with the "app.UseAuthorization();" line of code highlighted.](media/2019-04-19-15-08-40.png "Startup.cs")
 
-2. Add the following `using` directives to the top of the **Startup.cs** code file:
-
-    ```csharp
-    using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
-    ```
-
-3. Locate the `app.UseAuthorization();` line within the `public void Configure` method, and add the following line of code before it:
+4. Locate the `app.UseAuthorization();` line within the `public void Configure` method, and add the following line of code before it:
 
     ```csharp
     app.UseAuthentication();
-    app.UseAuthorization();
     ```
 
     The result will look similar to the following:
 
     ![app.UseAuthentication code inserted.](media/2020-03-18-14-44-13.png "app.UseAuthentication code inserted")
 
-4. Locate the Azure AD B2C name by navigating to your resource group. Copy the name to Notepad.
-
-    ![List of all of the resources within the ContosoSports resource group. Pointing to the B2C tenant name.](media/2019-03-28-16-51-14.png "Locate B2C tenant name")
-
-5. Next, using the Azure Management Portal, using your main subscription, open the Contoso Web App blade, and select **Configuration**.
-
-6. Add the following settings in the **Application Settings** section:
-
-   - AzureADB2C:Instance - `https://[your Azure AD B2C name].b2clogin.com/tfp/`
-   - AzureADB2C:ClientId - **B2C Application ID you copied down earlier**.
-   - AzureADB2C:CallbackPath - `/signin-oidc-b2c`
-   - AzureADB2C:Domain - **[your Azure AD B2C name].onmicrosoft.com**
-   - AzureADB2C:SignUpSignInPolicyId - `B2C_1_SignUp`
-   - AzureADB2C:ResetPasswordPolicyId - `B2C_1_SSPR`
-   - AzureADB2C:EditProfilePolicyId - `B2C_1_EditProfile`
-
-7. Select **Save**.
+5. Select **Save** on the toolbar to save the `Startup.cs` file.
 
 ### Task 7: Send authentication requests to Azure AD
 
-Your app is now properly configured to communicate with Azure AD B2C by using ASP.NET Core Identity. OWIN has taken care of all of the details of crafting authentication messages, validating tokens from Azure AD, and maintaining user session. All that remains is to initiate each user's flow.
+Your app is now configured to communicate with Azure AD B2C by using ASP.NET Core Identity. OWIN has taken care of all of the details of crafting authentication messages, validating tokens from Azure AD, and maintaining user session. All that remains is to initiate each user's flow.
 
-1. Right select the **Controllers** folder, and select **Add** -\> **Controller**.
+1. Right select the **Controllers** folder, and select **Add** -> **Controller**.
 
     ![In Solution Explorer, in the right-click menu for the Controllers folder, Add is selected, and from its menu, Controller is selected.](media/image177.png "Solution Explorer")
 
-2. Select **MVC Controller -- Empty** and then select **Add**. Replace default name of **HOmeController1.cs** with the name of **AccountController.cs** for the new Controller being added.
+2. Select **MVC Controller - Empty** and then select **Add**. Replace default name of **HomeController1.cs** with the name of **AccountController.cs** for the new Controller being added.
 
     ![On the left of the Add Scaffold window, Installed / Controller is selected. In the center of the window, MVC 5 Controller - Empty is selected.](media/image178.png "Add Scaffold window")
 
-3. Add the following using statement to the top of the controller:
+3. Add the following using statements to the top of the controller, below the existing using statements:
 
     ```csharp
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     ```
 
@@ -1556,8 +1578,6 @@ Your app is now properly configured to communicate with Azure AD B2C by using AS
 5. Replace the method with the following code:
 
     ```csharp
-    // Controllers\AccountController.cs
-
     private string _editProfilePolicyId;
 
     public AccountController(IConfiguration configuration)
@@ -1611,22 +1631,19 @@ Your app is now properly configured to communicate with Azure AD B2C by using AS
     }
     ```
 
-6. Save the file.
+6. Save the file by selecting **Save** on the Visual Studio toolbar.
 
 ### Task 8: Display user information
 
 When you authenticate users by using OpenID Connect, Azure AD returns an ID token to the app that contains **claims**. These are assertions about the user. You can use claims to personalize your app. You can access user claims in your controllers via the ClaimsPrincipal.Current security principal object.
 
-1. Open the **Controllers\\HomeController.cs** file and add the following using statements at the end of the other using statements at the top of the file:
+1. Open the **Controllers\\HomeController.cs** file and add the following using statements at the end of the other using statements at the top of the file, below the existing using statements:
 
     ```csharp
-    using Contoso.Apps.SportsLeague.Web.Models;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     ```
 
-2. Still in the **Controllers\\HomeController.cs** file, add the following method to the **HomeController** class:
+2. Next, add the following method to the **HomeController** class:
 
     ```csharp
     [Authorize]
@@ -1639,11 +1656,19 @@ When you authenticate users by using OpenID Connect, Azure AD returns an ID toke
     }
     ```
 
-3. You can access any claim that your application receives in the same way. A list of all the claims the app receives is available for you on the **Claims** page. In Visual Studio on the Contoso.Apps.SportsLeague.Web object, right-click on **Views -\> Home,** select **Add -\> View**, choose **Razor View - Empty** and name it **Claims.cshtml**.
+3. To access the claims that your application receives, you will create a new claims view that will display a list of all the claims the app receives. In the Visual Studio Solution Explorer, expand the **Views -\> Home** folder under the **Contoso.Apps.SportsLeague.Web** project, right-click the **Home** folder, and then select **Add -\> View**.
 
-    ![In Solution Explorer, on the right-click menu for Views\\Home, Add is selected, and from its menu, View is selected.](media/image180.png "Solution Explorer")
+    ![In Solution Explorer, on the right-click menu for Views\\Home, Add is selected, and from its menu, View is selected.](media/views-home-add-view.png "Solution Explorer")
 
-4. Open the **Claims.cshtml** file and replace the code with the following:
+4. On the **Add New Scaffolded Item** dialog, select **Razor View - Empty** and select **Add**.
+
+    ![On the Add New Scaffolded Item dialog, Razor View - Empty is selected and highlighted.](media/add-new-scaffolded-item-razor-view-empty.png "Add New Scaffolded Item")
+
+5. On the **Add New Item** dialog, enter **Claims.cshtml** as the name of the new view and then select **Add**.
+
+    ![On the Add New Item dialog, Claims.cshtml is entered in to the name field and the Add button is highlighted.](media/add-new-item-claims.png "Add new item")
+
+6. In the new **Claims.cshtml** file that opens in Visual Studio, replace all the file's contents with the following code:
 
     ```csharp
     @using System.Security.Claims
@@ -1670,11 +1695,15 @@ When you authenticate users by using OpenID Connect, Azure AD returns an ID toke
     </table>
     ```
 
-5. Right-click on the **Views -\> Shared** folder, select **Add**, add a new **View**. Choose **Razor View - Empty** and **\_LoginPartial.cshtml** for the name.
+7. Select **Save** on the toolbar in Visual Studio to save the `Claims.cshtml` file.
 
-    ![In Solution Explorer, on the right-click menu for Views\\Shared, Add is selected, and from its menu, View is selected.](media/image180.png  "Solution Explorer")
+8. Next, you will create a partial view to handle logging users in and out under the **Shared** folder. Right-click on the **Views -\> Shared** folder, select **Add**, add a new **View**.
 
-6. Add the following code to the razor partial view to provide a sign-in and sign-out link as well as a link to edit the user's profile:
+9. On the **Add New Scaffolded Item** dialog, select **Razor View - Empty** and select **Add**.
+
+10. On the **Add New Item** dialog, enter **\_LoginPartial.cshtml** for the name (making sure to include the leading underscore, "_", in the file name) and then select **Add**.
+
+11. Replace all contents of the file with the following code to create a razor partial view to provide a sign-in and sign-out link as well as a link to edit the user's profile:
 
     ```html
     @if (User.Identity.IsAuthenticated)
@@ -1706,7 +1735,11 @@ When you authenticate users by using OpenID Connect, Azure AD returns an ID toke
     }
     ```
 
-7. Open `Views\Shared\_Layout.cshtml` in Visual Studio. Locate the header-top div, and add the line that starts with `@Html.ActionLink` and the line that starts with `@Html.Partial`.
+12. Select **Save** on the toolbar in Visual Studio to save the `_LoginPartial.cshtml` file.
+
+13. Open `Views\Shared\_Layout.cshtml` in Visual Studio.
+
+14. Locate the **DIV** markdown element that has the class of `header-top` (line 46 of the file), and add the line that starts with `@Html.ActionLink` and the line that starts with `@Html.Partial`.
 
     ```html
     <div class="header-top">
@@ -1728,9 +1761,35 @@ When you authenticate users by using OpenID Connect, Azure AD returns an ID toke
     </div>
     ```
 
-### Task 9: Run the sample app
+### Task 9: Update App Service configuration
 
-1. Right-click on the **Contoso.Apps.SportsLeague.Web** project, and select **Publish**. Follow the steps to deploy the updated application to the Microsoft Azure Web App.
+In this task, you update the configuration settings for the deployed web app in the Azure portal.
+
+1. Return to the [Azure portal](https://portal.azure.com/), navigate to the **ContosoSports** resource group, and locate the Azure AD B2C resource. Copy the name portion of the **B2C tenant** and pasted it into a text edit, such as Notepad.exe.
+
+    > **Note**: The name portion of the tenant is everything leading up to the first period (.) in the resource name. So, you will exclude `.onmicrosoft.com` from what you copy and paste into the text editor.
+
+    ![List of all of the resources within the ContosoSports resource group. Pointing to the B2C tenant name.](media/resource-group-b2c-tenant.png "Locate B2C tenant name")
+
+2. While still on the **ContosoSports** resource group blade in the Azure portal, select the Contoso Web App resource, and then select **Configuration** on the web app blade.
+
+3. Add the following settings in the **Application Settings** section:
+
+   - AzureADB2C:Instance - `https://[your-AAD-B2C-tenant-name].b2clogin.com/tfp/`
+   - AzureADB2C:ClientId - **B2C Application ID you copied down earlier**.
+   - AzureADB2C:CallbackPath - `/signin-oidc-b2c`
+   - AzureADB2C:Domain - `[your-AAD-B2C-tenant-name]`.onmicrosoft.com**
+   - AzureADB2C:SignUpSignInPolicyId - `B2C_1_SignUp`
+   - AzureADB2C:ResetPasswordPolicyId - `B2C_1_PasswordReset`
+   - AzureADB2C:EditProfilePolicyId - `B2C_1_EditProfile`
+
+4. Select **Save** on the toolbar.
+
+### Task 10: Run the sample app
+
+In this task, you re-deploy the web app to your App Service and test the app using Azure AD B2C.
+
+1. Go back to Visual Studio, right-click on the **Contoso.Apps.SportsLeague.Web** project, and select **Publish**. Follow the steps to deploy the updated application to the Microsoft Azure Web App.
 
     Launch a browser outside of Visual Studio for testing if the page loads in Visual Studio.
 
@@ -1742,7 +1801,8 @@ When you authenticate users by using OpenID Connect, Azure AD returns an ID toke
 
     ![On the Contoso website, the following links are circled: Claims, Sign up, and Sign in.](media/image182.png "Contoso website")
 
-    Claims information page:    
+    Claims information page:
+
     ![On the Contoso website, the following links are circled: Russell, Sign out, and Edit Profile.](media/image183.png "Contoso website, Claims information page")
 
 ## Exercise 4: Enabling Telemetry with Application Insights
