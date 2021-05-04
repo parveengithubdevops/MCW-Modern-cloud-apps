@@ -29,10 +29,8 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 - [Modern cloud apps before the hands-on lab setup guide](#modern-cloud-apps-before-the-hands-on-lab-setup-guide)
   - [Requirements](#requirements)
   - [Before the hands-on lab](#before-the-hands-on-lab)
-    - [Task 1: Download GitHub resources](#task-1-download-github-resources)
-    - [Task 2: Deploy Lab VM Resources to Azure](#task-2-deploy-lab-vm-resources-to-azure)
-    - [Task 3: Deploy Environment Resources to Azure](#task-3-deploy-environment-resources-to-azure)
-    - [Task 4: Explore the Contoso Sports League sample](#task-4-explore-the-contoso-sports-league-sample)
+    - [Task 1: Deploy Lab VM Resources to Azure](#task-1-deploy-lab-vm-resources-to-azure)
+    - [Task 2: Deploy Environment Resources to Azure](#task-2-deploy-environment-resources-to-azure)
 
 <!-- /TOC -->
 
@@ -55,49 +53,36 @@ Duration: 30 minutes
 
 Before initiating the hands-on lab, you will setup an environment to use for the rest of the exercises.
 
-### Task 1: Download GitHub resources
-
-1. Open a browser window to the Cloud Workshop GitHub repository (<https://github.com/microsoft/MCW-Modern-cloud-apps>).
-
-2. Select **Clone or download**, then select **Download Zip**.
-
-    ![The GitHub Clone or download menu is expanded with the Download ZIP button highlighted.](media/github-download-zip.png "The GitHub clone or download menu.")
-
-3. Extract the zip file to your local machine, be sure to keep note of where you have extracted the files. You should now see a set of folders:
-
-    ![Windows Explorer showing the extracted files.](media/file-explorer-hands-on-lab.png "Windows Explorer")
-
-### Task 2: Deploy Lab VM Resources to Azure
+### Task 1: Deploy Lab VM Resources to Azure
 
 1. Select the following **Deploy to Azure** button to deploy the ARM Template with the Lab VM resources for this lab. This link will deep link into the Azure Portal, passing in the ARM Template for deploying the resources for this lab.
 
-    [![Deploy to Azure button.](images/azure-deploy-button-small.png "Deploy to Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FMCW-Modern-cloud-apps%2Fmaster%2FHands-on%20lab%2Fscripts%2Flabvm%2Ftemplate.json)
+    <a href ="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FMCW-Modern-cloud-apps%2Fmaster%2FHands-on%20lab%2Fscripts%2Flabvm%2Ftemplate.json" target="_blank" title="Deploy to Azure">
+        <img src="https://azuredeploy.net/deploybutton.png"/>
+    </a>
 
-    >**Note**: If you have issues with the **Deploy to Azure** link, then do a new **Custom deployment** in the Azure Portal using the `/Hands-on lab/scripts/labvm/template.json` ARM Template within the lab files.
+2. On the **Custom deployment** blade, enter the following:
 
-2. On the **Custom deployment** form, select **Edit parameters**.
+    **Subscription**:
 
-    ![A portion of the Custom deployment form is displayed with the Edit parameters button highlighted.](media/custom-deployment-edit.png "The Edit parameters button")
+    - **Subscription**: Select the subscription you are using for this hands-on lab.
+    - **Resource group**: Select **Create new** and enter `ContosoSports-XXXXX`, where `XXXXX` is a unique suffix, such as your initials or a random number used to ensure a unique resource group name.
 
-3. On the **Edit parameters** pane, select the **Load file** button.
+    > **Note**: For this lab, it is recommended you use the **East US**, **North Europe**, or **Australia East** Azure regions. There are certain Azure regions that don't support all the resources provisioned by the ARM Templates used by this hands-on lab.
 
-4. Locate and open the `\Hands-on lab\scripts\labvm\parameters.json` file within the extracted files.
+    **Instance details**:
 
-5. Select **Save**.
+    - **Region**: Select the region you would like to use for this hands-on lab.
+    - **Lab VM Admin Username**: Accept the default value of `demouser`.
+    - **Lab VM Admin Password**: Accept the default value of `demo@pass123`.
 
-6. In the **Subscription** field, select the appropriate subscription.
-
-7. Select **Create new** for the **Resource group** field, and enter `ContosoSports-[your initials or first name]`.
-
-8. Select your desired region in the **Region** field.
-
-9. Select **Review + create**.
+3. Select **Review + create**.
 
     ![The Custom deployment form is shown populated with the values described above.](media/custom-deployment.png "The custom deployment form")
 
-10. Once validation has succeeded, select the **Create** button.
+4. Once validation has succeeded, select the **Create** button.
 
-11. The deployment will take 15-30 minutes to complete. Continue to the next Task while this is deploying.
+5. The deployment will take 15-30 minutes to complete. Continue to the next Task while this is deploying.
 
     To view the progress, select the **Deployments** link, then select the **Microsoft.Template** deployment.
 
@@ -107,75 +92,37 @@ Before initiating the hands-on lab, you will setup an environment to use for the
     >
     > ![The CustomScriptExtension task in highlighted in the list of deployment tasks.](media/deployment-progress.png "Deployment progress")
 
-### Task 3: Deploy Environment Resources to Azure
+### Task 2: Deploy Environment Resources to Azure
 
 1. Select the following **Deploy to Azure** button to deploy the ARM Template with the Environment resources for this lab. This link will deep link into the Azure Portal, passing in the ARM Template for deploying the resources for this lab.
 
-    [![Deploy to Azure button.](images/azure-deploy-button-small.png "Deploy to Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FMCW-Modern-cloud-apps%2Fmaster%2FHands-on%20lab%2Fscripts%2Fenvironment%2Ftemplate.json)
+    <a href ="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2FMCW-Modern-cloud-apps%2Fmaster%2FHands-on%20lab%2Fscripts%2Fenvironment%2Ftemplate.json" target="_blank" title="Deploy to Azure">
+        <img src="https://azuredeploy.net/deploybutton.png"/>
+    </a>
 
     >**Note**: If you have issues with the **Deploy to Azure** link, then do a new **Custom deployment** in the Azure Portal using the `/Hands-on lab/scripts/environment/template.json` ARM Template within the lab files.
 
-2. Select **Edit parameters**.
+2. On the **Custom deployment** blade, enter the following:
 
-    ![A portion of the Custom deployment form is displayed with the Edit parameters button highlighted.](media/custom-deployment-edit.png "The Edit parameters button.")
+    **Subscription**:
 
-3. On the **Edit parameters** pane, select the **Load file** button.
+    - **Subscription**: Select the subscription you are using for this hands-on lab.
+    - **Resource group**: Select the `ContosoSports-XXXXX` resource group you created in the previous task, where `XXXXX` is a unique suffix, such as your initials or a random number used to ensure a unique resource group name.
 
-4. Locate and open the `\Hands-on lab\scripts\environment\parameters.json` file within the extracted files.
+    **Instance details**:
 
-5. Select **Save**.
+    - **Region**: The region you assigned to the resource group above will be automatically selected.
+    - **Lab VM Admin Username**: Accept the default value of `demouser`.
+    - **Lab VM Admin Password**: Accept the default value of `demo@pass123`.
 
-6. On the **Custom deployment** form, select your desired subscription for this lab.
+3. Select **Review + create**.
 
-7. For the **Resource group** field, select the resource group that you created in the previous task, **ContosoSports-{suffix}**.
-
-8. On the **Location** field for the Custom deployment, choose the Azure Region closest to you.
-
-    > **Note**: For this lab, it is recommended you use the **East US**, **North Europe**, or **Australia East** Azure Region. There are certain Azure regions that don't support all the resources provisioned by the ARM Template. This limitation can also vary depending on restrictions applied to the type of Azure Subscription you are using.
-
-9. Select **Review + create**.
-
-    ![The Custom deployment form is shown populated with the values described above.](media/custom-deployment.png "The Custom deployment form")
+    ![The Custom deployment form is shown populated with the values described above.](media/custom-deployment-env.png "The Custom deployment form")
 
     > **Note**: The deployment may fail if you have not registered the `Microsoft.AppConfiguration` resource provider for the subscription you are using. To fix this, just navigate to your subscription and locate **Settings --> Resource providers**. Then search for `Microsoft.AppConfiguration`, select the resource provider, and select **Register**.
     >
     > ![Demonstrating how to register the AppConfiguration resource provider.](media/registering-appconfiguration-resource-provider.png "Registering Microsoft.AppConfiguration within portal")
 
-10. The deployment will take 5 - 10 minutes to complete.
-
-### Task 4: Explore the Contoso Sports League sample
-
-1. In the Azure Portal, open the Resource group that you created for the lab.
-
-2. Locate and select the **LabVM** resource.
-
-3. From the top toolbar, expand the **Connect** button and select **RDP**.
-
-   ![The Connect button is expanded with the RDP item selected.](media/connectvm-rdp.png "The LabVM Connect menu")
-
-4. From the **Connect** screen, select the **Download RDP File** button and save it to the desired location on your local computer.
-
-5. Connect to the **LabVM** that was deployed using the previous template using Remote Desktop by double-clicking the RDP file that you downloaded in the previous step. Authenticate to the VM using these credentials:
-
-    - **Admin username**: `demouser`
-    - **Admin password**: `demo@pass123`
-
-    > **Note**: Be sure to wait until the **Lab VM** ARM Template deployment has completed before connecting to the **LabVM** virtual machine.
-
-6. Using **File Explorer**, open the `C:\MCW` folder.
-
-7. From the **Contoso Sports League** folder under **MCW**, open the Visual Studio Solution file: `Contoso.Apps.SportsLeague.sln`. Be sure to sign into Visual Studio using your Azure credentials.
-
-8. The solution contains the following projects:
-
-    | Project | Description |
-    |:----------|:-------------|
-    | Contoso.Apps.SportsLeague.Web |   Contoso Sports League e-commerce application |
-    | Contoso.Apps.SportsLeague.Admin |   Contoso Sports League call center admin application |
-    | Contoso.Apps.Common  |   Shared tier |
-    | Contoso.Apps.SportsLeague.Data  |   Shared tier |
-    | Contoso.Apps.FunctionApp  |   Function app tier |
-    | Contoso.Apps.SportsLeague.Offers |  API for returning list of available products |
-    | Contoso.Apps.PaymentGateway   |     API for payment processing |
+4. The deployment will take 5 - 10 minutes to complete.
 
 You should follow all the steps provided *before* performing the Hands-on lab.

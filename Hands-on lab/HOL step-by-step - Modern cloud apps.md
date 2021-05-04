@@ -349,7 +349,41 @@ The Contoso Sports solution contains multiple projects, each of which access the
 15. Select **Save** on the Access policies screen to commit the changes.
 
 <!-- omit in toc -->
-#### Subtask 7: Configure and deploy the e-commerce Web App from Visual Studio
+#### Subtask 7: Log into the LabVM and explore the Contoso Sports League sample
+
+1. In the Azure Portal, open the Resource group that you created for the lab.
+
+2. Locate and select the **LabVM** resource.
+
+3. From the top toolbar, expand the **Connect** button and select **RDP**.
+
+   ![The Connect button is expanded with the RDP item selected.](media/connectvm-rdp.png "The LabVM Connect menu")
+
+4. From the **Connect** screen, select the **Download RDP File** button and save it to the desired location on your local computer.
+
+5. Connect to the **LabVM** that was deployed using the previous template using Remote Desktop by double-clicking the RDP file that you downloaded in the previous step. Authenticate to the VM using these credentials:
+
+    - **Admin username**: `demouser`
+    - **Admin password**: `demo@pass123`
+
+6. Using **File Explorer**, open the `C:\MCW` folder.
+
+7. From the **Contoso Sports League** folder under **MCW**, open the Visual Studio Solution file: `Contoso.Apps.SportsLeague.sln`. Be sure to sign into Visual Studio using your Azure credentials.
+
+8. The solution contains the following projects:
+
+    | Project | Description |
+    |:----------|:-------------|
+    | Contoso.Apps.SportsLeague.Web |   Contoso Sports League e-commerce application |
+    | Contoso.Apps.SportsLeague.Admin |   Contoso Sports League call center admin application |
+    | Contoso.Apps.Common  |   Shared tier |
+    | Contoso.Apps.SportsLeague.Data  |   Shared tier |
+    | Contoso.Apps.FunctionApp  |   Function app tier |
+    | Contoso.Apps.SportsLeague.Offers |  API for returning list of available products |
+    | Contoso.Apps.PaymentGateway   |     API for payment processing |
+
+<!-- omit in toc -->
+#### Subtask 8: Configure and deploy the e-commerce Web App from Visual Studio
 
 1. Navigate to the **Contoso.Apps.SportsLeague.Web** project located in the **Web** folder using the **Solution Explorer** of Visual Studio.
 
@@ -628,7 +662,7 @@ The failover may take a few minutes to complete. You can continue with the next 
 
 ### Task 3: Deploying the Call Center admin website
 
-In this exercise, you will provision a website via the Azure Web App template using the Microsoft Azure Portal. You will then edit the necessary configuration files in the Starter Project and deploy the call center admin website.
+In this exercise, you provision a website via the Azure Web App template using the [Azure portal](https://portal.azure.com/). You then edit the necessary configuration files in the Starter Project and deploy the call center admin website.
 
 <!-- omit in toc -->
 #### Subtask 1: Provision the call center admin Web App
@@ -678,11 +712,11 @@ In this exercise, you will provision a website via the Azure Web App template us
 
 7. The call center web application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity. From the left menu, select **Identity**.
 
-8. With the **System assigned** tab selected, toggle the **Status** field to **On**, then select **Save**. 
-    
+8. With the **System assigned** tab selected, toggle the **Status** field to **On**, then select **Save**.
+
     ![On the Identity screen, the System assigned tab is selected and the Status field is in the On position.](media/appconfig_systemidentity.png "The Identity Screen")
 
-9. Open the **contosokv** Key Vault resource, and from the left menu, select **Access policies**. 
+9. Open the **contosokv** Key Vault resource, and from the left menu, select **Access policies**.
 
 10. Select the **+ Add Access Policy** link.
 
@@ -691,10 +725,10 @@ In this exercise, you will provision a website via the Azure Web App template us
 12. In the **Select principal** blade, search for the name of the call center application you just created and choose the managed identity.
 
 13. Select **Add**.
-    
+
     ![The Add access policy form is displayed.](media/kv_addaccesspolicy_forconfig.png "The Add Access Policy form")
 
-14. Select **Save** on the Access policies screen to commit the changes. 
+14. Select **Save** on the Access policies screen to commit the changes.
 
 <!-- omit in toc -->
 #### Subtask 3: Configure and deploy the call center admin Web App from Visual Studio
@@ -704,7 +738,7 @@ In this exercise, you will provision a website via the Azure Web App template us
 2. Right-click the **Contoso.Apps.SportsLeague.Admin** project, and select **Edit Project File**.
 
 3. In the **PropertyGroup** element, add the following XML beneath the TargetFramework item and save the file:
-   
+
     ```xml
     <UserSecretsId>79a3edd0-2092-40a2-a04d-dcb46d5ca9ed</UserSecretsId>
     ```
@@ -721,17 +755,17 @@ In this exercise, you will provision a website via the Azure Web App template us
 
 7. Repeat step 4-6, this time installing the latest **Azure.Identity**.
 
-8. Now we are ready to configure this application to use the App Configuration in Azure. Under the **Contoso.Apps.SportsLeague.Web** project, open the **Program.cs** file.
+8. Now we are ready to configure this application to use the App Configuration in Azure. Under the `Contoso.Apps.SportsLeague.Admin` project, open the `Program.cs` file.
 
 9. Uncomment the following **using** statements at the top of the file:
-    
+
     ```C#
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
 10. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
-    
+
     ```C#
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
     {
@@ -749,18 +783,18 @@ In this exercise, you will provision a website via the Azure Web App template us
     .UseStartup<Startup>();
     ```
 
-11. Right-click the **Contoso.Apps.SportsLeague.Admin** project, and select **Publish**.
+11. Right-click the `Contoso.Apps.SportsLeague.Admin` project, and select **Publish**.
 
     ![In Solution Explorer, the right-click menu for Contoso.Apps.SportsLeague.Admin displays, and Publish is selected.](media/2019-04-19-14-30-03.png "Right-Click menu")
 
 12. On the Publish dialog, select **Azure** for the **Target**, then select **Next**.
 
-13. For **Specific target**, select **Azure App Service (Linux)**, then select **Next**. 
+13. For **Specific target**, select **Azure App Service (Linux)**, then select **Next**.
 
 14. For **App Service**, expand the lab Resource group, and select the **Web App** that was created for the Call Center Admin Web App (with the name that was created previously).
 
     ![The App Service dialog is shown with the resource group expanded and the call center app service selected.](media/appsvcdeploy_selectcallcenterappdialog.png "Publish target app service selection")
-    
+
 15. Select **Finish**.
 
 16. Select **Publish** to publish the Web application.
@@ -814,7 +848,7 @@ In this exercise, the attendee will provision an Azure API app template using th
     ![The App Service form is shown with the payment gateway api selected.](media/deployment_selectpaymentapiappservice.png "Publish target App Service selection")
 
 6. In the **API Management** form, check the **Skip this step** checkbox. Select **Finish**.
-   
+
 7. Select **Publish** to publish the API App.
 
     ![Publish button is highlighted](media/2020-06-19-22-33-57.png "Publish button is highlighted")
@@ -823,7 +857,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![The Visual Studio output shows that the web app was published successfully.](media/image99.png "Visual Studio output")
 
-9.  Copy and paste the gateway **URL** of the deployed **API App** into Notepad for later use.
+9. Copy and paste the gateway **URL** of the deployed **API App** into Notepad for later use.
 
 10. Viewing the Web App in a browser will display the Swagger UI for the API.
 
@@ -1059,7 +1093,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![On the Contoso Sports League webpage, the message Order Completed displays.](media/image122.png "Contoso Sports League webpage")
 
->**Leader Note**: If the attendee is still experiencing CORS errors, ensure the URLs to the Web App in Azure local host are exact.
+>**Note**: If you are still experiencing CORS errors, ensure the URLs to the Web App in Azure local host are exact.
 
 ## Exercise 2: Identity and Security
 

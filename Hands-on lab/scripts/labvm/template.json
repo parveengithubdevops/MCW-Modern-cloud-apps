@@ -3,10 +3,20 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "labVMAdminUsername": {
-            "type": "string"
+            "defaultValue": "demouser",
+            "type": "string",
+            "metadata": {
+                "description": "Administrator user name for logging into the virtual machine."
+            }
         },
         "labVMAdminPassword": {
-            "type": "secureString"
+            "defaultValue": "demo@pass123",
+            "type": "secureString",
+            "minLength": 12,
+            "maxLength": 128,
+            "metadata": {
+                "description": "The password must be between 12 and 128 characters in length and must contain at least one number, one non-alphanumeric character, and one upper or lower case letter. Default value is demo@pass123"
+            }
         }
     },
     "variables": {
