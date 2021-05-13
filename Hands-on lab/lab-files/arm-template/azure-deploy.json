@@ -214,9 +214,12 @@
           "type": "databases",
           "location": "[variables('location')]",
           "apiVersion": "2020-11-01-preview",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', variables('databaseServerName'))]"
+          ],
           "sku": {
-              "name": "S1",
-              "tier": "Standard"
+            "name": "S1",
+            "tier": "Standard"
           },
           "properties": {
             "collation": "SQL_Latin1_General_CP1_CI_AS",
@@ -228,6 +231,9 @@
           "type": "firewallRules",
           "apiVersion": "2020-11-01-preview",
           "location": "[variables('location')]",
+          "dependsOn": [
+            "[concat('Microsoft.Sql/servers/', variables('databaseServerName'))]"
+          ],
           "properties": {
             "endIpAddress": "0.0.0.0",
             "startIpAddress": "0.0.0.0"
@@ -242,8 +248,7 @@
       "apiVersion": "2019-06-01",
       "location": "[variables('location')]",
       "properties": {
-        "accessTier": "Hot",
-        "supportsHttpsTrafficOnly": "true"
+        "accessTier": "Hot"
       },
       "dependsOn": [],
       "sku": {
