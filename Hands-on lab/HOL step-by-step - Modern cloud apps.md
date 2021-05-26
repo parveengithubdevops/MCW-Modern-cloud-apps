@@ -9,7 +9,7 @@ Hands-on lab step-by-step
 </div>
 
 <div class="MCWHeader3">
-November 2020
+May 2021
 </div>
 
 Information in this document, including URL and other Internet Web site references, is subject to change without notice. Unless otherwise noted, the example companies, organizations, products, domain names, e-mail addresses, logos, people, places, and events depicted herein are fictitious, and no association with any real company, organization, product, domain name, e-mail address, logo, person, place or event is intended or should be inferred. Complying with all applicable copyright laws is the responsibility of the user. Without limiting the rights under copyright, no part of this document may be reproduced, stored in or introduced into a retrieval system, or transmitted in any form or by any means (electronic, mechanical, photocopying, recording, or otherwise), or for any purpose, without the express written permission of Microsoft Corporation.
@@ -18,9 +18,9 @@ Microsoft may have patents, patent applications, trademarks, copyrights, or othe
 
 The names of manufacturers, products, or URLs are provided for informational purposes only and Microsoft makes no representations and warranties, either expressed, implied, or statutory, regarding these manufacturers or the use of the products with any Microsoft technologies. The inclusion of a manufacturer or product does not imply endorsement of Microsoft of the manufacturer or product. Links may be provided to third party sites. Such sites are not under the control of Microsoft and Microsoft is not responsible for the contents of any linked site or any link contained in a linked site, or any changes or updates to such sites. Microsoft is not responsible for webcasting or any other form of transmission received from any linked site. Microsoft is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement of Microsoft of the site or the products contained therein.
 
-© 2020 Microsoft Corporation. All rights reserved.
+© 2021 Microsoft Corporation. All rights reserved.
 
-Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
+Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellectualproperty/Trademarks/Usage/General.aspx> are trademarks of the Microsoft group of companies. All other trademarks are property of their respective owners.
 
 **Contents**
 
@@ -31,8 +31,19 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
   - [Solution architecture](#solution-architecture)
   - [Requirements](#requirements)
   - [Help references](#help-references)
-  - [Exercise 1: Proof of concept deployment](#exercise-1-proof-of-concept-deployment)
-    - [Task 1: Deploy the e-commerce website, SQL Database, and storage](#task-1-deploy-the-e-commerce-website-sql-database-and-storage)
+  - [Exercise 1: Create Key Vault secrets and add to App Configuration](#exercise-1-create-key-vault-secrets-and-add-to-app-configuration)
+    - [Task 1: Retrieve database connection string](#task-1-retrieve-database-connection-string)
+    - [Task 2: Retrieve Storage Account access key](#task-2-retrieve-storage-account-access-key)
+    - [Task 3: Retrieve Service Bus Queue connection string](#task-3-retrieve-service-bus-queue-connection-string)
+    - [Task 4: Create secrets in Azure Key Vault](#task-4-create-secrets-in-azure-key-vault)
+    - [Task 5: Centralize secrets for multiple projects using an App Configuration store](#task-5-centralize-secrets-for-multiple-projects-using-an-app-configuration-store)
+  - [Exercise 2: Configure Azure SQL Database](#exercise-2-configure-azure-sql-database)
+    - [Task 1: Configure SQL Database firewall](#task-1-configure-sql-database-firewall)
+  - [Exercise 3: Deploy proof of concept e-commerce website](#exercise-3-deploy-proof-of-concept-e-commerce-website)
+    - [Task 1: Connect to the Lab VM](#task-1-connect-to-the-lab-vm)
+    - [Task 2: Open the Contoso Sports League starter solution in Visual Studio](#task-2-open-the-contoso-sports-league-starter-solution-in-visual-studio)
+    - [Task 3: Configure the e-commerce Web App in Visual Studio](#task-3-configure-the-e-commerce-web-app-in-visual-studio)
+    - [Task 4: Publish the web app to Azure](#task-4-publish-the-web-app-to-azure)
     - [Task 2: Setup SQL Database Geo-Replication](#task-2-setup-sql-database-geo-replication)
     - [Task 3: Deploying the Call Center admin website](#task-3-deploying-the-call-center-admin-website)
     - [Task 4: Deploying the payment gateway](#task-4-deploying-the-payment-gateway)
@@ -81,13 +92,15 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/en-us/legal/in
 
 In this hands-on lab, you will be challenged to implement an end-to-end scenario using a supplied sample that is based on Azure App Services, Microsoft Azure Functions, Azure SQL Database, Azure Logic Apps, and related services. The scenario will include implementing compute, storage, workflows, and monitoring, using various components of Microsoft Azure.
 
-Please note that as opposed to the whiteboard design session, the lab is not focused on maintaining PCI compliance and using more advanced security features such as App Service Environment, Network Security Groups, and Application Gateway. The hands-on lab can be implemented on your own, but it is highly recommended to pair up with other members working on the lab to model a real-world experience and to allow each member to share their expertise for the overall solution.
+Please note that as opposed to the Whiteboard Design Session, the lab is not focused on maintaining PCI compliance and using more advanced security features such as App Service Environment, Network Security Groups, and Application Gateway. The hands-on lab can be implemented on your own, but it is highly recommended to pair up with other members at the lab to model a real-world experience and to allow each member to share their expertise for the overall solution.
 
 By the end of this hands-on lab, you will have learned how to use several key services within Azure to improve overall functionality of the original solution, and to increase the security and scalability of the new and improved design.
 
 ## Overview
 
-The Cloud Workshop: Modern Cloud Apps lab is a hands-on exercise that will challenge you to implement an end-to-end scenario using a supplied sample that is based on Microsoft Azure App Services and related services. The scenario will include implementing compute, storage, security, and scale using various components of Microsoft Azure. The lab can be implemented on your own, but it is highly recommended to pair up with additional team members to more closely model a real-world experience, and to allow members to share their expertise for the overall solution.
+The Contoso Sports League Association (CSLA) is one of the largest sports franchises and is struggling to keep up with demand from their growing user base. They currently host an e-commerce website and have a backend website that supports their call center, allowing employees to view order information.
+
+CSLA would like to modernize their websites and move to the cloud, ultimately moving away from managing infrastructure. They are interested in whether Platform-as-a-Service (PaaS) will meet their needs so they can completely remove the infrastructure management overhead. However, they are concerned about securing their websites and data to meet the stringent PCI (Payment Card Industry) compliance requirements.
 
 ## Solution architecture
 
@@ -103,274 +116,279 @@ The Cloud Workshop: Modern Cloud Apps lab is a hands-on exercise that will chall
 ## Help references
 
 | Description | Links |
-|:---------|:-------------|
-| SQL firewall | <https://azure.microsoft.com/en-us/documentation/articles/sql-database-configure-firewall-settings/> |
-| Deploying a Web App | <https://azure.microsoft.com/en-us/documentation/articles/web-sites-deploy/> |
-| Deploying an API app | <https://azure.microsoft.com/en-us/documentation/articles/app-service-dotnet-deploy-api-app/> |
-| Accessing an API app from a JavaScript client | <https://azure.microsoft.com/en-us/documentation/articles/app-service-api-javascript-client/> |
-| SQL Database Geo-Replication overview | <https://azure.microsoft.com/en-us/documentation/articles/sql-database-geo-replication-overview/> |
-| What is Azure AD? | <https://azure.microsoft.com/en-us/documentation/articles/active-directory-whatis/> |
+|---------|-------------|
+| SQL firewall | <https://azure.microsoft.com/documentation/articles/sql-database-configure-firewall-settings/> |
+| Deploying a Web App | <https://azure.microsoft.com/documentation/articles/web-sites-deploy/> |
+| Deploying an API app | <https://azure.microsoft.com/documentation/articles/app-service-dotnet-deploy-api-app/> |
+| Accessing an API app from a JavaScript client | <https://azure.microsoft.com/documentation/articles/app-service-api-javascript-client/> |
+| SQL Database Geo-Replication overview | <https://azure.microsoft.com/documentation/articles/sql-database-geo-replication-overview/> |
+| What is Azure AD? | <https://azure.microsoft.com/documentation/articles/active-directory-whatis/> |
 | Azure Web Apps authentication | <http://azure.microsoft.com/blog/2014/11/13/azure-websites-authentication-authorization/> |
-| View your access and usage reports | <https://msdn.microsoft.com/en-us/library/azure/dn283934.aspx> |
-| Custom branding an Azure AD Tenant | <https://msdn.microsoft.com/en-us/library/azure/Dn532270.aspx> |
-| Service Principal Authentication | <https://docs.microsoft.com/en-us/azure/app-service-api/app-service-api-dotnet-service-principal-auth> |
-| Consumer Site B2C | <https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-devquickstarts-web-dotnet> |
-| Getting Started with Active Directory B2C | <https://azure.microsoft.com/en-us/trial/get-started-active-directory-b2c/> |
+| View your access and usage reports | <https://msdn.microsoft.com/library/azure/dn283934.aspx> |
+| Custom branding an Azure AD Tenant | <https://msdn.microsoft.com/library/azure/Dn532270.aspx> |
+| Service Principal Authentication | <https://docs.microsoft.com/azure/app-service-api/app-service-api-dotnet-service-principal-auth> |
+| Consumer Site B2C | <https://docs.microsoft.com/azure/active-directory-b2c/active-directory-b2c-devquickstarts-web-dotnet> |
+| Getting Started with Active Directory B2C | <https://azure.microsoft.com/trial/get-started-active-directory-b2c/> |
 | How to Delete an Azure Active Directory | <https://blog.nicholasrogoff.com/2017/01/20/how-to-delete-an-azure-active-directory-add-tenant/> |
 | Run performance tests on your app | <http://blogs.msdn.com/b/visualstudioalm/archive/2015/09/15/announcing-public-preview-for-performance-load-testing-of-azure-webapp.aspx> |
-| Application Insights Custom Events | <https://azure.microsoft.com/en-us/documentation/articles/app-insights-api-custom-events-metrics/> |
-| Enabling Application Insights | <https://azure.microsoft.com/en-us/documentation/articles/app-insights-start-monitoring-app-health-usage/> |
-| Detect failures | <https://azure.microsoft.com/en-us/documentation/articles/app-insights-asp-net-exceptions/> |
-| Monitor performance problems | <https://azure.microsoft.com/en-us/documentation/articles/app-insights-web-monitor-performance/> |
-| Creating a Logic App | <https://azure.microsoft.com/en-us/documentation/articles/app-service-logic-create-a-logic-app/> |
-| Logic app connectors | <https://azure.microsoft.com/en-us/documentation/articles/app-service-logic-connectors-list/> |
-| Logic Apps Docs | <https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-what-are-logic-apps> |
-| Azure Functions -- create first function | <https://docs.microsoft.com/en-us/azure/azure-functions/functions-create-first-azure-function> |
-| Azure Functions docs | <https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-azure-functions> |
-| Deploy to Azure with GitHub Actions | <https://docs.microsoft.com/en-us/azure/developer/github/github-actions> |
+| Application Insights Custom Events | <https://azure.microsoft.com/documentation/articles/app-insights-api-custom-events-metrics/> |
+| Enabling Application Insights | <https://azure.microsoft.com/documentation/articles/app-insights-start-monitoring-app-health-usage/> |
+| Detect failures | <https://azure.microsoft.com/documentation/articles/app-insights-asp-net-exceptions/> |
+| Monitor performance problems | <https://azure.microsoft.com/documentation/articles/app-insights-web-monitor-performance/> |
+| Creating a Logic App | <https://azure.microsoft.com/documentation/articles/app-service-logic-create-a-logic-app/> |
+| Logic app connectors | <https://azure.microsoft.com/documentation/articles/app-service-logic-connectors-list/> |
+| Logic Apps Docs | <https://docs.microsoft.com/azure/logic-apps/logic-apps-what-are-logic-apps> |
+| Azure Functions -- create first function | <https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function> |
+| Azure Functions docs | <https://docs.microsoft.com/azure/logic-apps/logic-apps-azure-functions> |
+| Deploy to Azure with GitHub Actions | <https://docs.microsoft.com/azure/developer/github/github-actions> |
 
-## Exercise 1: Proof of concept deployment
+## Exercise 1: Create Key Vault secrets and add to App Configuration
 
-Duration: 60 minutes
+**Duration**: 30 minutes
 
-Contoso has asked you for a proof of concept in Microsoft Azure by deploying the web, database, and API applications for the solution as well as validating that the core functionality of the solution works. Ensure all resources use the same resource group previously created for the App Service Environment.
+In this exercise, you retrieve various keys and connection string from resources in the **hands-on-lab-SUFFIX** resource group and use them to create secrets in Key Vault. You will first copy connection string and keys into a text editor, such as Notepad.exe, for easier reference when creating secrets in Key Vault. You finish the exercise by adding references to the Key Vault into the App Configuration resource.
 
-### Task 1: Deploy the e-commerce website, SQL Database, and storage
+### Task 1: Retrieve database connection string
 
-In this exercise, you will provision a website via the Azure **Web App + SQL** template using the Microsoft Azure Portal. You will then edit the necessary configuration files in the starter project and deploy the e-commerce website.
+In this task, you retrieve the connection string for the ContosoSports DB SQL Database, set the password, and save it to a text editor, such as Notepad.exe.
 
-<!-- omit in toc -->
-#### Subtask 1: Configure SQL Database Firewall and Retrieve Connection String
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-1. Navigate to the Azure Management portal, [http://portal.azure.com](http://portal.azure.com/), using a new tab or instance and login with your lab-provided Azure credentials.
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-2. Navigate to the **contososports** resource group.
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-3. Select the **ContosoSportsDB** SQL Database.
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-    ![The contososports Resource Group blade with the "ContosoSportsDB" highlighted.](media/image22.png "Azure Portal")
+3. In the list of resources within your resource group, select the **ContosoSportsDB** SQL database resource.
 
-4. On the **SQL Database** blade, select the **Show database connection strings** link.
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and ContosoSportsDB is highlighted.](./media/resource-group-resources-sql-db.png "ContosoSportsDB in resource group list")
 
-    ![On the SQL Database blade, in the left pane, Overview is selected. In the right pane, under Essentials, the Connection strings (Show database connection strings) link is circled.](media/image23.png "SQL Database blade")
+4. On the **SQL Database** blade, select the **Show database connection strings** link within the Essentials area.
 
-5. On the **Database connection strings** blade, select and copy the **ADO.NET** connection string. Then, save it in **Notepad** for use later, being sure to replace the password placeholder with **demo@pass123**
+    ![On the SQL Database blade, in the left pane, Overview is selected. In the right pane, under Essentials, the Connection strings (Show database connection strings) link is circled.](media/sql-db-connection-strings-link.png "SQL Database blade")
 
-    ![In the Database connection strings blade, the ADO.NET connection string is circled.](media/image24.png "Database connection strings blade")
+5. On the **Connection strings** blade, select the **Copy to clipboard** icon in the bottom right-hand corner of the `ADO.NET` connection string box.
 
-6. Go back to the **contososports** resource group blade, and select the **contososports** SQL Server.
+    ![In the Database connection strings blade, the ADO.NET connection string is circled.](media/sql-db-connection-string-ado-net.png "Database connection strings blade")
 
-    ![The contososports resource group with the contososports sql server highlighted.](media/2019-11-15-17-47-46.png "Azure Portal")
+6. Paste the copied connection string into a text editor, such as **Notepad.exe** and then replace the `{your_password}` token with `Password.1!!`.
 
-7. On the **Overview** screen of the **SQL Server** blade, select the **Show firewall settings**.
+7. In the tasks below, you will be copying additional values into the text editor, so you can have easy access to these values for creating secrets in Key Vault later in this hand-on lab. Leave the text editor open.
 
-    ![On the SQL Server Overview screen with the Show firewall settings link highlighted.](media/2019-03-31-14-37-31.png "SQL Server Overview")
+### Task 2: Retrieve Storage Account access key
 
-8. On the **Firewall Settings** blade, specify a new rule named **My IP**, copy your **Client IP address**, and paste it into the **Start IP** and **End IP**. This will set the allowed IP Address range to just your IP address so you can connect to the database from this machine.
+In this task, you retrieve the access key for your Azure Storage account and save it to a text editor, such as Notepad.exe.
 
-    ![Screenshot of the Rule name, Start IP. and End IP fields on the Firewall Settings blade.](media/image27.png "Firewall Settings blade")
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **contoso** Storage account resource from the list.
 
-9. Select **Save**.
+    ![The storage account resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-storage-account.png "Storage account resource")
 
-    ![Screenshot of the Firewall settings Save button.](media/2019-04-10-16-00-29.png "Firewall settings Save button")
+2. On the **Storage account** blade, select the **Access keys** in the left-hand navigation menu, and on the **Access keys** blade, select the **Show keys** and then copy the **key1** **Key** value by selecting the **Copy to clipboard** icon.
 
-10. Update progress can be found by selecting the **Notifications** link located at the top of the page.
+    ![The Access keys blade is displayed, with Access keys highlighted in the left-hand menu and the copy to clipboard icon highlighted next to the key1 Key value.](media/storage-account-access-keys.png "Storage account access keys")
 
-    ![Screenshot of the Success dialog box, which says that the server firewall rules have been successfully updated.](media/2019-04-19-13-39-41.png "Success dialog box")
+3. Paste the copied value into your open text editor for later reference, as you did with the database connection string above.
 
-11. Close all configuration blades.
+### Task 3: Retrieve Service Bus Queue connection string
 
-<!-- omit in toc -->
-#### Subtask 2: Retrieve Storage Account Access Keys
+In this task, you retrieve the primary connection string for the `receiptgenerator` Service Bus queue and save it to a text editor, such as Notepad.exe.
 
-1. Go back to the **contososports** blade resource group, and select the **contoso** Storage account.
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **Service Bus Namespace** resource from the list.
 
-2. On the **Storage account** blade, scroll down, and, under the **SETTINGS** menu area, select the **Access keys** option.
+    ![The Service Bus Namespace resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-service-bus-namespace.png "Service Bus Namespace resource")
 
-    ![In the Storage account blade, under Settings, Access keys is circled.](media/image35.png "Storage account blade")
+2. On the Service Bus Namespace blade, select **Queues** from the left-hand navigation menu, under the Entities header, and then select the `receiptgenerator` queue.
 
-3. On the **Access keys** blade, select the copy button by the **Connection String** field in the **key1** section. Paste the value into **Notepad** for later usage.
+    ![On the Queues blade, the Queues item is highlighted in the left-hand menu and the receiptgenerator queue is highlighted.](media/service-bus-queues-receipt-generator.png "Queues")
 
-    ![In the Access keys blade default keys section, the copy button for the key1 connection string is circled.](media/image36.png "Access keys blade, default keys section")
+3. On the `receiptgenerator` Service Bus Queue blade, select **Shared access policies** in the left-hand navigation menu and then select the **Publisher** policy.
 
-<!-- omit in toc -->
-#### Subtask 3: Retrieve Service Bus Queue Connection String
+    ![On the Shared access policies blade, Shared access policies in highlighted in the left-hand navigation menu and the Publisher policy is highlighted in the list of policies.](media/service-bus-queues-shared-access-policies.png "Shared access policies")
 
-1. Go back to the **contososports** blade resource group, and select the **contoso** Service Bus Namespace.
-
-    ![Service Bus Namespace resource is highlighted](media/2020-03-18-10-38-09.png "Service Bus Namespace")
-
-2. Select the **Queues** link under Entities.
-
-    ![Queues link under Entities](media/2020-03-18-10-38-57.png "Queues link")
-
-3. On the **Queues** pane, select the **receiptgenerator** Service Bus Queue.
-
-    ![receiptgenerator queue is highlighted](media/2020-03-18-10-40-40.png "receiptgenerator queue is highlighted")
-
-4. On the **receiptgenerator** Service Bus Queue blade, select the **Shared access policies** link under Settings.
-
-    ![Shared access policies link is shown](media/2020-03-18-10-42-03.png "Shared access policies link is shown")
-
-5. Select the **Publisher** shared access policy.
-
-    ![Publisher policy is highlighted](media/2020-03-18-10-43-12.png "Publisher policy is highlighted")
-
-    >**Note**: The _Publisher_ and _Listener_ shared access policies for the Azure Service Bus Queue were deployed as part of the ARM Template that was used to setup the lab environment. As you can see, the **Publisher** policy that we're copying the connection string for, only has permissions to _Send_ messages to the queue.
+    >**Note**: The _Publisher_ and _Listener_ shared access policies for the Azure Service Bus Queue were deployed as part of the ARM Template that was used to setup the lab environment. Notice the **Publisher** policy only has permissions to _Send_ messages to the queue.
     >
     > By default, no policies are created. Additionally, it is best practice to use least privilege security to create separate shared access policies for publishers sending messages and listeners receiving messages from the queue.
 
-6. On the **SAS Policy** pane, copy the **Primary Connection String**. Paste the value into **Notepad** for later usage.
+4. On the **SAS Policy: Publisher** dialog, copy the **Primary Connection String** by selecting the **Copy to clipboard** icon.
 
-    ![Primary Connection String is highlighted](media/2020-03-18-10-54-39.png "Primary Connection String is highlighted")
+    ![The copy to clipboard icon is highlighted next to the primary connection string on the SAS Policy: Publisher dialog.](media/service-bus-queues-sas-policy-publisher.png "SAS Policy: Publisher")
 
-<!-- omit in toc -->
-#### Subtask 4: Create secrets in Azure Key Vault
+5. Paste the copied value into your open text editor for later reference, as you did with the database connection string above.
 
-You've retrieved multiple access keys and connection strings in this task. To properly secure them, and to keep these values out of application code, we need a secure place to store them. This place is the Azure Key Vault.
+### Task 4: Create secrets in Azure Key Vault
 
-1. Go back to the **contososports** resource group blade, and select the **contosokv** Key Vault resource.
+In this task, you create secrets in Key Vault for each of the connection strings and keys you retrieved in the tasks above.
 
-    ![The resource listing is displayed with the key vault item selected.](media/rg_selectkeyvault.png "Resource group listing")
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **Key vault** resource from the list.
 
-2. Beneath **Settings**, select **Access Policies**.
+    ![The Key Vault resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-key-vault.png "Key Vault resource")
 
-3. In order to add, edit, or view secrets, you must be granted access through a new Access policy. Select the **+ Add Access Policy** link.
+2. Select **Secrets** from the left-hand navigation menu and then select **Generate/Import**.
 
-    ![A portion of the Access Policies screen is shown with the + Add Access Policy link selected.](media/add_access_policy_link.png "Key Vault Access Policies")
+    ![The Secrets item in highlighted in the left-hand menu and Generate/Import is highlighted on the Secrets blade.](media/key-vault-secrets.png "Key Vault Secrets")
 
-4. Expand the **Secret permissions** drop down, and check the **Select all** checkbox.
-
-5. For **Select principal**, select your Azure user account, and select **Add**.
-
-    ![The Add access policy form is displayed with the Secret Permissions and Select principal fields highlighted.](media/kv_add_access_policy_form.png "The Add Access Policy Form")
-
-6. Press **Save** on the **Access policies** screen to save the changes.
-
-7. Beneath **Settings**, select **Secrets** then **Generate/Import**.
-
-8. Create the following secret values by filling out **Name** and **Value** (retaining the defaults for all other fields):
+3. You will create three secrets in Key Vault, using the values you copied into your text editor. The secrets will be named according to the table below:
 
     | Name | Value |
     |------|-------|
-    | AzureQueueConnectionString | {the primary connection string you recorded for the queue} |
-    | ContosoSportsLeague | {the database connection string} |
-    | contososportsstorage | {the primary connection string you recorded for the storage account} |
+    | AzureQueueConnectionString | Use the primary connection string you recorded for the Service Bus `receiptgenerator` queue |
+    | ContosoSportsLeague | Use the database connection string |
+    | contososportsstorage | Use the primary connection string you recorded for the storage account |
 
-    ![The Create a secret form is displayed with the Name and Value fields highlighted.](media/kv_createasecret.png "The Create a secret form")
+4. On the **Create a secret** blade, enter the following:
 
-<!-- omit in toc -->
-#### Subtask 5: Centralize secrets for multiple projects using an App Configuration store
+    - **Name**: Enter `AzureQueueConnectionString`.
+    - **Value**: Paste the Service Bus queue primary connection string value into this box.
 
-The Contoso Sports solution contains multiple projects, each of which access the same Azure resources. In this subtask, we will be centralizing the configuration of the solution applications via the deployed Azure **App Configuration** resource.
+    > The remaining settings will retain their default values.
 
-1. Go back to the **contososports** resource group blade, and select the **contosoconfig** App Configuration resource.
+    ![The Create a secret form is displayed with the Name and Value fields highlighted.](media/key-vault-create-a-secret.png "Create a secret")
 
-    ![The resource listing is displayed with the App Configuration resource highlighted.](media/appconfig_resourcelist_selection.png "The resource listing")
+5. Select **Create**.
 
-2. Select **Configuration explorer** found beneath the **Operations** section of the left menu.
+6. Select **Generate/Import** again and repeat steps 4 and 5 for the remaining two secrets specified in the table above, replacing the name and value settings with with appropriate values.
 
-3. On the **Configuration explorer** screen, expand **+ Create** and select **Key Vault reference**.
+7. You should end up with three secrets in Key Vault.
 
-   ![The + Create button is expanded with the Key Vault reference item highlighted.](media/ac_createkeyvaultreference_menu.png "Create Key Vault Reference")
+    ![The list of newly created secrets in Key Vault is displayed.](media/key-vault-secrets-list.png "Key Vault secrets")
 
-4. On the **Create** form, be sure to select the appropriate **Subscription**, **Resource group**, and the **contosokv** Key Vault. Create the following Key Vault references:
+### Task 5: Centralize secrets for multiple projects using an App Configuration store
 
-    | Key | Secret | Secret version |
-    |-----|--------|----------------|
-    | ConnectionStrings:ReceiptQueue | Select **AzureQueueConnectionString** | Select **Latest version** |
-    | ConnectionStrings:ReceiptStorage | Select **contososportsstorage** | Select **Latest version** |
-    | ConnectionStrings:SportsDB | Select **ContosoSportsLeague** | Select **Latest version** |
+The Contoso Sports solution contains multiple projects, each of which access the same Azure resources. In this task, you centralize the configuration of the solution applications via the deployed Azure **App Configuration** resource.
 
-    ![The Create new Key vault reference form is displayed populated with the ConnectionStrings:ReceiptQueue values.](media/ac_createkeyvaultref_form.png "The create new key vault reference form")
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **App Configuration** resource from the list.
 
-5. From the left menu, select **Access keys** located in the **Settings** section.
+    ![The App Configuration resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-app-configuration.png "App Configuration resource")
 
-6. Select the **Read-only keys** tab.
+2. Select **Configuration explorer** from the left-hand navigation menu and then select **Create** and **Key Vault reference**.
 
-7. Copy the **Primary key Connection string** value, and paste it into notepad. This value is needed to connect the deployed applications to the App Configuration store.
+    ![Configuration explorer is highlighted in the left-hand menu and Create --> Key Vault reference is highlighted on the Configuration explorer blade.](media/app-configuration-explorer.png "Configuration explorer")
 
-    ![A portion of the Access keys screen is displayed. The Read-only keys tab is highlighted and the copy button next to the Primary key Connection string textbox is selected.](media/ac_connectionstringcopy.png "The Access keys screen")
+3. You will add a Key Vault reference for each of the three secrets you created in the previous task. The configuration values will be named according to the table below:
 
-<!-- omit in toc -->
-#### Subtask 6: Update the configuration in the starter project
+    | Key | Secret |
+    |-----|--------|
+    | ConnectionStrings:ReceiptQueue | Select **AzureQueueConnectionString** |
+    | ConnectionStrings:ReceiptStorage | Select **contososportsstorage** |
+    | ConnectionStrings:SportsDB | Select **ContosoSportsLeague** |
 
-1. Go back to the **contososports** resource group blade.
+4. On the **Create** dialog, enter the following:
 
-2. Select the **contosoapp** web app (**App Service** type).
+    - **Key**: Enter `ConnectionStrings:ReceiptQueue`.
+    - **Subscription**: Select the subscription you are using for this hands-on lab.
+    - **Resource group**: Select the **hands-on-lab-SUFFIX** resource group.
+    - **Key Vault**: Choose the **key-vault-UNIQUE-ID** Key Vault resource.
+    - **Secret**: Select the secret named `AzureQueueConnectionString`.
 
-    ![Resources listed for ContosoSports. Web app selected.](media/2019-04-19-13-46-40.png "Resources listed for ContosoSports")
+    ![The Create new Key vault reference form is displayed populated with the ConnectionStrings:ReceiptQueue values.](media/app-configuration-create-key-vault-reference.png "The create new key vault reference form")
 
-3. Copy the web app URL to Notepad.
+5. Select **Apply** on the Create dialog.
 
-    - Select the **Overview** link.
-    - Copy the URL to Notepad for later use. Use the **Copy to clipboard** link.
+6. Select **Create --> Key Vault reference** again and repeat steps 4 and 5 for the remaining two keys specified in the table above, populating the **Key** and **Secret** fields with with appropriate values.
 
-    ![In the Web App Overview settings, the URL has a box around the link.](media/2019-03-22-16-33-05.png "Contoso Web App Overview")
+## Exercise 2: Configure Azure SQL Database
 
-4. On the **App Service** blade, scroll down in the left pane. Under the **Settings** menu, select **Configuration**.
+**Duration**: 5 minutes
 
-    ![In the App Service blade, under Settings, select Configuration link.](media/2019-04-19-16-38-54.png "Configuration link")
+In this exercise, you configure the firewall settings for the Azure SQL Database.
 
-5. Locate **Connection Strings** section below **Application Settings**.
+### Task 1: Configure SQL Database firewall
 
-    ![The App Service Configuration screen is displayed with the Connection Strings section title and + New connection string button highlighted.](media/image41.png "Connection Strings section")
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-6. Add a new **Connection String** with the following values, and select **OK**:
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-   - Name: **AppConfig**
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-   - Value: **Enter the Connection String for the App Configuration Store**.
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-   - Type: Select **Custom**.
+3. In the list of resources within your resource group, select the **contososports** SQL Server resource.
 
-    ![The Add/Edit connection string form is displayed and is populated with the preceding values.](media/image43.png "The Add/Edit connection string form")
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contososports SQL Server resource is highlighted.](./media/resource-group-resources-sql-server.png "ContosoSports SQL Server in resource group list")
 
-7. Select **Save** to commit the changes.
+4. On the **Overview** blade for the **SQL Server** resource, select the **Show firewall settings** in the Essentials area.
 
-8. The e-commerce website application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity. From the left menu, select **Identity**.
+    ![On the SQL Server Overview screen with the Show firewall settings link highlighted.](media/sql-server-overview-show-firewall-settings.png "SQL Server Overview")
 
-9. With the **System assigned** tab selected, toggle the **Status** field to **On**, then select **Save**.
+5. On the **Firewalls and virtual networks** blade, select **Add client IP** from the toolbar.
 
-    ![On the Identity screen, the System assigned tab is selected and the Status field is in the On position.](media/appconfig_systemidentity.png "The Identity Screen")
+    ![The Add client IP button is highlighted on the firewalls and virtual networks toolbar.](media/sql-server-firewall-toolbar-add-client-ip.png "Add client IP")
 
-10. Open the **contosokv** Key Vault resource, and from the left menu, select **Access policies**.
+6. A new rule will be generated that contains your client IP address for the **Start IP** and **End IP**. This allows you to connect to the database from your machine.
 
-11. Select the **+ Add Access Policy** link.
+    ![Screenshot of the Rule name, Start IP. and End IP fields on the Firewall Settings blade.](media/sql-server-client-ip-rule.png "Firewall rule")
 
-12. In the **Add access policy** form, expand **Secret permissions** and check the box next to **Get** and **List**.  
+7. Select **Save** on the toolbar.
 
-13. In the **Select principal** blade, search for **contosoapp** and choose the managed identity that was just created.
+    ![Screenshot of the Firewall settings Save button.](media/sql-server-firewall-toolbar-save.png "Firewall settings Save button")
 
-14. Select **Add**.
+8. Select **OK** on the **Success** dialog when it appears.
 
-    ![The Add access policy form is displayed with the Get secret permission selected, and the contosoconfig principal selected.](media/kv_addaccesspolicy_forconfig.png "The Add Access Policy Form")
+    ![The success dialog for updating the server firewall rules is displayed and the OK button is highlighted.](media/sql-server-firewall-save-success.png "Success")
 
-15. Select **Save** on the Access policies screen to commit the changes.
+## Exercise 3: Deploy proof of concept e-commerce website
 
-<!-- omit in toc -->
-#### Subtask 7: Log into the LabVM and explore the Contoso Sports League sample
+Duration: 60 minutes
 
-1. In the Azure Portal, open the Resource group that you created for the lab.
+In this exercise, you deploy the Contoso web app and provide the necessary configuration to display the e-commerce website.
 
-2. Locate and select the **LabVM** resource.
+### Task 1: Connect to the Lab VM
 
-3. From the top toolbar, expand the **Connect** button and select **RDP**.
+In this task, you create an RDP connection to your Lab virtual machine (VM).
 
-   ![The Connect button is expanded with the RDP item selected.](media/connectvm-rdp.png "The LabVM Connect menu")
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-4. From the **Connect** screen, select the **Download RDP File** button and save it to the desired location on your local computer.
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-5. Connect to the **LabVM** that was deployed using the previous template using Remote Desktop by double-clicking the RDP file that you downloaded in the previous step. Authenticate to the VM using these credentials:
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-    - **Admin username**: `demouser`
-    - **Admin password**: `demo@pass123`
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-6. Using **File Explorer**, open the `C:\MCW` folder.
+3. In the list of resources within your resource group, select the **LabVM Virtual machine** resource.
 
-7. From the **Contoso Sports League** folder under **MCW**, open the Visual Studio Solution file: `Contoso.Apps.SportsLeague.sln`. Be sure to sign into Visual Studio using your Azure credentials.
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and LabVM is highlighted.](./media/resource-group-resources-labvm.png "LabVM in resource group list")
 
-8. The solution contains the following projects:
+4. On your LabVM blade, select **Connect** and **RDP** from the top menu.
+
+   ![The LabVM blade is displayed, with the Connect button highlighted in the top menu.](./media/connect-vm-rdp.png "Connect to Lab VM")
+
+5. On the Connect to virtual machine blade, select **Download RDP File**, then open the downloaded RDP file.
+
+   ![The Connect to virtual machine blade is displayed, and the Download RDP File button is highlighted.](./media/connect-to-virtual-machine.png "Connect to virtual machine")
+
+6. Select **Connect** on the Remote Desktop Connection dialog.
+
+   ![In the Remote Desktop Connection Dialog Box, the Connect button is highlighted.](./media/remote-desktop-connection.png "Remote Desktop Connection dialog")
+
+7. Enter the following credentials when prompted, and then select **OK**:
+
+   - **User name**: demouser
+   - **Password**: Password.1!!
+
+   ![The credentials specified above are entered into the Enter your credentials dialog.](media/rdc-credentials.png "Enter your credentials")
+
+8. Select **Yes** to connect if prompted that the remote computer's identity cannot be verified.
+
+   ![In the Remote Desktop Connection dialog box, a warning states that the remote computer's identity cannot be verified and asks if you want to continue anyway. At the bottom, the Yes button is highlighted.](./media/remote-desktop-connection-identity-verification-labvm.png "Remote Desktop Connection dialog")
+
+### Task 2: Open the Contoso Sports League starter solution in Visual Studio
+
+1. On the LabVM, open File Explorer and navigate to the `C:\MCW\MCW-Modern-cloud-apps-master\Hands-on lab\lab-files\src\Contoso Sports League` folder.
+
+2. From the **Contoso Sports League** folder, open the Visual Studio solution by double-clicking on the `Contoso.Apps.SportsLeague.sln` file.
+
+3. If prompted about how to open the file, select **Visual Studio 2019** and then select **OK**.
+
+   ![Visual Studio 2019 is highlighted in the How do you want to open this file? dialog.](media/solution-file-open-with.png "Visual Studio 2019")
+
+4. Sign in to Visual Studio using your Azure account credentials.
+
+   ![The Sign in button is highlighted on the Visual Studio Welcome screen.](media/visual-studio-sign-in.png "Visual Studio 2019")
+
+5. If prompted with a security warning, uncheck **Ask me for every project in this solution**, and then select **OK**.
+
+6. Using the Visual Studio Solution Explorer, expand each of the folders and notice the solution contains the following projects:
 
     | Project | Description |
     |:----------|:-------------|
@@ -382,43 +400,34 @@ The Contoso Sports solution contains multiple projects, each of which access the
     | Contoso.Apps.SportsLeague.Offers |  API for returning list of available products |
     | Contoso.Apps.PaymentGateway   |     API for payment processing |
 
-<!-- omit in toc -->
-#### Subtask 8: Configure and deploy the e-commerce Web App from Visual Studio
+    ![The projects contained within the solution are displayed in the Visual Studio Solution Explorer.](media/visual-studio-solution.png "Contoso.Apps.SportsLeague solution files")
 
-1. Navigate to the **Contoso.Apps.SportsLeague.Web** project located in the **Web** folder using the **Solution Explorer** of Visual Studio.
+### Task 3: Configure the e-commerce Web App in Visual Studio
 
-2. Right-click the **Contoso.Apps.SportsLeague.Web** project, and select **Edit Project File**.
+1. Navigate to the `Contoso.Apps.SportsLeague.Web` project located in the **Web** folder using the **Solution Explorer** of Visual Studio.
 
-    ![In the solution explorer, the Contoso.Apps.SportsLeague.Web project is highlighted with its context menu expanded. The Edit Project File option is selected from the menu.](media/web_editprojfile_menu.png "Editor for the project file")
+    ![The Web project is highlighted in Visual Studio Solution Explorer.](media/visual-studio-web-app.png "Solution Explorer")
 
-3. In the **PropertyGroup** element, add the following XML beneath the TargetFramework item and save the file:
+2. Right-click the `Contoso.Apps.SportsLeague.Web` project, and select **Manage NuGet Packages** from the context menu.
 
-    ```xml
-    <UserSecretsId>79a3edd0-2092-40a2-a04d-dcb46d5ca9ed</UserSecretsId>
-    ```
+3. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
 
-    ![A portion of the project file is displayed. The UserSecretsId element is highlighted in the code listing.](media/web_addusersecretsidtoproject.png "Project file editor")
-
-4. Right-click the **Contoso.Apps.SportsLeague.Web** project, and select **Manage NuGet Packages**.
-
-5. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
-
-6. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
+4. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
 
     ![The NuGet Package Manager windows is displayed with the Browse tab selected, Microsoft.Azure.AppConfiguration.AspNetCore entered into the search box and selected from the search results. In the next pane, the Install button is selected.](media/nuget_installappconfigpackage_web.png "NuGet Package Manager")
 
-7. Repeat step 4-6, this time installing the latest **Azure.Identity**.
+5. Repeat step 4-6, this time installing the latest **Azure.Identity**.
 
-8. Now we are ready to configure this application to use the App Configuration in Azure. Under the **Contoso.Apps.SportsLeague.Web** project, open the **Program.cs** file.
+6. Now you are ready to configure this application to use the App Configuration in Azure. Expand the **Contoso.Apps.SportsLeague.Web** project and open the **Program.cs** file.
 
-9. Uncomment the following **using** statements at the top of the file:
+7. Uncomment the following **using** statements at the top of the file:
 
     ```C#
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
-10. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
+8. In the **CreateHostBuilder** method, uncomment the following code. This tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
 
     ```C#
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
@@ -437,29 +446,31 @@ The Contoso Sports solution contains multiple projects, each of which access the
     .UseStartup<Startup>();
     ```
 
-11. Right-click the **Contoso.Apps.SportsLeague.Web** project, and select **Publish**.
+### Task 4: Publish the web app to Azure
+
+1. Right-click the **Contoso.Apps.SportsLeague.Web** project in the Visual Studio Solution Explorer and select **Publish**.
 
     ![In Solution Explorer, under Solution \'Contoso.Apps.SportsLeague\' (7 projects), Web is expanded, and under Web, Contoso.Apps.SportsLeague.Web is selected.](media/2019-04-19-14-03-04.png "Solution Explorer")
 
-12. On the Publish dialog, select **Azure** as the **Target**, then select **Next**.
+2. On the Publish dialog, select **Azure** as the **Target**, then select **Next**.
 
-13. For **Specific target**, select **Azure App Service (Windows)**, then select **Next**.
+3. For **Specific target**, select **Azure App Service (Windows)**, then select **Next**.
 
-14. For **App Service**, expand the lab resource group, and select the **contosoapp** from the list, then choose **Finish**.
+4. For **App Service**, expand the lab resource group, and select the **contosoapp** from the list, then choose **Finish**.
 
     ![The App Service dialog is shown with the resource group expanded and the contosoapp application service selected in the list. The OK button is highlighted.](media/deploywebapp_serviceselection.png "App Service Selection")
 
-15. Select **Publish** to publish the Web application.
+5. Select **Publish** to publish the Web application.
 
     ![Publish profile is displayed with the Publish button highlighted.](media/2020-06-15-16-53-15.png "Publish profile")
 
-16. In the Visual Studio **Output** view, you will see a status that indicates the Web App was published successfully.
+6. In the Visual Studio **Output** view, you will see a status that indicates the Web App was published successfully.
 
     ![Screenshot of the Visual Studio Output view, with the Publish Succeeded message circled.](media/image50.png "Visual Studio Output view")
 
     >**Note**: Your URL will differ from the one shown in the Output screenshot because it must be globally unique.
 
-17. A new browser should automatically open the new web applications. Validate the website by choosing the **Store** link on the menu. You should see product items. If products are returned, then the connection to the database is successful.
+7. A new browser should automatically open the new web applications. Validate the website by choosing the **Store** link on the menu. You should see product items. If products are returned, then the connection to the database is successful.
 
     ![Screenshot of the Store link.](media/image51.png "Store link")
 
@@ -486,7 +497,7 @@ In this exercise, the attendee will provision a secondary SQL Database and confi
 
     ![The Geo-Replication pane with list of locations. Primary location is set to West US.](media/image54.png "Geo-Replication blade")
 
-    The Secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/en-us/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
+    The Secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
 
     >**Note**: If you choose a region that cannot be used as a secondary region, you will not be able to pick a pricing plan. Choose another region.
     >
@@ -1995,7 +2006,7 @@ To configure the application for logging and diagnostics, you have been asked to
 
 Duration: 45 Minutes
 
-Contoso wants to automate the process of generating receipts in PDF format and alerting users when their orders have been processed using Azure Logic App and Functions. To run custom snippets of C\# or node.js in logic apps, you can create custom functions through Azure Functions. [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/functions-overview) offers server-free computing in Microsoft Azure and are useful for performing these tasks:
+Contoso wants to automate the process of generating receipts in PDF format and alerting users when their orders have been processed using Azure Logic App and Functions. To run custom snippets of C\# or node.js in logic apps, you can create custom functions through Azure Functions. [Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-overview) offers server-free computing in Microsoft Azure and are useful for performing these tasks:
 
 - Advanced formatting or compute of fields in logic apps
 
@@ -2176,7 +2187,7 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
 ### Task 3: Create an Azure Logic App to Process Orders
 
-Without writing any code, you can automate business processes more easily and quickly when you create and run workflows with Azure Logic Apps. Logic Apps provide a way to simplify and implement scalable integrations and workflows in the cloud. It provides a visual designer to model and automate your process as a series of steps known as a workflow. There are [many connectors](https://docs.microsoft.com/en-us/azure/connectors/apis-list) across the cloud and on-premises to quickly integrate across services and protocols.
+Without writing any code, you can automate business processes more easily and quickly when you create and run workflows with Azure Logic Apps. Logic Apps provide a way to simplify and implement scalable integrations and workflows in the cloud. It provides a visual designer to model and automate your process as a series of steps known as a workflow. There are [many connectors](https://docs.microsoft.com/azure/connectors/apis-list) across the cloud and on-premises to quickly integrate across services and protocols.
 
 The advantages of using Logic Apps include the following:
 
