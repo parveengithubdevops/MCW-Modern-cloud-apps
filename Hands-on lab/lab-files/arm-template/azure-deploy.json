@@ -50,15 +50,15 @@
     "databaseName": "ContosoSportsDB",
     "databaseServerName": "[concat('contososports', uniqueString(resourceGroup().id))]",
 
-    "appInsightsName": "[concat('appinsights-', uniqueString(resourceGroup().id))]",
+    "appInsightsName": "[concat('app-insights-', uniqueString(resourceGroup().id))]",
     "storageAccountName": "[concat('contoso', uniqueString(resourceGroup().id))]",
 
     "serviceBusName": "[concat('contoso-sb-', uniqueString(resourceGroup().id))]",
     "serviceBusQueueName": "receiptgenerator",
 
-    "keyVaultName": "[concat('keyvault-', uniqueString(resourceGroup().id))]",
-    "logicAppName": "[concat('logicapp-', uniqueString(resourceGroup().id))]",
-    "appConfigName": "[concat('appconfig-', uniqueString(resourceGroup().id))]"
+    "keyVaultName": "[concat('key-vault-', uniqueString(resourceGroup().id))]",
+    "logicAppName": "[concat('logic-app-', uniqueString(resourceGroup().id))]",
+    "appConfigName": "[concat('app-config-', uniqueString(resourceGroup().id))]"
   },
   "resources": [
     {
