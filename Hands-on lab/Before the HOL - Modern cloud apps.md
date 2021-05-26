@@ -80,28 +80,22 @@ In this task, you run an Azure Resource Manager (ARM) template to create the han
 - [Azure App Configuration](https://docs.microsoft.com/azure/azure-app-configuration/overview)
 - [Application Insights](https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview)
 - [Azure Logic Apps](https://docs.microsoft.com/azure/logic-apps/logic-apps-overview)
-- Azure SQL Database
-- Azure Key Vault, plus secrets for:
-  - XXX
-  - XXX
-  - XXX
-- App Service Plan
-- Web Apps
-  - Contoso
-  - Admin site
-- API App
-- Azure Storage account
-- Service Bus namespace
-- Virtual network with `default` subnet
-- Virtual machine using the Visual Studio 2019 (Latest) Community Edition image
+- [Azure SQL Database](https://docs.microsoft.com/azure/azure-sql/database/sql-database-paas-overview)
+- [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/overview)
+- [App Service Plan](https://docs.microsoft.com/azure/app-service/overview-hosting-plans)
+- [Web App](https://docs.microsoft.com/azure/app-service/overview)
+- [Azure Storage account](https://docs.microsoft.com/azure/storage/common/storage-account-overview)
+- [Service Bus namespace](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-messaging-overview)
+- [Virtual network](https://docs.microsoft.com/azure/virtual-network/virtual-networks-overview) with `default` subnet
+- [Virtual machine using the Visual Studio 2019 (Latest) Community Edition image](https://docs.microsoft.com/azure/virtual-machines/windows/using-visual-studio-vm)
   - Uses custom script extension to
     - Disable **IE Enhanced Security Configuration**
     - Download starter solution from Serverless architecture MCW GitHub repo
     - Download and install Azure Data Studio
     - Download and install Microsoft Edge browser
-- Network security group for VM
-- Network interface for VM
-- Public IP address for VM
+- [Network security group](https://docs.microsoft.com/azure/virtual-network/network-security-groups-overview) for VM
+- [Network interface](https://docs.microsoft.com/azure/virtual-network/virtual-network-network-interface) for VM
+- [Public IP address](https://docs.microsoft.com/azure/virtual-network/public-ip-addresses) for VM
 
 1. Select the following **Deploy to Azure** button to deploy the ARM Template with the Lab VM resources for this lab. This link will deep link into the Azure Portal, passing in the ARM Template for deploying the resources for this lab.
 
@@ -146,8 +140,6 @@ In this task, you run an Azure Resource Manager (ARM) template to create the han
    ![On the Review + create blade for the custom deployment, the Validation passed message is highlighted, and the Create button is highlighted.](media/azure-custom-deployment-review-create.png "Review + create custom deployment")
 
 8. You can monitor the deployment's progress on the **Deployment** blade that opens when you start the ARM template deployment.
-
-    > **Note**: A configuration script downloads and installs the required lab files and software after the deployment of the LabVM completes. The task will be listed on the deployment progress screen as `LabVM/CustomScriptExtension`. You should wait for this task to complete before attempting to log into the LabVM.
 
     ![The deployment is in progress screen is displayed.](media/custom-deployment-progress.png "Deployment is in progress")
 
