@@ -30,5 +30,5 @@ $msiArgs = @(
 Start-Process msiexec.exe -ArgumentList $msiArgs -Wait -NoNewWindow
 
 # Download and install Azure Data Studio
-Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2160780' -OutFile 'C:\ads\azuredatastudio.exe'
-Start-Process C:\ads\azuredatastudio.exe /VERYSILENT /MERGETASKS=!runcode
+Invoke-WebRequest 'https://go.microsoft.com/fwlink/?linkid=2160780' -OutFile 'C:\azuredatastudio.exe'
+Start-Process C:\azuredatastudio.exe /VERYSILENT
