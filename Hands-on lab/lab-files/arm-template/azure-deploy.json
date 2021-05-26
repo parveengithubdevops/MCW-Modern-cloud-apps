@@ -26,8 +26,8 @@
     }
   },
   "variables": {
-    "GitHubOrg": "kylebunting",
-    "GitHubScriptRepoBranch": "master",
+    "gitHubOrg": "kylebunting",
+    "gitHubBranch": "master",
 
     "location": "[resourceGroup().location]",
 
@@ -42,7 +42,7 @@
     "vmNetworkInterfaceName": "[concat(variables('vmName'), '-nic')]",
     "vmPublicIpAddressName": "[concat(variables('vmName'), '-ip')]",
     "vmCustomScriptFileName": "configure-labvm.ps1",
-    "vmCustomScriptUri": "[concat('https://raw.githubusercontent.com/', variables('GitHubOrg'), '/MCW-Modern-cloud-apps/', variables('GitHubScriptRepoBranch'), '/Hands-on%20lab/lab-files/arm-template/', variables('vmCustomScriptFileName'))]",
+    "vmCustomScriptUri": "[concat('https://raw.githubusercontent.com/', variables('gitHubOrg'), '/MCW-Modern-cloud-apps/', variables('gitHubBranch'), '/Hands-on%20lab/lab-files/arm-template/', variables('vmCustomScriptFileName'))]",
 
     "webAppName": "[concat('contosoapp', uniqueString(resourceGroup().id))]",
     "hostingPlanName": "[concat('contoso-asp-', uniqueString(resourceGroup().id))]",
@@ -53,7 +53,7 @@
     "appInsightsName": "[concat('appinsights-', uniqueString(resourceGroup().id))]",
     "storageAccountName": "[concat('contoso', uniqueString(resourceGroup().id))]",
 
-    "serviceBusName": "[concat('contoso', uniqueString(resourceGroup().id))]",
+    "serviceBusName": "[concat('contoso-sb-', uniqueString(resourceGroup().id))]",
     "serviceBusQueueName": "receiptgenerator",
 
     "keyVaultName": "[concat('keyvault-', uniqueString(resourceGroup().id))]",
@@ -66,6 +66,8 @@
       "type": "Microsoft.AppConfiguration/configurationStores",
       "apiVersion": "2020-07-01-Preview",
       "location": "[variables('location')]",
+      "properties":{
+      },
       "sku": {
         "name": "free"
       }
@@ -94,6 +96,25 @@
       }
     },
     {
+      "name": "[concat(variables('keyVaultName'), '/add')]",
+      "type": "Microsoft.KeyVault/vaults/accessPolicies",
+      "apiVersion": "2019-09-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+      ],
+      "properties": {
+        "accessPolicies": [
+          {
+            "tenantId": "[subscription().tenantId]",
+            "objectId": "[reference(resourceId('Microsoft.Web/sites', variables('webAppName')), '2020-12-01', 'Full').identity.principalId]",
+            "permissions": {
+              "secrets": ["get"]
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "[variables('logicAppName')]",
       "type": "Microsoft.Logic/workflows",
       "apiVersion": "2016-06-01",
@@ -113,19 +134,35 @@
     {
       "name": "[variables('webAppName')]",
       "type": "Microsoft.Web/sites",
+      "apiVersion": "2020-12-01",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
+        "[concat('microsoft.insights/components/', variables('appInsightsName'))]"
+      ],
+      "identity": {
+        "type": "SystemAssigned"
+      },
       "properties": {
+        "name": "[variables('webAppName')]",
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
         "siteConfig": {
           "connectionStrings": [
             {
               "name": "defaultConnection",
-              "ConnectionString": "[concat('Data Source=tcp:' , reference(concat('Microsoft.Sql/servers/', variables('databaseServerName'))).fullyQualifiedDomainName , ',1433;Initial Catalog=', variables('databaseName'),';User Id=', parameters('username'),'@',reference(concat('Microsoft.Sql/servers/', variables('databaseServerName'))).fullyQualifiedDomainName,';Password=',parameters('password'),';')]",
+              "connectionString": "[concat('Data Source=tcp:' , reference(concat('Microsoft.Sql/servers/', variables('databaseServerName'))).fullyQualifiedDomainName , ',1433;Initial Catalog=', variables('databaseName'),';User Id=', parameters('username'),'@',reference(concat('Microsoft.Sql/servers/', variables('databaseServerName'))).fullyQualifiedDomainName,';Password=',parameters('password'),';')]",
               "type": "SQLAzure"
+            },
+            {
+              "name": "AppConfig",
+              "connectionString": "[listKeys(resourceId('Microsoft.AppConfiguration/configurationStores', variables('appConfigName')), '2020-07-01-Preview').value[0].connectionString]",
+              "type:": "Custom"
             }
           ],
           "appSettings": [
             {
               "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-              "value": "[reference(concat('microsoft.insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+              "value": "[reference(resourceId('Microsoft.Insights/components/', variables('appInsightsName')), '2018-05-01-preview').InstrumentationKey]"
             },
             {
               "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
@@ -160,22 +197,13 @@
               "value": "disabled"
             }
           ]
-        },
-        "name": "[variables('webAppName')]",
-        "serverFarmId": "[concat(subscription().id,'/resourcegroups/', resourceGroup().name, '/providers/Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-        "hostingEnvironment": ""
-      },
-      "dependsOn": [
-        "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-        "[concat('microsoft.insights/components/', variables('appInsightsName'))]"
-      ],
-      "apiVersion": "2018-11-01",
-      "location": "[variables('location')]"
+        }
+      }
     },
     {
-      "apiVersion": "2016-09-01",
       "name": "[variables('hostingPlanName')]",
       "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2020-06-01",
       "location": "[variables('location')]",
       "properties": {
         "name": "[variables('hostingPlanName')]",
@@ -184,8 +212,8 @@
         "hostingEnvironment": ""
       },
       "sku": {
-        "Tier": "Standard",
-        "Name": "S1"
+        "tier": "Standard",
+        "name": "S1"
       }
     },
     {
@@ -241,7 +269,6 @@
         }
       ]
     },
-
     {
       "name": "[variables('storageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
