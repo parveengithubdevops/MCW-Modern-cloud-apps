@@ -147,6 +147,8 @@ In this task, you run an Azure Resource Manager (ARM) template to create the han
 
 8. You can monitor the deployment's progress on the **Deployment** blade that opens when you start the ARM template deployment.
 
-    > **Note**: A configuration script to install SSMS and the required lab files will run after the deployment of the LabVM completes. The task will be listed on the deployment progress screen as `LabVM/CustomScriptExtension`. You should wait for this task to complete before attempting to log into the LabVM in the next task, as it downloads and installs files you will need.
+    > **Note**: A configuration script downloads and installs the required lab files and software after the deployment of the LabVM completes. The task will be listed on the deployment progress screen as `LabVM/CustomScriptExtension`. You should wait for this task to complete before attempting to log into the LabVM.
+
+    ![The deployment is in progress screen is displayed.](media/custom-deployment-progress.png "Deployment is in progress")
 
 You should follow all the steps provided *before* performing the Hands-on lab.
