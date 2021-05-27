@@ -91,7 +91,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 4: View the Application Insights logs](#task-4-view-the-application-insights-logs)
   - [Exercise 11: Automating backend processes with Azure Functions and Logic Apps](#exercise-11-automating-backend-processes-with-azure-functions-and-logic-apps)
     - [Task 1: Create an Azure Function to Generate PDF Receipts](#task-1-create-an-azure-function-to-generate-pdf-receipts)
-  - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
+    - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
     - [Task 3: Configure and deploy the Function App](#task-3-configure-and-deploy-the-function-app)
     - [Task 4: Create an Azure Logic App to Process Orders](#task-4-create-an-azure-logic-app-to-process-orders)
     - [Task 5: Use Twilio to send SMS Order Notifications](#task-5-use-twilio-to-send-sms-order-notifications)
@@ -268,7 +268,7 @@ In this task, you create secrets in Key Vault for each of the connection strings
 
 5. Select **Create**.
 
-6. Select **Generate/Import** again and repeat steps 4 and 5 for the remaining two secrets specified in the table above, replacing the name and value settings with with appropriate values.
+6. Select **Generate/Import** again and repeat steps 4 and 5 for the remaining two secrets specified in the table above, replacing the name and value settings with appropriate values.
 
 7. You should end up with three secrets in Key Vault.
 
@@ -306,7 +306,7 @@ The Contoso Sports solution contains multiple projects, each of which access the
 
 5. Select **Apply** on the Create dialog.
 
-6. Select **Create --> Key Vault reference** again and repeat steps 4 and 5 for the remaining two keys specified in the table above, populating the **Key** and **Secret** fields with with appropriate values.
+6. Select **Create --> Key Vault reference** again and repeat steps 4 and 5 for the remaining two keys specified in the table above, populating the **Key** and **Secret** fields with appropriate values.
 
 ## Exercise 2: Deploy e-commerce website
 
@@ -417,7 +417,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
     | Contoso.Apps.SportsLeague.Offers |  API for returning list of available products |
     | Contoso.Apps.PaymentGateway   |     API for payment processing |
 
-    ![The projects contained within the solution are displayed in the Visual Studio Solution Explorer.](media/visual-studio-solution.png "Contoso.Apps.SportsLeague solution files")
+   ![The projects contained within the solution are displayed in the Visual Studio Solution Explorer.](media/visual-studio-solution.png "Contoso.Apps.SportsLeague solution files")
 
 ### Task 4: Configure the e-commerce Web App in Visual Studio
 
@@ -539,7 +539,7 @@ In this exercise, the attendee will provision a secondary SQL Database and confi
 
 7. On the **Create SQL Database - Geo Replica** Basics tab, select **Create new** for the **Server** and in the New server dialog, enter:
 
-    - **Server name**: Enter a globally unique value, such as `contosodbreplicaSUFFIX`, where `SUFFIX` is a unique identifer (ensure the green checkmark appears).
+    - **Server name**: Enter a globally unique value, such as `contosodbreplicaSUFFIX`, where `SUFFIX` is a unique identifier (ensure the green checkmark appears).
     - **Server admin login**: Enter `demouser`.
     - **Password**: Enter `Password.1!!`.
     - **Location**: Select the region you chose for your secondary region on the Geo-Replication screen.
@@ -624,7 +624,7 @@ With SQL Database Geo-Replication configured, the Azure SQL Failover Groups feat
 
     ![Failover Group is highlighted.](media/failover-group-list.png "Failover Group is highlighted")
 
-7. On the **Failover group** pane you will see a map displaying the locations of the _Primary_ and _Secondary_ SQL Database servers within the failover group. Below that, the _Primary_ database shows as **Automatic** failover for Read/Write of data, while the _Secondary_ database does not since it is currently Read only.
+7. On the **Failover group** pane, you will see a map displaying the locations of the _Primary_ and _Secondary_ SQL Database servers within the failover group. Below that, the _Primary_ database shows as **Automatic** failover for Read/Write of data, while the _Secondary_ database does not since it is currently Read only.
 
     ![Map display of Primary and Secondary databases.](media/failover-group-map.png "Map display of Primary and Secondary databases")
 
@@ -755,7 +755,7 @@ In this exercise, you provision a website via the Azure Web App template using t
 4. Add a new **Connection String** with the following values, and select **OK**:
 
    - **Name**: Enter `AppConfig`.
-   - **Value**: Enter the Connection String for the App Configuration Store. You copied this into a your text editor previously. Otherwise, you can retrieve it from the Access Keys blade of the App Configuration resource.
+   - **Value**: Enter the Connection String for the App Configuration Store. You copied this into your text editor previously. Otherwise, you can retrieve it from the Access Keys blade of the App Configuration resource.
    - **Type**: Select **Custom**.
 
     ![The Add/Edit connection string form is displayed and is populated with the preceding values.](media/image43.png "The Add/Edit Connection String Form")
@@ -986,7 +986,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 3. Add a new **Connection String** with the following values, and select **OK**:
 
    - **Name**: Enter `AppConfig`.
-   - **Value**: Enter the Connection String for the App Configuration Store. You copied this into a your text editor previously. Otherwise, you can retrieve it from the Access Keys blade of the App Configuration resource.
+   - **Value**: Enter the Connection String for the App Configuration Store. You copied this into your text editor previously. Otherwise, you can retrieve it from the Access Keys blade of the App Configuration resource.
    - **Type**: Select **Custom**.
 
     ![The Add/Edit connection string form is displayed and is populated with the preceding values.](media/image43.png "The Add/Edit connection string form")
