@@ -37,18 +37,36 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 3: Retrieve Service Bus Queue connection string](#task-3-retrieve-service-bus-queue-connection-string)
     - [Task 4: Create secrets in Azure Key Vault](#task-4-create-secrets-in-azure-key-vault)
     - [Task 5: Centralize secrets for multiple projects using an App Configuration store](#task-5-centralize-secrets-for-multiple-projects-using-an-app-configuration-store)
-  - [Exercise 2: Configure Azure SQL Database](#exercise-2-configure-azure-sql-database)
+  - [Exercise 2: Deploy e-commerce website](#exercise-2-deploy-e-commerce-website)
     - [Task 1: Configure SQL Database firewall](#task-1-configure-sql-database-firewall)
-  - [Exercise 3: Deploy proof of concept e-commerce website](#exercise-3-deploy-proof-of-concept-e-commerce-website)
-    - [Task 1: Connect to the Lab VM](#task-1-connect-to-the-lab-vm)
-    - [Task 2: Open the Contoso Sports League starter solution in Visual Studio](#task-2-open-the-contoso-sports-league-starter-solution-in-visual-studio)
-    - [Task 3: Configure the e-commerce Web App in Visual Studio](#task-3-configure-the-e-commerce-web-app-in-visual-studio)
-    - [Task 4: Publish the web app to Azure](#task-4-publish-the-web-app-to-azure)
-    - [Task 2: Setup SQL Database Geo-Replication](#task-2-setup-sql-database-geo-replication)
-    - [Task 3: Deploying the Call Center admin website](#task-3-deploying-the-call-center-admin-website)
-    - [Task 4: Deploying the payment gateway](#task-4-deploying-the-payment-gateway)
-    - [Task 5: Deploying the Offers Web API](#task-5-deploying-the-offers-web-api)
-    - [Task 6: Add API endpoint configuration settings](#task-6-add-api-endpoint-configuration-settings)
+    - [Task 2: Connect to the Lab VM](#task-2-connect-to-the-lab-vm)
+    - [Task 3: Open the Contoso Sports League starter solution in Visual Studio](#task-3-open-the-contoso-sports-league-starter-solution-in-visual-studio)
+    - [Task 4: Configure the e-commerce Web App in Visual Studio](#task-4-configure-the-e-commerce-web-app-in-visual-studio)
+    - [Task 5: Publish the web app to Azure](#task-5-publish-the-web-app-to-azure)
+  - [Exercise 3: Setup SQL Database Geo-Replication](#exercise-3-setup-sql-database-geo-replication)
+    - [Task 1: Add secondary database](#task-1-add-secondary-database)
+    - [Task 2: Configure secondary SQL Database firewall](#task-2-configure-secondary-sql-database-firewall)
+    - [Task 3: Setup SQL Failover Group](#task-3-setup-sql-failover-group)
+    - [Task 4: Update database connection string to use failover listener endpoint](#task-4-update-database-connection-string-to-use-failover-listener-endpoint)
+    - [Task 5: Failover SQL Database Failover Group](#task-5-failover-sql-database-failover-group)
+    - [Task 6: Test e-commerce Web App after Failover](#task-6-test-e-commerce-web-app-after-failover)
+  - [Exercise 4: Deploy the Call Center admin website](#exercise-4-deploy-the-call-center-admin-website)
+    - [Task 1: Provision a Web App](#task-1-provision-a-web-app)
+    - [Task 2: Update the configuration in the starter project](#task-2-update-the-configuration-in-the-starter-project)
+    - [Task 3: Add a managed identity and set a Key Vault access policy](#task-3-add-a-managed-identity-and-set-a-key-vault-access-policy)
+    - [Task 4: Configure and deploy the call center admin Web App from Visual Studio](#task-4-configure-and-deploy-the-call-center-admin-web-app-from-visual-studio)
+  - [Exercise 5: Deploy the payment gateway](#exercise-5-deploy-the-payment-gateway)
+    - [Task 1: Provision the payment gateway API App](#task-1-provision-the-payment-gateway-api-app)
+    - [Task 2: Deploy the Payment Gateway from Visual Studio](#task-2-deploy-the-payment-gateway-from-visual-studio)
+  - [Exercise 6: Deploy the Offers Web API](#exercise-6-deploy-the-offers-web-api)
+    - [Task 1: Provision the Offers Web API App](#task-1-provision-the-offers-web-api-app)
+    - [Task 2: Configure Cross-Origin Resource Sharing (CORS)](#task-2-configure-cross-origin-resource-sharing-cors)
+    - [Task 3: Update the configuration in the starter project](#task-3-update-the-configuration-in-the-starter-project)
+    - [Task 4: Add a managed identity and set a Key Vault access policy](#task-4-add-a-managed-identity-and-set-a-key-vault-access-policy)
+    - [Task 4: Deploy the Offers app from Visual Studio](#task-4-deploy-the-offers-app-from-visual-studio)
+  - [Exercise 7: Add API endpoint configuration settings](#exercise-7-add-api-endpoint-configuration-settings)
+    - [Task 1: Add the API endpoint configuration settings](#task-1-add-the-api-endpoint-configuration-settings)
+    - [Task 2: Validate App Settings are correct](#task-2-validate-app-settings-are-correct)
   - [Exercise 2: Identity and Security](#exercise-2-identity-and-security)
     - [Task 1: Enable Azure AD Premium Trial](#task-1-enable-azure-ad-premium-trial)
     - [Task 2: Create a new Contoso user](#task-2-create-a-new-contoso-user)
@@ -144,7 +162,7 @@ CSLA would like to modernize their websites and move to the cloud, ultimately mo
 
 ## Exercise 1: Create Key Vault secrets and add to App Configuration
 
-**Duration**: 30 minutes
+**Duration**: 15 minutes
 
 In this exercise, you retrieve various keys and connection string from resources in the **hands-on-lab-SUFFIX** resource group and use them to create secrets in Key Vault. You will first copy connection string and keys into a text editor, such as Notepad.exe, for easier reference when creating secrets in Key Vault. You finish the exercise by adding references to the Key Vault into the App Configuration resource.
 
@@ -287,13 +305,15 @@ The Contoso Sports solution contains multiple projects, each of which access the
 
 6. Select **Create --> Key Vault reference** again and repeat steps 4 and 5 for the remaining two keys specified in the table above, populating the **Key** and **Secret** fields with with appropriate values.
 
-## Exercise 2: Configure Azure SQL Database
+## Exercise 2: Deploy e-commerce website
 
-**Duration**: 5 minutes
+Duration: 15 minutes
 
-In this exercise, you configure the firewall settings for the Azure SQL Database.
+In this exercise, you deploy the Contoso web app and provide the necessary configuration to display the e-commerce website.
 
 ### Task 1: Configure SQL Database firewall
+
+In this task, you set up access to the Azure SQL Database from your local machine.
 
 1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
@@ -327,13 +347,7 @@ In this exercise, you configure the firewall settings for the Azure SQL Database
 
     ![The success dialog for updating the server firewall rules is displayed and the OK button is highlighted.](media/sql-server-firewall-save-success.png "Success")
 
-## Exercise 3: Deploy proof of concept e-commerce website
-
-Duration: 60 minutes
-
-In this exercise, you deploy the Contoso web app and provide the necessary configuration to display the e-commerce website.
-
-### Task 1: Connect to the Lab VM
+### Task 2: Connect to the Lab VM
 
 In this task, you create an RDP connection to your Lab virtual machine (VM).
 
@@ -372,7 +386,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
    ![In the Remote Desktop Connection dialog box, a warning states that the remote computer's identity cannot be verified and asks if you want to continue anyway. At the bottom, the Yes button is highlighted.](./media/remote-desktop-connection-identity-verification-labvm.png "Remote Desktop Connection dialog")
 
-### Task 2: Open the Contoso Sports League starter solution in Visual Studio
+### Task 3: Open the Contoso Sports League starter solution in Visual Studio
 
 1. On the LabVM, open File Explorer and navigate to the `C:\MCW\MCW-Modern-cloud-apps-master\Hands-on lab\lab-files\src\Contoso Sports League` folder.
 
@@ -402,7 +416,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
     ![The projects contained within the solution are displayed in the Visual Studio Solution Explorer.](media/visual-studio-solution.png "Contoso.Apps.SportsLeague solution files")
 
-### Task 3: Configure the e-commerce Web App in Visual Studio
+### Task 4: Configure the e-commerce Web App in Visual Studio
 
 1. Navigate to the `Contoso.Apps.SportsLeague.Web` project located in the **Web** folder using the **Solution Explorer** of Visual Studio.
 
@@ -418,7 +432,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
 5. Repeat step 4-6, this time installing the latest **Azure.Identity**.
 
-6. Now you are ready to configure this application to use the App Configuration in Azure. Expand the **Contoso.Apps.SportsLeague.Web** project and open the **Program.cs** file.
+6. Now you are ready to configure this application to use the App Configuration in Azure. Expand the **Contoso.Apps.SportsLeague.Web** project and open the `Program.cs` file.
 
 7. Uncomment the following **using** statements at the top of the file:
 
@@ -446,7 +460,9 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
     .UseStartup<Startup>();
     ```
 
-### Task 4: Publish the web app to Azure
+9. Save `Program.cs` by selecting Save on the Visual Studio toolbar.
+
+### Task 5: Publish the web app to Azure
 
 1. Right-click the **Contoso.Apps.SportsLeague.Web** project in the Visual Studio Solution Explorer and select **Publish**.
 
@@ -454,15 +470,19 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
 2. On the Publish dialog, select **Azure** as the **Target**, then select **Next**.
 
+    ![On the Publish dialog, Azure is specified as the target and the next button is highlighted.](media/publish-target.png "Publish Target")
+
 3. For **Specific target**, select **Azure App Service (Windows)**, then select **Next**.
 
-4. For **App Service**, expand the lab resource group, and select the **contosoapp** from the list, then choose **Finish**.
+    ![On the Publish dialog, Azure App Service (Windows) is specified as the specific target and the next button is highlighted.](media/publish-specific-target-app-service-windows.png "Publish Specific Target")
 
-    ![The App Service dialog is shown with the resource group expanded and the contosoapp application service selected in the list. The OK button is highlighted.](media/deploywebapp_serviceselection.png "App Service Selection")
+4. On the **App Service** tab of the Publish dialog, select the appropriate subscription, then expand the **hands-on-lab-SUFFIX** resource group, select the **contosoapp** Web App from the list, and then select **Finish**.
 
-5. Select **Publish** to publish the Web application.
+    ![On the Publish dialog App Service tab, the contosoapp Web App is highlighted and the finish button is highlighted.](media/publish-app-service-contoso-app.png "App Service Publish")
 
-    ![Publish profile is displayed with the Publish button highlighted.](media/2020-06-15-16-53-15.png "Publish profile")
+5. Back in Visual Studio, select **Publish** to publish the Web application.
+
+    ![Publish profile is displayed with the Publish button highlighted.](media/visual-studio-publish-web.png "Publish profile")
 
 6. In the Visual Studio **Output** view, you will see a status that indicates the Web App was published successfully.
 
@@ -470,236 +490,260 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
     >**Note**: Your URL will differ from the one shown in the Output screenshot because it must be globally unique.
 
-7. A new browser should automatically open the new web applications. Validate the website by choosing the **Store** link on the menu. You should see product items. If products are returned, then the connection to the database is successful.
+7. A new browser should automatically open the new web applications. Validate the website by choosing the **Store** link on the menu. You should see product items. If products are returned, then the connection to the database was successful.
 
-    ![Screenshot of the Store link.](media/image51.png "Store link")
+    ![Screenshot of the Store link.](media/contoso-web-site-store-products.png "Store link")
 
     >**Troubleshooting**: If the web site fails to start up or show products, go back and double check all your connection string entries and passwords web application settings. If you get a message indicating the Service is unavailable. Give it a moment, and refresh your browser.
 
-### Task 2: Setup SQL Database Geo-Replication
+## Exercise 3: Setup SQL Database Geo-Replication
+
+**Duration**: 45 minutes (15 minutes if not performing optional failover)
 
 In this exercise, the attendee will provision a secondary SQL Database and configure Geo-Replication using the Microsoft Azure Portal.
 
-<!-- omit in toc -->
-#### Subtask 1: Add secondary database
+### Task 1: Add secondary database
 
-1. In the Azure Portal, navigate back to the lab resource group.
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-2. From the list of resources, select the **ContosoSportsDB** SQL database resource.
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-    ![The resource listing is displayed with the ContosoSportsDB SQL database resource highlighted.](media/resourcelist_contososportsdb.png "Resource listing")
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-3. Under the **Settings** menu area, select **Geo-Replication**.
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-    ![In the Settings section, Geo-Replication is selected.](media/image53.png "Settings section")
+3. In the list of resources within your resource group, select the **ContosoSportsDB** SQL database resource.
 
-4. Select the Azure Region to place the Secondary within.
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and ContosoSportsDB is highlighted.](./media/resource-group-resources-sql-db.png "ContosoSportsDB in resource group list")
 
-    ![The Geo-Replication pane with list of locations. Primary location is set to West US.](media/image54.png "Geo-Replication blade")
+4. On the **SQL Database** blade, select the **Show database connection strings** link within the Essentials area.
 
-    The Secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
+    ![On the SQL Database blade, in the left pane, Overview is selected. In the right pane, under Essentials, the Connection strings (Show database connection strings) link is circled.](media/sql-db-connection-strings-link.png "SQL Database blade")
+
+5. Select **Geo-Replication** in the left-hand navigation menu, under **Data management**.
+
+    ![In the Settings section, Geo-Replication is selected.](media/sql-db-geo-replication-menu.png "Settings section")
+
+6. On the Geo-Replication blade, select the Azure Region within which you want to run the secondary database.
+
+    ![The Geo-Replication pane with list of locations. Primary location is set to West US.](media/sql-db-geo-replication-secondary-region.png "Geo-Replication blade")
+
+    > **Important**: The secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
 
     >**Note**: If you choose a region that cannot be used as a secondary region, you will not be able to pick a pricing plan. Choose another region.
     >
     > ![Wrong geo-replication region selected. Not available options presented.](media/2019-03-30-16-05-25.png "Not available options presented.")
 
-5. On the **Create secondary** blade, select **Secondary Type** as **Readable**.
+7. On the **Create SQL Database - Geo Replica** Basics tab, select **Create new** for the **Server** and in the New server dialog, enter:
 
-6. Select **Target server** ***Configure required settings***.
+    - **Server name**: Enter a globally unique value, such as `contosodbreplicaSUFFIX`, where `SUFFIX` is a unique identifer (ensure the green checkmark appears).
+    - **Server admin login**: Enter `demouser`.
+    - **Password**: Enter `Password.1!!`.
+    - **Location**: Select the region you chose for your secondary region on the Geo-Replication screen.
 
-    ![the Target server Configure required settings option is selected.](media/image55.png "Target server option")
+    ![The fields in the New Server blade display with the previously defined settings.](media/new-sql-server.png "New Server blade")
 
-7. Select **Create a new server**.
+8. Select **OK** on the New server dialog.
 
-8. On the **New server** blade, specify the following configuration:
+9. Leave SQL elastic pool set to **No** and the Compute + Storage set to **Standard S1**. Select **Geo-redundant backup storage** for the **Backup storage redundancy**, and then select **Next: Networking**.
 
-   - Server name: **A unique value (ensure the green checkmark appears)**.
+    ![The values specified above are entered into the Create SQL Database Geo Replica basics tab.](media/create-sql-database-geo-replica.png "Create SQL Database Geo Replica")
 
-   - Server admin login: **demouser**
+10. On the **Networking** tab, set **Allow Azure services and resources to access this server** to **Yes**.
 
-   - Password and Confirm Password: **demo@pass123**
+    ![Allow Azure services and resources to access this server is set to Yes.](media/create-sql-database-geo-replica-networking.png "Create SQL Database Geo Replica Networking")
 
-    ![The fields in the New Server blade display with the previously defined settings.](media/image56.png "New Server blade")
+11. Select **Review + create** and on the Review + create tab, select **Create** to start the deployment of the secondary database.
 
-9. Once the values are accepted in the **New server** blade, choose **Select**.
+    > **Note**: Deployment of the secondary database for geo-replication takes several minutes to complete.
 
-    ![Screenshot of the Select button.](media/image20.png "Select button")
+### Task 2: Configure secondary SQL Database firewall
 
-10. On the **Create secondary** blade, select **OK**.
+In this task, you set up access to the secondary Azure SQL Database from your local machine.
 
-    ![Screenshot of the OK button.](media/image57.png "OK button")
+1. After the Geo-Replication has finished provisioning, select **Go to resource** from the deployment blade.
 
-    > **Note**: The Geo-Replication will take a few minutes to complete.
+    ![The go to resource button is highlighted on the deployment blade for the secondary SQL database.](media/sql-db-replica-go-to-resource.png "Go to resource")
 
-11. After the Geo-Replication has finished provisioning, return to the resource group for the lab.
+2. In the Essentials area of the SQL database, select the **Server name** link to navigate to the SQL Server hosting the database.
 
-12. Select the name of the secondary SQL Server resource that you just created.
+    ![In the Essentials area of the SQL database, the **Server name** link is highlighted.](media/sql-database-secondary-server-name.png "Server name link")
 
-    ![In the list of resources, the secondary SQL server resource is selected.](media/secondarydatabaseinresourcelist.png "Resource listing")
+3. On the **Overview** blade for the **SQL Server** resource, select the **Show firewall settings** in the Essentials area.
 
-13. On the **SQL Server** blade, within the **Overview** pane, select **Show firewall settings** link.
+    ![On the SQL Server Overview screen with the Show firewall settings link highlighted.](media/sql-server-replica-overview-show-firewall-settings.png "SQL Server Overview")
 
-    ![On the SQL Server blade, at the top, the Set server firewall tile is boxed in red.](media/image62.png "SQL Server blade, Overview section")
+4. On the **Firewalls and virtual networks** blade, select **Add client IP** from the toolbar.
 
-14. On the **Firewall Settings** blade, specify a new rule named **My IP**, copy your **Client IP address**, and paste it into the **Start IP** and **End IP**. This will set the allowed IP Address range to just your IP address so you can connect to the database from this machine.
+    ![The Add client IP button is highlighted on the firewalls and virtual networks toolbar.](media/sql-server-firewall-toolbar-add-client-ip.png "Add client IP")
 
-    ![On the Firewall Settings blade, in the New rule section, a new rule has been created with the previously defined settings.](media/image27.png "New rule section ")
+5. A new rule will be generated that contains your client IP address for the **Start IP** and **End IP**. This allows you to connect to the database from your machine.
 
-15. Select **Save**.
+    ![Screenshot of the Rule name, Start IP. and End IP fields on the Firewall Settings blade.](media/sql-server-client-ip-rule.png "Firewall rule")
 
-    ![Screenshot of the Firewall settings Save button.](media/2019-04-10-16-00-29.png "Firewall settings Save button")
+6. Select **Save** on the toolbar.
 
-16. Update progress can be found by choosing the **Notifications** link located at the top of the page.
+    ![Screenshot of the Firewall settings Save button.](media/sql-server-firewall-toolbar-save.png "Firewall settings Save button")
 
-    ![Screenshot of the Success dialog box, which says that the server firewall rules have been successfully updated.](media/2019-04-19-13-39-41.png "Success dialog box")
+7. Select **OK** on the **Success** dialog when it appears.
 
-17. Close all configuration blades.
+    ![The success dialog for updating the server firewall rules is displayed and the OK button is highlighted.](media/sql-server-firewall-save-success.png "Success")
 
-<!-- omit in toc -->
-#### Subtask 2: Setup SQL Failover Group
+### Task 3: Setup SQL Failover Group
 
 With SQL Database Geo-Replication configured, the Azure SQL Failover Groups feature can be used to enable "auto failover" scenarios for the SQL Database. This enables a single connection string endpoint to be used by the application, and SQL Database will automatically handle failing over from Primary to Secondary database in the event of a SQL Database outage / down time.
 
-1. In the Azure Portal, navigate back to the lab resource group.
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **contososports** SQL Server resource associated with the primary database.
 
-2. From the list of resources, select the Primary SQL server resource.
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contososports SQL Server resource is highlighted.](./media/resource-group-resources-sql-server.png "ContosoSports SQL Server in resource group list")
 
-    ![The list of lab resources is shown with the primary SQL server resource selected.](media/primary_sqlserverresource_inlist.png "Resource listing")
+2. On the **SQL server** blade, select **Failover groups** under **Data management** in the left-hand navigation menu.
 
-3. On the **SQL server** blade, select **Failover groups** under **Settings**.
+    ![Failover groups is highlighted in the left-hand menu.](media/sql-server-failover-groups-menu.png "Failover groups setting option")
 
-    ![Failover groups setting option.](media/sqlserverfailovergroupslink.png "Failover groups setting option")
+3. On the **Failover groups** pane, select **Add group** on the toolbar.
 
-4. On the **Failover groups** pane, select the **Add group** button.
+    ![The Add group button is highlighted on the failover groups toolbar.](media/failover-group-add.png "Add group button")
 
-    ![Add group button.](media/failovergroupsaddgroupbutton.png "Add group button")
+4. On the **Failover group** pane, enter the following:
 
-5. On the **Failover group** pane, enter a unique **Failover group name**.
+    - **Failover group name**: Enter a globally unique name, such as `contoso-failover-SUFFIX`.
+    - **Server**: Select the secondary server you created above.
+    - **Read/Write failover policy**: Choose **Automatic**.
+    - **Read/Write grace period (hours)**: Choose **1 hours**.
+    - **Database within group**: Select **Configure database**, check the box next to the **ContosoSportsDB** database on the replica, and then select **Select**.
 
-    ![Failover group name field.](media/sqlfailovergroupname.png "Failover group name field")
+    ![The values specified above are entered in to the Failover group dialog.](media/failover-group-settings.png "Failover group")
 
-6. Select **Secondary server**, then choose the **Secondary SQL Database** that was previously created.
+5. Select **Create** to create the SQL Failover Group.
 
-    ![Secondary SQL Database is highlighted.](media/sqlfailoversecondaryserver.png "Secondary SQL Database is highlighted")
+6. Once the Failover Group has been created, select it in the list.
 
-7. Select **Database within the group**, then choose the **ContosoSportsDB** database, then **Select**.
+    ![Failover Group is highlighted.](media/failover-group-list.png "Failover Group is highlighted")
 
-    ![Steps to choose the ContosoSportsDB are highlighted.](media/sqlfailoversecondarydatabase.png "Steps to choose the ContosoSportsDB are highlighted")
+7. On the **Failover group** pane you will see a map displaying the locations of the _Primary_ and _Secondary_ SQL Database servers within the failover group. Below that, the _Primary_ database shows as **Automatic** failover for Read/Write of data, while the _Secondary_ database does not since it is currently Read only.
 
-8. Select **Create** to create the SQL Failover Group.
+    ![Map display of Primary and Secondary databases.](media/failover-group-map.png "Map display of Primary and Secondary databases")
 
-9. Once the Failover Group has been created, select it in the list.
+8. Below the map you will find the **Read/write listener endpoint** and the **Read-only listener endpoint**. These allow for applications to be configured to connect to the SQL Failover Group endpoints instead of the individual SQL Server endpoints. Copy both **Listener Endpoint** values and paste into a text editor, such as Notepad.exe, for later reference.
 
-    ![Failover Group is highlighted.](media/sqlfailovergrouplist.png "Failover Group is highlighted")
+    ![Read/Write and Read-only listener endpoints are displayed.](media/failover-group-endpoints.png "Read/Write and Read-only listener endpoints are displayed")
 
-10. Notice, on the **Failover group** pane, the map and display showing the _Primary_ and _Secondary_ SQL Database servers within the failover group. The _Primary_ database shows as **Automatic** failover for Read/Write of data, while the _Secondary_ database doesn't since it is currently Read only.
+### Task 4: Update database connection string to use failover listener endpoint
 
-    ![Map display of Primary and Secondary databases.](media/sqlfailovergroupmap.png "Map display of Primary and Secondary databases")
+In this task, you update the database connection string in Key Vault to use the read/write listener endpoint of the failover group.
 
-11. Scroll down, below the map, to where the **Read/write listener endpoint** and **Read-only listener endpoint** are displayed. These allow for applications to be configured to connect to the SQL Failover Group endpoints instead of the individual SQL Server endpoints.
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **Key vault** resource from the list.
 
-    Copy both **Listener Endpoint** values for later reference.
+    ![The Key Vault resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-key-vault.png "Key Vault resource")
 
-    ![Read/Write and Read-only listener endpoints are displayed.](media/sqlfailovergroupendpoints.png "Read/Write and Read-only listener endpoints are displayed")
+2. Select **Secrets** from the left-hand navigation menu and then select the **ContosoSportsLeague** secret.
 
-12. Go back to the **contososports** resource group blade.
+    ![On the Key Vault blade, Secrets is highlighted in the left-hand menu and the ContosoSportsLeague secret is highlighted in the secrets list.](media/key-vault-secrets-contoso-sports-league.png "Secrets")
 
-13. Select the **contosokv** Key vault resource.
+3. On the ContosoSportsLeague **Versions** blade, select **New Version** on the toolbar.
 
-14. Under the **Settings** menu, select **Secrets**.
+    ![The new version button is highlighted on the toolbar of the secret version blade.](media/key-vault-secret-new-version.png "New secret version")
 
-15. Locate and select the **ContosoSportsLeague** secret.
+4. Copy the original connection string to the **ContosoSportsDB**, but replace the server name with the **Azure SQL Failover Group Read/Write Listener Endpoint** that was copied previously, then select **Create**. The new version of the connection string should look similar to the following:
 
-16. On the **Versions** screen, select **+ New Version**.
+    ```sh
+    Server=tcp:{failover_group_endpoint};Initial Catalog=ContosoSportsDB;Persist Security Info=False;User ID=demouser;Password=demo@pass123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+    ```
 
-17. Copy the original connection string to the **ContosoSportsDB**, but replace the server name with the **Azure SQL Failover Group Read/Write Listener Endpoint** that was copied previously, then select **Create**.
+    ![The ContosoSportsLeague secret Versions screen is shown with a current and older version present in the list. ](media/new-secret-version.png "Secrets version list")
 
-    > **Note**: The connection string will need to be in the following format:
-    > ```
-    > Server=tcp:{failover_group_endpoint};Initial Catalog=ContosoSportsDB;Persist Security Info=False;User ID=demouser;Password=demo@pass123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
-    > ```
+### Task 5: Failover SQL Database Failover Group
 
-    ![The ContosoSportsLeague secret Versions screen is shown with a current and older version present in the list. ](media/newvalueforsecret_keyvault.png "Secrets version list")
+> **THIS TASK IS OPTIONAL**: The replication and failover process can take anywhere from 10 to 30 minutes to complete, so you have the option to skip tasks 5 and 6, and go directly to exercise 4. However, if you have the time, it is recommended that you complete these steps.
 
-<!-- omit in toc -->
-#### Subtask 3: Failover SQL Database Failover Group
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **contososports** SQL Server resource associated with the primary database.
 
->**Note**: This subtask is optional.
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contososports SQL Server resource is highlighted.](./media/resource-group-resources-sql-server.png "ContosoSports SQL Server in resource group list")
 
-Since the Replication and Failover process can take anywhere from 10 to 30 minutes to complete, you have the choice to skip Subtask 3 and 4, and go directly to Task 3. However, if you have the time, it is recommended that you complete these steps.
+2. On the **SQL server** blade, select **Failover groups** under **Data management** in the left-hand navigation menu.
 
-1. In the Azure Portal, navigate back to the lab resource group.
+    ![Failover groups is highlighted in the left-hand menu.](media/sql-server-failover-groups-menu.png "Failover groups setting option")
 
-2. From the list of resources, select the Primary SQL server resource.
+3. Select your failover group in the list.
 
-    ![The list of lab resources is shown with the primary SQL server resource selected.](media/primary_sqlserverresource_inlist.png "Resource listing")
+    ![Failover Group is highlighted.](media/failover-group-list.png "Failover Group is highlighted")
 
-3. On the **SQL server** blade, select **Failover groups** under Settings.
+4. On the Failover group blade, select the **Forced Failover** button on the toolbar, then select **Yes** to confirm the forced failover of the SQL Database Failover Group.
 
-    ![Failover groups option is highlighted.](media/2020-03-17-19-37-00.png "Failover groups option is highlighted")
+    ![The Forced failover button is highlighted on the toolbar and the confirmation message is displayed.](media/failover-group-forced-failover.png "Forced failover")
 
-4. Select the **Failover group** in the list.
+> **Note**: The failover may take a few minutes to complete. You can continue with the next task.
 
-    ![Failover group is highlighted in the list.](media/2020-03-17-19-38-01.png "Failover group is highlighted in the list")
+### Task 6: Test e-commerce Web App after Failover
 
-5. On the Failover group blade, select the **Forced Failover** button, then select **Yes** to confirm the forced failover of the SQL Database Failover Group.
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **contosoapp** App Service resource.
 
-    ![Forced failover confirmation is displayed.](media/2020-03-17-19-39-56.png "Forced failover confirmation is displayed")
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contososports SQL Server resource is highlighted.](./media/resource-group-resources-app-service.png "ContosoSports SQL Server in resource group list")
 
-The failover may take a few minutes to complete. You can continue with the next Subtask.
+2. On the **App Service** blade, select the **URL** of the Web App displayed in the Essentials area to open it in a new browser tab.
 
-<!-- omit in toc -->
-#### Subtask 4: Test e-commerce Web App after Failover
+    ![On the App Service blade, in the Essentials section, the URL link is highlighted.](media/web-app-url.png "App Service URL")
 
-1. From the Azure portal, select **Resource Groups**, and select **contososports**.
+3. In the e-commerce Web App, select **STORE** in the top navigation bar of the website and verify the product list from the database displays.
 
-2. Select the **Web App** created earlier.
+    ![Screenshot of the Contoso store webpage. Under Team Apparel, a Contoso hat, tank top, and hoodie display.](media/contoso-web-site-store-products.png "Contoso store webpage")
 
-3. On the **App Service** blade, select **Overview**.
+## Exercise 4: Deploy the Call Center admin website
 
-    ![Screenshot of Overview menu option.](media/image71.png "App Service blade")
-
-4. On the **Overview** pane, select the **URL** for the Web App to open it in a new browser tab.
-
-    ![On the App Service blade, in the Essentials section, the URL (http;//contososportsweb4azurewebsites.net) link is circled.](media/image72.png "App Service blade Essentials section")
-
-5. After the e-commerce Web App loads in Internet Explorer, select **STORE** in the top navigation bar of the website.
-
-    ![On the Contoso sports league website navigation bar, the Store button is circled.](media/image73.png "Contoso sports league website navigation bar")
-
-6. Verify the product list from the database displays.
-
-    ![Screenshot of the Contoso store webpage. Under Team Apparel, a Contoso hat, tank top, and hoodie display.](media/image74.png "Contoso store webpage")
-
-### Task 3: Deploying the Call Center admin website
+**Duration**: 15 minutes
 
 In this exercise, you provision a website via the Azure Web App template using the [Azure portal](https://portal.azure.com/). You then edit the necessary configuration files in the Starter Project and deploy the call center admin website.
 
-<!-- omit in toc -->
-#### Subtask 1: Provision the call center admin Web App
+### Task 1: Provision a Web App
 
-1. Using a new tab or instance of your browser, navigate to the [Azure portal](https://portal.azure.com/).
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-2. Select **+ Create a resource**, then search for and select **Web App**.
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-3. Specify a **unique Name** for the Web App, **Resource Group** you have used throughout the lab are selected. Also, specify **.NET Core 3.1 (LTS)** as the **Runtime stack**.
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-4. Select **Linux Plan**, and create a new Linux-based App Service Plan for the Web App.
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-5. Select a different **Region** for the web app than what was chosen for the lab. You can't mix Linux and Windows app services in the same region in the same resource group.
+3. On the Resource group blade, select **Add** on the toolbar.
 
-6. After the values are accepted, select **Review and create**, then **Create**.  It will take a few minutes to provision.
+    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
 
-  ![On the Create Web App blade, the App name field is set to contososportscallcentercp.](media/2019-03-28-05-29-59.png "Create Web App blade")
+4. On the create a resource blade, enter "Web App" into the search box and select **Web App** in the search results and then select **Create**.
 
-<!-- omit in toc -->
-#### Subtask 2: Update the configuration in the starter project
+    ![Web App is highlighted in the search box and the Web App resource is highlighted in the search results.](media/marketplace-web-app.png "Marketplace")
+
+5. On the Create Web App **Basics** tab, enter the following:
+
+    **Project Details**:
+
+    - **Subscription**: Select the subscription you are using for this hands-on lab.
+    - **Resource group**: Select the **hands-on-lab-SUFFIX** resource group.
+
+    **Instance Details**:
+
+    - **Name**: Enter a **unique Name** for the Web App, such as `contosoadminSUFFIX`.
+    - **Publish**: Select **Code**.
+    - **Runtime stack**: Choose **.NET Core 3.1 (LTS)**.
+    - **Operating System**: Choose **Linux**.
+    - **Region**: Select a different region than the one you are using for the hands-on-lab-SUFFIX resource group and other resources in this hands-on lab, as you cannot mix Linux and Windows app services in the same region in the same resource group. For example, if you are using **East US**, select **East US 2** for the region.
+
+    **App Service Plan**:
+
+    - **Linux Plan**: Accept the default new plan name.
+    - **Sku and size**: Accept the default **Premium V2 P1v2** plan.
+
+    ![The values specified above are entered into the Create Web App Basics tab.](media/create-web-app-admin-site.png "Create Web App")
+
+6. Select **Review and create**, then **Create** to provision the web app.
+
+### Task 2: Update the configuration in the starter project
 
 1. Navigate to the **App Service** blade for the Call Center Admin App just provisioned.
 
     ![The App Service blade displays.](media/2020-03-17-19-59-03.png "App Service blade")
 
-2. On the **App Service** blade, select **Configuration** in the left pane.
+2. On the **App Service** blade, select **Configuration** in the left-hand navigation menu.
 
     ![In the App Service blade, under Settings, select Configuration link.](media/2019-04-19-16-38-54.png "Configuration link")
 
@@ -707,11 +751,9 @@ In this exercise, you provision a website via the Azure Web App template using t
 
 4. Add a new **Connection String** with the following values, and select **OK**:
 
-   - Name: **AppConfig**
-
-   - Value: **Enter the Connection String for the App Configuration Store**.
-
-   - Type: Select **Custom**.
+   - **Name**: Enter `AppConfig`.
+   - **Value**: Enter the Connection String for the App Configuration Store. You copied this into a your text editor previously. Otherwise, you can retrieve it from the Access Keys blade of the App Configuration resource.
+   - **Type**: Select **Custom**.
 
     ![The Add/Edit connection string form is displayed and is populated with the preceding values.](media/image43.png "The Add/Edit Connection String Form")
 
@@ -721,61 +763,57 @@ In this exercise, you provision a website via the Azure Web App template using t
 
     ![the Save button is circled on the App Service blade.](media/2019-03-28-05-36-38.png "App Service blade")
 
-7. The call center web application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity. From the left menu, select **Identity**.
+### Task 3: Add a managed identity and set a Key Vault access policy
 
-8. With the **System assigned** tab selected, toggle the **Status** field to **On**, then select **Save**.
+The call center web application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity.
 
-    ![On the Identity screen, the System assigned tab is selected and the Status field is in the On position.](media/appconfig_systemidentity.png "The Identity Screen")
+1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar.
 
-9. Open the **contosokv** Key Vault resource, and from the left menu, select **Access policies**.
+    ![The Identity item is selected in the left-hand menu. The status is set to On. The Save button is highlighted.](media/call-center-identity.png "Identity")
 
-10. Select the **+ Add Access Policy** link.
+2. Return to the **hands-on-lab-SUFFIX** resource group and select the **Key vault** resource from the list.
 
-11. In the **Add access policy** form, expand **Secret permissions** and check the box next to **Get** and **List**.  
+    ![The Key Vault resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-key-vault.png "Key Vault resource")
 
-12. In the **Select principal** blade, search for the name of the call center application you just created and choose the managed identity.
+3. From the left menu, select **Access policies** and then select the **Add Access Policy** link.
 
-13. Select **Add**.
+    ![Add Access Policy is highlighted on the Key Vault Access Policies blade.](media/key-vault-add-access-policy.png "Key Vault Access Policies")
 
-    ![The Add access policy form is displayed.](media/kv_addaccesspolicy_forconfig.png "The Add Access Policy form")
+4. In the **Add access policy** form:
 
-14. Select **Save** on the Access policies screen to commit the changes.
+    - **Secret permissions**: Expand the list and check the box next to **Get**.
+    - **Select principal**: Select **None selected** and in the **Select principal** dialog, search for the name of the call center application you just created and choose the managed identity.
 
-<!-- omit in toc -->
-#### Subtask 3: Configure and deploy the call center admin Web App from Visual Studio
+    ![The values specified above are entered into the Add access policy form.](media/key-vault-add-access-policy-blade.png "Add access policy")
 
-1. Navigate to the **Contoso.Apps.SportsLeague.Admin** project located in the **Web** folder using the **Solution Explorer** in Visual Studio.
+5. Select **Add** on the Add access policy dialog.
 
-2. Right-click the **Contoso.Apps.SportsLeague.Admin** project, and select **Edit Project File**.
+6. Select **Save** on the Access policies toolbar to commit the changes.
 
-3. In the **PropertyGroup** element, add the following XML beneath the TargetFramework item and save the file:
+### Task 4: Configure and deploy the call center admin Web App from Visual Studio
 
-    ```xml
-    <UserSecretsId>79a3edd0-2092-40a2-a04d-dcb46d5ca9ed</UserSecretsId>
-    ```
+1. Return to Visual Studio on the LabVM and navigate to the **Contoso.Apps.SportsLeague.Admin** project located in the **Web** folder using the **Solution Explorer**.
 
-    ![A portion of the project file is displayed. The UserSecretsId element is highlighted in the code listing.](media/web_addusersecretsidtoproject.png "Editor displaying project file")
+2. Right-click the **Contoso.Apps.SportsLeague.Admin** project, and select **Manage NuGet Packages**.
 
-4. Right-click the **Contoso.Apps.SportsLeague.Admin** project, and select **Manage NuGet Packages**.
+3. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
 
-5. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
+4. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
 
-6. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
+    ![The NuGet Package Manager windows is displayed with the Browse tab selected, Microsoft.Azure.AppConfiguration.AspNetCore entered into the search box and selected from the search results. In the next pane, the Install button is selected.](media/nuget_installappconfigpackage_web.png "The NuGet Package manager")
 
-    ![The Nuget Package Manager windows is displayed with the Browse tab selected, Microsoft.Azure.AppConfiguration.AspNetCore entered into the search box and selected from the search results. In the next pane, the Install button is selected.](media/nuget_installappconfigpackage_web.png "The NuGet Package manager")
+5. Repeat step 4-6, this time installing the latest **Azure.Identity**.
 
-7. Repeat step 4-6, this time installing the latest **Azure.Identity**.
+6. Now we are ready to configure this application to use the App Configuration in Azure. Under the `Contoso.Apps.SportsLeague.Admin` project, open the `Program.cs` file.
 
-8. Now we are ready to configure this application to use the App Configuration in Azure. Under the `Contoso.Apps.SportsLeague.Admin` project, open the `Program.cs` file.
-
-9. Uncomment the following **using** statements at the top of the file:
+7. Uncomment the following **using** statements at the top of the file:
 
     ```C#
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
-10. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
+8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
 
     ```C#
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
@@ -794,55 +832,65 @@ In this exercise, you provision a website via the Azure Web App template using t
     .UseStartup<Startup>();
     ```
 
-11. Right-click the `Contoso.Apps.SportsLeague.Admin` project, and select **Publish**.
+9. Right-click the `Contoso.Apps.SportsLeague.Admin` project, and select **Publish**.
 
     ![In Solution Explorer, the right-click menu for Contoso.Apps.SportsLeague.Admin displays, and Publish is selected.](media/2019-04-19-14-30-03.png "Right-Click menu")
 
-12. On the Publish dialog, select **Azure** for the **Target**, then select **Next**.
+10. On the Publish dialog, select **Azure** for the **Target**, then select **Next**.
 
-13. For **Specific target**, select **Azure App Service (Linux)**, then select **Next**.
+11. For **Specific target**, select **Azure App Service (Linux)**, then select **Next**.
 
-14. For **App Service**, expand the lab Resource group, and select the **Web App** that was created for the Call Center Admin Web App (with the name that was created previously).
+12. For **App Service**, expand the lab Resource group, and select the **Web App** that was created for the Call Center Admin Web App (with the name that was created previously).
 
-    ![The App Service dialog is shown with the resource group expanded and the call center app service selected.](media/appsvcdeploy_selectcallcenterappdialog.png "Publish target app service selection")
+    ![The App Service dialog is shown with the resource group expanded and the call center app service selected.](media/app-service-publish-linux.png "Publish target app service selection")
 
-15. Select **Finish**.
+13. Select **Finish**.
 
-16. Select **Publish** to publish the Web application.
+14. Select **Publish** to publish the Web application.
 
     ![Publish button is highlighted](media/2020-06-19-22-25-36.png "Publish button")
 
-17. Once deployment is complete, navigate to the Web App. It should look like the following:
+15. Once deployment is complete, navigate to the Web App. It should look like the following:
 
     ![The Contoso website displays the Contoso Sports League Admin webpage, which says that orders that display below are sorted by date, and you can select an order to see its details. However, at this time, there is no data available under Completed Orders.](media/image89.png "Contoso website")
 
-    >**Note**: If you see a page that indicates the app service is running and asking about deploying code, refresh the browser window by selecting CTRL+F5.
+    > **Note**: If you see a page that indicates the app service is running and asking about deploying code, refresh the browser window by selecting CTRL+F5.
 
-### Task 4: Deploying the payment gateway
+## Exercise 5: Deploy the payment gateway
+
+**Duration**: 10 minutes
 
 In this exercise, the attendee will provision an Azure API app template using the Microsoft Azure Portal. The attendee will then deploy the payment gateway API to the API app.
 
-<!-- omit in toc -->
-#### Subtask 1: Provision the payment gateway API app
+### Task 1: Provision the payment gateway API App
 
-1. Using a new tab or instance of your browser, navigate to the Azure Management Portal <http://portal.azure.com>.
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-2. Select **+ Create a resource**, type **API App** into the marketplace search box, and press **Enter**.  Select the **Create** button.
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-3. On the new **API App** create form, create the following values:
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
+
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
+
+3. On the Resource group blade, select **Add** on the toolbar.
+
+    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
+
+4. On the create a resource blade, enter "API App" into the search box and select **API App** in the search results and then select **Create**.
+
+5. On the new **API App** create form, create the following values:
 
    - **App name:** Specify a unique name for the App Name.
    - **Subscription:** Your Azure subscription.
    - **Resource Group:** Select the lab resource group.
-   - **App Service Plan/Location:** Select the **ContosoSportsPlan**.
+   - **App Service Plan/Location:** Select the **contoso-asp-UNIQUEID** plan.
    - **Application Insights:** Enter the configuration, and select **Disabled**
 
-    ![On the API App create form, the Configuration fields are displayed.](media/2019-04-20-14-55-42.png "Configuration fields are displayed")
+    ![On the API App create form, the Configuration fields are displayed.](media/create-api-app.png "Configuration fields are displayed")
 
-4. After the values are accepted, select **Create**.  It will take a few minutes to provision.
+6. Select **Create**.
 
-<!-- omit in toc -->
-#### Subtask 2: Deploy the Contoso.Apps.PaymentGateway project in Visual Studio
+### Task 2: Deploy the Payment Gateway from Visual Studio
 
 1. In Visual Studio, navigate to the **Contoso.Apps.PaymentGateway** project located in the **APIs** folder using the **Solution Explorer**.
 
@@ -874,29 +922,45 @@ In this exercise, the attendee will provision an Azure API app template using th
 
    ![Payment Gateway is up and running and the Swagger UI is displayed.](media/2019-04-11-04-58-04.png "Swagger UI")
 
-  > **Note**: When opening the Swagger UI using the Internet Explorer browser you will see a "Resolver error" error message. This is a result of the Swagger UI no longer supporting Internet Explorer. In another browser, the Swagger UI will work as expected.
+  > **Note**: When opening the Swagger UI using the Internet Explorer browser you will see a "Resolver error" error message. This is a result of the Swagger UI no longer supporting Internet Explorer. Copy the URL and try opening the page in Microsoft Edge, which has been installed on the LabVM. The Swagger UI will work as expected.
 
-### Task 5: Deploying the Offers Web API
+## Exercise 6: Deploy the Offers Web API
+
+**Duration**: 10 minutes
 
 In this exercise, the attendee will provision an Azure API app template using the Microsoft Azure Portal. The attendee will then deploy the Offers Web API.
 
-<!-- omit in toc -->
-#### Subtask 1: Provision the Offers Web API app
+### Task 1: Provision the Offers Web API App
 
-1. Using a new tab or instance of your browser, navigate to the Azure Management Portal (<http://portal.azure.com>).
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-2. Select **+ Create a resource**, type **API App** into the marketplace search box, and press **Enter**.  Select the **Create** button.
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-3. On the new **API App** form, specify a unique name for the **API App**, and ensure the previously used Resource Group and the **ContosoSportsPlan** App Service Plan are selected. You may also disable **Application Insights**.
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-    ![In the API App form, a unique name is typed in the App name field. App configuration fields displayed.](media/2019-04-11-05-03-33.png "API App blade")
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-4. Select the **Create** button.
+3. On the Resource group blade, select **Add** on the toolbar.
 
-5. When the API App has completed provisioning, return to the resource group, then select the new API App from the list of resources.
+    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
 
-<!-- omit in toc -->
-#### Subtask 2: Configure Cross-Origin Resource Sharing (CORS)
+4. On the create a resource blade, enter "API App" into the search box and select **API App** in the search results and then select **Create**.
+
+5. On the new **API App** create form, create the following values:
+
+   - **App name:** Specify a unique name, such as `contoso-offers-api-SUFFIX`.
+   - **Subscription:** Your Azure subscription.
+   - **Resource Group:** Select the lab resource group.
+   - **App Service Plan/Location:** Select the **contoso-asp-UNIQUEID** plan.
+   - **Application Insights:** Enter the configuration, and select **Disabled**
+
+    ![On the API App create form, the Configuration fields are displayed.](media/create-offers-api-app.png "Configuration fields are displayed")
+
+6. Select **Create**.
+
+7. When the API App has completed provisioning, return to the resource group, then select the new API App from the list of resources.
+
+### Task 2: Configure Cross-Origin Resource Sharing (CORS)
 
 1. On the **App Service** blade for the Offers API, under the **API** menu section, scroll down and select **CORS**.
 
@@ -908,8 +972,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![CORS configuration blade displayed.  Entering * as the Allowed Origins value.](media/2019-03-28-08-20-57.png "CORS configuration blade")
 
-<!-- omit in toc -->
-#### Subtask 3: Update the configuration in the starter project
+### Task 3: Update the configuration in the starter project
 
 1. On the **App Service** blade for the Offers API, select **Configuration**.
 
@@ -919,11 +982,9 @@ In this exercise, the attendee will provision an Azure API app template using th
 
 3. Add a new **Connection String** with the following values, and select **OK**:
 
-   - Name: **AppConfig**
-
-   - Value: **Enter the Connection String for the App Configuration Store**.
-
-   - Type: Select **Custom**.
+   - **Name**: Enter `AppConfig`.
+   - **Value**: Enter the Connection String for the App Configuration Store. You copied this into a your text editor previously. Otherwise, you can retrieve it from the Access Keys blade of the App Configuration resource.
+   - **Type**: Select **Custom**.
 
     ![The Add/Edit connection string form is displayed and is populated with the preceding values.](media/image43.png "The Add/Edit connection string form")
 
@@ -933,61 +994,57 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![the Save button is circled on the App Service blade.](media/2019-03-28-05-36-38.png "App Service blade")
 
-6. The offers api resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity. From the left menu, select **Identity**.
+### Task 4: Add a managed identity and set a Key Vault access policy
 
-7. With the **System assigned** tab selected, toggle the **Status** field to **On**, then select **Save**. 
+The offers api resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity.
 
-    ![On the Identity screen, the System assigned tab is selected and the Status field is in the On position.](media/appconfig_systemidentity.png "The Identity screen")
+1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar.
 
-8. Open the **contosokv** Key Vault resource, and from the left menu, select **Access policies**. 
+    ![The Identity item is selected in the left-hand menu. The status is set to On. The Save button is highlighted.](media/call-center-identity.png "Identity")
 
-9. Select the **+ Add Access Policy** link.
+2. Return to the **hands-on-lab-SUFFIX** resource group and select the **Key vault** resource from the list.
 
-10. In the **Add access policy** form, expand **Secret permissions** and check the box next to **Get** and **List**.  
+    ![The Key Vault resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-key-vault.png "Key Vault resource")
 
-11. In the **Select principal** blade, search for the name of the offers api application you just created and choose its managed identity.
+3. From the left menu, select **Access policies** and then select the **Add Access Policy** link.
 
-12. Select **Add**.
+    ![Add Access Policy is highlighted on the Key Vault Access Policies blade.](media/key-vault-add-access-policy.png "Key Vault Access Policies")
 
-    ![The Add access policy form is displayed.](media/kv_addaccesspolicy_forconfig.png "The Add access policy form")
+4. In the **Add access policy** form:
 
-13. Select **Save** on the Access policies screen to commit the changes.
+    - **Secret permissions**: Expand the list and check the box next to **Get**.
+    - **Select principal**: Select **None selected** and in the **Select principal** dialog, search for the name of the call center application you just created and choose the managed identity.
 
-<!-- omit in toc -->
-#### Subtask 4: Deploy the Contoso.Apps.SportsLeague.Offers project in Visual Studio
+    ![The values specified above are entered into the Add access policy form.](media/key-vault-add-access-policy-offers-api.png "Add access policy")
+
+5. Select **Add** on the Add access policy dialog.
+
+6. Select **Save** on the Access policies toolbar to commit the changes.
+
+### Task 4: Deploy the Offers app from Visual Studio
 
 1. Navigate to the **Contoso.Apps.SportsLeague.Offers** project located in the **APIs** folder using the **Solution Explorer** in Visual Studio.
 
-2. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Edit Project File**.
+2. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Manage NuGet Packages**.
 
-3. In the **PropertyGroup** element, add the following XML beneath the TargetFramework item and save the file:
+3. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
 
-    ```xml
-    <UserSecretsId>79a3edd0-2092-40a2-a04d-dcb46d5ca9ed</UserSecretsId>
-    ```
-
-    ![A portion of the project file is displayed. The UserSecretsId element is highlighted in the code listing.](media/web_addusersecretsidtoproject.png "Editor showing the project file")
-
-4. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Manage NuGet Packages**.
-
-5. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
-
-6. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
+4. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
 
     ![The Nuget Package Manager windows is displayed with the Browse tab selected, Microsoft.Azure.AppConfiguration.AspNetCore entered into the search box and selected from the search results. In the next pane, the Install button is selected.](media/nuget_installappconfigpackage_web.png "The NuGet Package Manager")
 
-7. Repeat step 4-6, this time installing the latest **Azure.Identity**.
+5. Repeat step 4-6, this time installing the latest **Azure.Identity**.
 
-8. Now we are ready to configure this application to use the App Configuration in Azure. Under the **Contoso.Apps.SportsLeague.Offers** project, open the **Program.cs** file.
+6. Now we are ready to configure this application to use the App Configuration in Azure. Under the **Contoso.Apps.SportsLeague.Offers** project, open the `Program.cs` file.
 
-9. Uncomment the following **using** statements at the top of the file:
+7. Uncomment the following **using** statements at the top of the file:
 
     ```C#
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
-10. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the API application service to point to the centralized App Configuration resource.
+8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the API application service to point to the centralized App Configuration resource.
 
     ```C#
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
@@ -1006,50 +1063,49 @@ In this exercise, the attendee will provision an Azure API app template using th
     .UseStartup<Startup>();
     ```
 
-11. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Publish**.
+9. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Publish**.
 
     ![In Solution Explorer, from the Contoso.Apps.SportsLeague.Admin right-click menu, Publish is selected.](media/2019-04-19-15-03-45.png "Solution Explorer")
 
-12. On the Publish dialog, select **Azure** for the **Target**. Select **Next**.
+10. On the Publish dialog, select **Azure** for the **Target**. Select **Next**.
 
-13. For **Specific target**, select **Azure App Service (Windows)**. Select **Next**.
+11. For **Specific target**, select **Azure App Service (Windows)**. Select **Next**.
 
-14. For **App Service**, expand the resource group, and select the API app service that you created for the Offer API from the list, then choose **Next**.
+12. For **App Service**, expand the resource group, and select the API app service that you created for the Offer API from the list, then choose **Next**.
 
     ![The App Service dialog is shown with the offers api selected.](media/deployment_selectoffersapiservice.png "Publish target app service selection")
-    
-15. For **API Management**, check the **Skip this step** checkbox and select **Finish**.
-    
-16. Select **Publish** to publish the API App.
+
+13. For **API Management**, check the **Skip this step** checkbox and select **Finish**.
+
+14. Select **Publish** to publish the API App.
 
     ![Publish button is highlighted](media/offerapi_vspublishbutton.png "Publish button is highlighted")
 
-17. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully.
+15. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully.
 
     ![The Visual Studio output shows that the web app was published successfully.](media/offerapi_publishsuccessoutput.png "Visual Studio output")
 
-18. Copy and paste the offer api **URL** of the deployed **API App** into Notepad for later use.
+16. Copy and paste the offer api **URL** of the deployed **API App** into Notepad for later use.
 
-19. Viewing the Web App in a browser will display the Swagger UI for the API.
+17. Viewing the Web App in a browser will display the Swagger UI for the API.
 
-20. In the Visual Studio **Output** view, you will see a status the API app was published successfully.
+18. In the Visual Studio **Output** view, you will see a status the API app was published successfully.
 
-21. Record the value of the deployed API app URL into Notepad for later use.
+19. Record the value of the deployed API app URL into Notepad for later use.
 
-22. Viewing the Web App in a browser will display the Swagger UI for the API.
+20. Viewing the Web App in a browser will display the Swagger UI for the API.
 
     ![The Offers API is up and running and the Swagger UI is displayed.](media/2019-04-11-05-20-40.png "Swagger UI")
 
     > **Note**: When opening the Swagger UI using the Internet Explorer browser you will see a "Resolver error" error message. This is a result of the Swagger UI no longer supporting Internet Explorer. In another browser, the Swagger UI will work as expected.
 
-23. Within the Swagger UI for the Offers API, select the `/api/get` method on the API. Then select the **Try it out** button, and then **Execute** to test out the API call from within the Swagger UI in the web browser. Once it executes, scroll down to view the results of the API call execution.
+21. Within the Swagger UI for the Offers API, select the `/api/get` method on the API. Then select the **Try it out** button, and then **Execute** to test out the API call from within the Swagger UI in the web browser. Once it executes, scroll down to view the results of the API call execution.
 
-    ![Swagger UI displaying API call response.](media/2020-03-17-20-56-31.png "Swagger UI")
+    ![Swagger UI displaying API call response.](media/offers-swagger-response.png "Swagger UI")
 
-### Task 6: Add API endpoint configuration settings
+## Exercise 7: Add API endpoint configuration settings
 
-<!-- omit in toc -->
-#### Subtask 1: Add the API endpoint configuration settings
+### Task 1: Add the API endpoint configuration settings
 
 1. In the Azure Portal, return to the lab resource group.
 
@@ -1083,8 +1139,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![The list of Configuration settings is shown with the two new API endpoint settings highlighted.](media/appconfig_listofsettingswithAPIendpointshighlighted.png "Configuration Settings")
 
-<!-- omit in toc -->
-#### Subtask 2: Validate App Settings are correct
+### Task 2: Validate App Settings are correct
 
 1. Return to the lab Resource Group and select the **contosoapp** App Service (the e-commerce website). On the **App Service** blade, select **Overview**.
 
