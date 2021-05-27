@@ -63,17 +63,17 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 2: Configure Cross-Origin Resource Sharing (CORS)](#task-2-configure-cross-origin-resource-sharing-cors)
     - [Task 3: Update the configuration in the starter project](#task-3-update-the-configuration-in-the-starter-project)
     - [Task 4: Add a managed identity and set a Key Vault access policy](#task-4-add-a-managed-identity-and-set-a-key-vault-access-policy)
-    - [Task 4: Deploy the Offers app from Visual Studio](#task-4-deploy-the-offers-app-from-visual-studio)
+    - [Task 5: Deploy the Offers app from Visual Studio](#task-5-deploy-the-offers-app-from-visual-studio)
   - [Exercise 7: Add API endpoint configuration settings](#exercise-7-add-api-endpoint-configuration-settings)
     - [Task 1: Add the API endpoint configuration settings](#task-1-add-the-api-endpoint-configuration-settings)
     - [Task 2: Validate App Settings are correct](#task-2-validate-app-settings-are-correct)
-  - [Exercise 2: Identity and Security](#exercise-2-identity-and-security)
+  - [Exercise 8: Identity and Security](#exercise-8-identity-and-security)
     - [Task 1: Enable Azure AD Premium Trial](#task-1-enable-azure-ad-premium-trial)
     - [Task 2: Create a new Contoso user](#task-2-create-a-new-contoso-user)
     - [Task 3: Configure access control for the call center administration Web Application](#task-3-configure-access-control-for-the-call-center-administration-web-application)
     - [Task 4: Apply custom branding for the Azure Active Directory logon page](#task-4-apply-custom-branding-for-the-azure-active-directory-logon-page)
     - [Task 5: Verify the branding has been successfully applied to the Azure Active Directory logon page](#task-5-verify-the-branding-has-been-successfully-applied-to-the-azure-active-directory-logon-page)
-  - [Exercise 3: Enable Azure B2C for customer site](#exercise-3-enable-azure-b2c-for-customer-site)
+  - [Exercise 9: Enable Azure B2C for customer site](#exercise-9-enable-azure-b2c-for-customer-site)
     - [Task 1: Create a new directory](#task-1-create-a-new-directory)
     - [Task 2: Add a new application](#task-2-add-a-new-application)
     - [Task 3: Create Policies, Sign up and sign in](#task-3-create-policies-sign-up-and-sign-in)
@@ -84,15 +84,18 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 8: Display user information](#task-8-display-user-information)
     - [Task 9: Update App Service configuration](#task-9-update-app-service-configuration)
     - [Task 10: Run the sample app](#task-10-run-the-sample-app)
-  - [Exercise 4: Enabling Telemetry with Application Insights](#exercise-4-enabling-telemetry-with-application-insights)
-    - [Task 1: Configure the application for telemetry](#task-1-configure-the-application-for-telemetry)
-    - [Task 2: View the Application Insights logs](#task-2-view-the-application-insights-logs)
-  - [Exercise 5: Automating backend processes with Azure Functions and Logic Apps](#exercise-5-automating-backend-processes-with-azure-functions-and-logic-apps)
+  - [Exercise 10: Enabling Telemetry with Application Insights](#exercise-10-enabling-telemetry-with-application-insights)
+    - [Task 1: Add Application Insights Telemetry to the e-commerce website project](#task-1-add-application-insights-telemetry-to-the-e-commerce-website-project)
+    - [Task 2: Enable client side telemetry](#task-2-enable-client-side-telemetry)
+    - [Task 3: Deploy the e-commerce Web App from Visual Studio](#task-3-deploy-the-e-commerce-web-app-from-visual-studio)
+    - [Task 4: View the Application Insights logs](#task-4-view-the-application-insights-logs)
+  - [Exercise 11: Automating backend processes with Azure Functions and Logic Apps](#exercise-11-automating-backend-processes-with-azure-functions-and-logic-apps)
     - [Task 1: Create an Azure Function to Generate PDF Receipts](#task-1-create-an-azure-function-to-generate-pdf-receipts)
-    - [Task 2: Configure and deploy the Function App](#task-2-configure-and-deploy-the-function-app)
-    - [Task 3: Create an Azure Logic App to Process Orders](#task-3-create-an-azure-logic-app-to-process-orders)
-    - [Task 4: Use Twilio to send SMS Order Notifications](#task-4-use-twilio-to-send-sms-order-notifications)
-  - [Exercise 6: Automate deployments using GitHub actions](#exercise-6-automate-deployments-using-github-actions)
+  - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
+    - [Task 3: Configure and deploy the Function App](#task-3-configure-and-deploy-the-function-app)
+    - [Task 4: Create an Azure Logic App to Process Orders](#task-4-create-an-azure-logic-app-to-process-orders)
+    - [Task 5: Use Twilio to send SMS Order Notifications](#task-5-use-twilio-to-send-sms-order-notifications)
+  - [Exercise 12: Automate deployments using GitHub actions](#exercise-12-automate-deployments-using-github-actions)
     - [Task 1: Create a GitHub repository](#task-1-create-a-github-repository)
     - [Task 2: Commit the existing lab files to source control](#task-2-commit-the-existing-lab-files-to-source-control)
     - [Task 3: Create a service principal in Active Directory](#task-3-create-a-service-principal-in-active-directory)
@@ -436,14 +439,14 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
 7. Uncomment the following **using** statements at the top of the file:
 
-    ```C#
+    ```csharp
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
 8. In the **CreateHostBuilder** method, uncomment the following code. This tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
 
-    ```C#
+    ```csharp
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
     {
         var settings = config.Build();
@@ -679,7 +682,7 @@ In this task, you update the database connection string in Key Vault to use the 
 
 1. Return to the **hands-on-lab-SUFFIX** resource group and select the **contosoapp** App Service resource.
 
-   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contososports SQL Server resource is highlighted.](./media/resource-group-resources-app-service.png "ContosoSports SQL Server in resource group list")
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contosoapp App Service resource is highlighted.](./media/resource-group-resources-app-service.png "contosoapp App Service in resource group list")
 
 2. On the **App Service** blade, select the **URL** of the Web App displayed in the Essentials area to open it in a new browser tab.
 
@@ -808,14 +811,14 @@ The call center web application resource needs access to the Key Vault. The App 
 
 7. Uncomment the following **using** statements at the top of the file:
 
-    ```C#
+    ```csharp
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
 8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
 
-    ```C#
+    ```csharp
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
     {
         var settings = config.Build();
@@ -852,7 +855,7 @@ The call center web application resource needs access to the Key Vault. The App 
 
 15. Once deployment is complete, navigate to the Web App. It should look like the following:
 
-    ![The Contoso website displays the Contoso Sports League Admin webpage, which says that orders that display below are sorted by date, and you can select an order to see its details. However, at this time, there is no data available under Completed Orders.](media/image89.png "Contoso website")
+    ![The Contoso website displays the Contoso Sports League Admin webpage, which says that orders that display below are sorted by date, and you can select an order to see its details. However, at this time, there is no data available under Completed Orders.](media/contoso-admin-app.png "Contoso website")
 
     > **Note**: If you see a page that indicates the app service is running and asking about deploying code, refresh the browser window by selecting CTRL+F5.
 
@@ -1021,7 +1024,7 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
 6. Select **Save** on the Access policies toolbar to commit the changes.
 
-### Task 4: Deploy the Offers app from Visual Studio
+### Task 5: Deploy the Offers app from Visual Studio
 
 1. Navigate to the **Contoso.Apps.SportsLeague.Offers** project located in the **APIs** folder using the **Solution Explorer** in Visual Studio.
 
@@ -1039,14 +1042,14 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
 7. Uncomment the following **using** statements at the top of the file:
 
-    ```C#
+    ```csharp
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```
 
 8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the API application service to point to the centralized App Configuration resource.
 
-    ```C#
+    ```csharp
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
     {
         var settings = config.Build();
@@ -1105,63 +1108,64 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
 ## Exercise 7: Add API endpoint configuration settings
 
+**Duration**: 15 minutes
+
 ### Task 1: Add the API endpoint configuration settings
 
-1. In the Azure Portal, return to the lab resource group.
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **App Configuration** resource from the list.
 
-2. Select the **contosoconfig** App Configuration resource from the list.
+    ![The App Configuration resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-app-configuration.png "App Configuration resource")
 
-    ![The resource listing is displayed with the App Configuration resource highlighted.](media/appconfig_resourcelist_selection.png "The resource listing")
+2. Select **Configuration explorer** from the left-hand navigation menu and then select **Create** and **Key Vault reference**.
 
-3. On the left menu, in the **Operations** section, select **Configuration explorer**.
+    ![Configuration explorer is highlighted in the left-hand menu and Create --> Key Vault reference is highlighted on the Configuration explorer blade.](media/app-configuration-explorer.png "Configuration explorer")
 
-4. Expand the **+ Create** button, and select **Key-value**. This API endpoint does not contain any secret values, thus is not required to be stored as a Key Vault value.
+3. Expand the **Create** button, and select **Key-value**. This API endpoint does not contain any secret values, thus is not required to be stored as a Key Vault value.
 
-    ![The + Create button is expanded with the Key-value item selected.](media/appconfig_createkeyvaluemenu.png "Create key value menu item")
+    ![The + Create button is expanded with the Key-value item selected.](media/app-config-create-key-value-menu.png "Create key value menu item")
 
-5. Create the new key-value entry with the following values:
+4. Create the new key-value entry with the following values:
 
-   - Name: `APIEndpoints:PaymentsAPI`
-
+   - **Name**: `APIEndpoints:PaymentsAPI`
    - Value: Enter the **HTTPS** URL for the Payments API App with `/api/nvp` appended to the end. This is the value that you recorded when deploying the API. Alternatively, this value can be retrieved by opening the API resource in the Azure Portal and copying the URL value on the Overview screen.
 
-        >**Example**: `https://paymentsapi0.azurewebsites.net/api/nvp`
+        >**Example**: `https://contoso-payments-api.azurewebsites.net/api/nvp`
 
-6. Create another Key-value setting with the following values:
+5. Create another Key-value setting with the following values:
 
    - App Setting Name: `APIEndpoints:OffersAPI`
 
    - Value: Enter the **HTTPS** URL for the Offers API App with `/api/get` appended to the end. This is the value that you recorded when deploying the API. Alternatively, this value can be retrieved by opening the API resource in the Azure Portal and copying the URL value on the Overview screen.
 
-    >**Example**: `https://offersapi4.azurewebsites.net/api/get`
+    >**Example**: `https://contoso-offers-api.azurewebsites.net/api/get`
 
     >**Note**: Ensure both API URLs are using **SSL** (https://), or you will see a CORS errors.
 
-    ![The list of Configuration settings is shown with the two new API endpoint settings highlighted.](media/appconfig_listofsettingswithAPIendpointshighlighted.png "Configuration Settings")
+    ![The list of Configuration settings is shown with the two new API endpoint settings highlighted.](media/app-config-keys-with-apis.png "Configuration Settings")
 
 ### Task 2: Validate App Settings are correct
 
-1. Return to the lab Resource Group and select the **contosoapp** App Service (the e-commerce website). On the **App Service** blade, select **Overview**.
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **contosoapp** App Service resource.
 
-    ![Overview is selected on the left side of the App Service blade.](media/image119.png "App Service blade")
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and contosoapp App Service resource is highlighted.](./media/resource-group-resources-app-service.png "contosoapp App Service in resource group list")
 
-2. In the **Overview** pane, select the **URL** for the Web App to open it in a new browser tab.
+2. On the **App Service** blade, select the **URL** of the Web App displayed in the Essentials area to open it in a new browser tab.
 
-    ![On the right side of the App Service overview screen, the URL (http://contososportsweb2101.azurewebsites.net) link is highlighted.](media/image120.png "App Service blade")
+    ![On the App Service blade, in the Essentials section, the URL link is highlighted.](media/web-app-url.png "App Service URL")
 
 3. On the homepage, you should see the latest offers populated from the Offers API.
 
     ![On the Contoso Sports League webpage, Today\'s offers display: Baseball socks, Road bike, and baseball mitt.](media/image121.png "Contoso Sports League webpage")
 
-    >**Note**: The page may be cached, if Today's Offers are not displayed, you can try re-publishing the e-commerce app service from Visual Studio (Contoso.Apps.SportsLeague.Web).
+    > **Note**: The page may be cached, if Today's Offers are not displayed, you can try re-publishing the e-commerce app service from Visual Studio (Contoso.Apps.SportsLeague.Web).
 
-4. Submit several test orders to ensure all pieces of the site are functional.  **Accept the default data during the payment processing.**
+4. Submit several test orders to ensure all pieces of the site are functional. **Accept the default data during the payment processing.**
 
     ![On the Contoso Sports League webpage, the message Order Completed displays.](media/image122.png "Contoso Sports League webpage")
 
->**Note**: If you are still experiencing CORS errors, ensure the URLs to the Web App in Azure local host are exact.
+> **Note**: If you are still experiencing CORS errors, ensure the URLs to the Web App in Azure local host are exact.
 
-## Exercise 2: Identity and Security
+## Exercise 8: Identity and Security
 
 Duration: 75 Minutes
 
@@ -1171,154 +1175,128 @@ The Contoso call center admin application will only be accessible by users of th
 
 >**Note**: This task is **optional**, and it is valid only if you are a global administrator on the Azure AD tenant associated with your subscription.
 
-1. Navigate to the Azure Management portal, [http://portal.azure.com](http://portal.azure.com/), using a new tab or instance.
+1. Navigate to the home page of the [Azure portal](http://portal.azure.com/) and select **Azure Active Directory**. under Azure Services.
 
-2. Expand the left-hand navigation menu, select **Azure Active Directory**.
+    > **Note**: If you do not see Azure Active Directory, select More Services and then select it there.
 
-    ![The Azure Active Directory menu option.](media/image123.png "Azure Portal")
+    ![The Azure Active Directory menu option.](media/azure-home-active-directory.png "Azure Portal")
 
-3. On the **Azure Active Directory** blade, locate and select the **Company branding** option.
+2. On the **Azure Active Directory** blade, locate and select the **Company branding** option in the left-hand navigation menu.
 
     ![In the Azure Active Directory blade, Company branding is selected.](media/image124.png "Azure Active Directory blade")
 
-4. In the right pane, select the **Get a free Premium trial...** link.
+3. In the right pane, select the **Get Free Premium Trial** button.
 
-    ![On the left side of the Azure Active Directory blade, Company branding is selected. On the right side, the Get a free Premium trial link is selected.](media/image125.png "Azure Active Directory blade")
+    ![On the left side of the Azure Active Directory blade, Company branding is selected. On the right side, the Get a free Premium trial link is selected.](media/azure-active-directory-free-premium-trial.png "Azure Active Directory blade")
 
     If you already have a Premium Azure Active Directory, skip to Task 2.
 
-5. On the **Activate** blade, select the **Free Trial** link within the **Azure AD Premium P2**, then select **Activate**.
+4. On the **Activate** blade, expand **Free trial** under **Azure AD Premium P2**, then select **Activate**.
 
-    ![The Free trial link is selected on the Activate blade in the Azure AD Premium P2 box, and the Activate button is highlighted.](media/image126.png "Activate blade")
+    ![The Free trial link is selected on the Activate blade in the Azure AD Premium P2 box, and the Activate button is highlighted.](media/azure-active-directory-free-trial-activate.png "Activate blade")
 
-6. Close the **Azure Active Directory** blades.
+5. Close the **Azure Active Directory** blades.
 
 ### Task 2: Create a new Contoso user
 
->**Note**: This task is **optional**, and it is valid only if you are a global administrator on the Azure AD tenant associated with your subscription.
+> **Note**: This task is **optional**, and it is valid only if you are a global administrator on the Azure AD tenant associated with your subscription.
 
-1. Navigate to the Azure Management portal, [http://portal.azure.com](http://portal.azure.com/), using a new tab or instance.
-
-2. Select **Azure Active Directory** in the navigation menu to the left.
-
-    ![Screenshot of Azure Active Directory menu option.](media/image123.png "Azure Portal")
-
-3. On the **Azure Active Directory** blade, select **Custom Domain names**.
+1. On the **Azure Active Directory** blade, select **Custom domain names**.
 
     ![Custom Domain Names menu option screenshot.](media/image128.png "Custom Domain names")
 
-4. Copy the **Domain Name** for your Azure AD Tenant. It will be in the format: *[your tenant\].onmicrosoft.com*.
+2. Copy the **Domain Name** for your Azure AD Tenant. It will be in the format: *[your tenant].onmicrosoft.com*.
     This will be used for creating the new user's Username.
 
     ![Under Name, the Domain Name is selected.](media/image129.png "Domain name")
 
-5. On the **Azure Active Directory** blade, select **Users**.
+3. On the **Azure Active Directory** blade, select **Users**.
 
     ![Under Manage, All users is selected.](media/image130.png "Azure Active Directory blade")
 
-6. Select **+ New user** to add a new user.
+4. Select **New user** to add a new user.
 
     ![The + New User button is boxed in red on the Azure Active Directory blade.](media/image131.png "Azure Active Directory blade")
 
-7. On the **User** blade, specify a user's **Name** and **User name**. Specify the **User name** to be at the domain name for your Azure AD Tenant. For example: *tbaker@\[your tenant\].onmicrosoft.com*.
+5. On the **User** blade, enter the following:
 
-    ![On the User blade, the two previously defined fields (Name and User name) are circled.](media/image132.png "User blade")
+    **Identity**:
 
-8. Select the **Show Password** checkbox, and make a note of the password for use later.
+    - **User name**: Enter a username and select the domain name for your Azure AD Tenant. For example: *tbaker@[your tenant].onmicrosoft.com*.
+    - **Name**: Enter the name of the user.
+    - **Password**: Select **Auto-generate** and then check **Show password**. Copy this value into a text editor for later user.
 
-    ![The Show Password checkbox is selected.](media/image133.png "Password section")
+    ![On the User blade, the two previously defined fields (Name and User name) are circled.](media/azure-active-directory-new-user.png "User blade")
 
-9. Select **Create**.
-
-    ![Screenshot of the Create button.](media/image134.png "Create button")
+6. Select **Create**.
 
 ### Task 3: Configure access control for the call center administration Web Application
 
->**Note**: This task is **optional**, and it is valid only if you have the right to create applications in your Azure AD Tenant.
+> **Note**: This task is **optional**, and it is valid only if you have the right to create applications in your Azure AD Tenant.
 
-<!-- omit in toc -->
-#### Subtask 1: Enable Azure AD Authentication
+1. Return to the **hands-on-lab-SUFFIX** resource group and select the **Call Center Administration web app** App Service resource.
 
-1. On the left navigation of the Azure Portal, select **App Services**.
+   ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and call center admin web app resource is highlighted.](./media/resource-group-resources-app-service-admin.png "Call center admin web app in resource group list")
 
-    ![Screenshot of the App Services button.](media/image135.png "App Services button")
+2. On the **App Service** blade, select the **Authentication** from the left-hand navigation menu and then select **Add Identity Provider**.
 
-2. On the **App Services** blade, select the **Call Center Administration Web app**.
+    ![On the App Service blade, Authentication is selected in the left-hand menu and the Add identity provider button is highlighted.](media/app-service-authentication.png "App Service blade")
 
-    ![In the App Services blade, under Name, contososportscallcentercp is selected.](media/image136.png "App Services blade")
+3. On the **Add an identity provider** dialog, enter the following:
 
-3. Select the **Authentication / Authorization** tile.
+    - **Identity provider**: Select **Microsoft**.
+    - **App registration type**: Choose **Create new app registration**.
+    - **Name**: Accept the default value entered into this box.
+    - **Supported account types**: Choose **Current tenant - Single tenant**.
+    - **Authentication**: Choose **Require authentication**.
+    - **Unauthenticated requests**: Choose **HTTP 302 Found redirect: recommended for web sites**.
+    - **Token store**: Check this box.
 
-    ![On the App Service blade, under Settings, Authentication / Authorization is selected.](media/image137.png "App Service blade")
+    ![The values specified above are entered into the basics tab of the add an identity provider dialog.](media/add-identity-provider-basics.png "Add an identity provider")
 
-4. Change **App Service Authentication** to **On**, and change the dropdown to **Log in with Azure Active Directory**.
+4. Select **Add**.
 
-    ![The Authentication / Authorization section displays with App Service Authentication button set to On, and Log in with Azure Active Directory selected in the Action to take when request is not authenticated drop-down list box.](media/image138.png "Authentication / Authorization section")
+5. Launch a new **InPrivate or Incognito mode** browser window and navigate to the **Call Center Administration** website. You can find the URL in the Essentials area of the web app's blade in the Azure portal.
 
-5. Select the **Azure Active Directory**.
-
-    ![In the Authentication Providers section, Azure Active Directory (Not Configured) is selected.](media/image139.png "Authentication Providers section")
-
-6. On the **Azure Active Directory Settings** blade, change **Management mode** to **Express**.
-
-    ![At the bottom of the Azure Active Directory Settings blade, Management mode is set to Express.](media/image140.png "Azure Active Directory Settings blade")
-
-7. Keep the remaining fields as their default, and select **OK**.
-
-    ![Screenshot of the OK button.](media/image141.png "OK button")
-
-8. Change the **Action to take when request is not authenticated** option to **Login with Azure Active Directory**.
-
-    ![The Action to take when request is not authenticated field is set to Log in with Azure Authentication.](media/image142.png "Action to take field")
-
-9. In the **Authentication / Authorization** blade, select **Save**.
-
-    ![The Save button is circled in the App Service blade.](media/image143.png "App Service blade")
-
-<!-- omit in toc -->
-#### Subtask 2: Verify the call center administration website uses the access control logon
-
-1. Close your browser (or use an alternative), and launch a browser is **InPrivate or Incognito mode**. Navigate to the **Call Center Administration** website.
-
-2. The browser will redirect to the non-branded Access Control logon URL. You can log on with your Microsoft account or the **Contoso test user** you created earlier.
+6. The browser will redirect to the non-branded Access Control logon URL. You can log on with your Microsoft account or the **Contoso test user** you created earlier.
 
     ![Microsoft login prompt.](media/image144.png "Microsoft login prompt")
 
-3. After you log on and **accept the consent**, your browser will be redirected to the Contoso Sports League Admin webpage.
+7. On the **Permissions requested** page, select **Accept**.
 
-    ![The Contoso Sports League Admin webpage displays with one Completed Order.](media/image145.png "Contoso Sports League Admin webpage")
+    ![The permissions requested page is displayed](media/permissions-requested.png "Permissions requested")
 
-4. Verify in the upper-right corner you see the link **Logged In**. If it is not configured, you will see **Sign in**.
+8. After you log on and **accept the consent**, your browser will be redirected to the Contoso Sports League Admin webpage.
 
-    ![Screenshot of the Logged In message.](media/image146.png "Logged in message") ![Screenshot of the Sign In link.](media/image147.png "Sign in link")
+    ![The Contoso Sports League Admin webpage displays with one Completed Order.](media/contoso-sports-admin-auth.png "Contoso Sports League Admin webpage")
 
 ### Task 4: Apply custom branding for the Azure Active Directory logon page
 
->**Note**: this task is **optional**, and it is valid only if you are a global administrator on the Azure AD tenant associated with your subscription, and you completed the Enabling Azure AD Premium exercise.
+> **Note**: this task is **optional**, and it is valid only if you are a global administrator on the Azure AD tenant associated with your subscription, and you completed the Enabling Azure AD Premium exercise.
 
-1. Navigate to the Azure Management portal, [http://portal.azure.com](http://portal.azure.com/), using a new tab or instance.
+1. Navigate to the home page of the [Azure portal](http://portal.azure.com/) and select **Azure Active Directory**. under Azure Services.
 
-2. In the navigation menu to the left, select **Azure Active Directory**.
+    > **Note**: If you do not see Azure Active Directory, select More Services and then select it there.
 
-    ![The Azure Active Directory menu option.](media/image123.png "Azure Active Directory")
+    ![The Azure Active Directory menu option.](media/azure-home-active-directory.png "Azure Portal")
 
-3. On the **Azure Active Directory** blade, select **Company branding**.
+2. On the **Azure Active Directory** blade, locate and select the **Company branding** option in the left-hand navigation menu.
 
-    ![On the Azure Active Directory blade, Company branding is selected.](media/image148.png "Azure Active Directory blade")
+    ![In the Azure Active Directory blade, Company branding is selected.](media/image124.png "Azure Active Directory blade")
 
-4. Select the **Configure...** information box.
+3. Select the **Configure...** information box.
 
     ![The Configure company branding link is selected.](media/image149.png "Configure company branding link")
 
-5. On the **Configure company branding** blade, select the `default_signin_illustration.jpg` image file from `C:\MCW` for the **Sign-in page image**.
+4. On the **Configure company branding** blade, select the `default_signin_illustration.jpg` image file from `C:\MCW` for the **Sign-in page image**.
 
     ![The Configure company branding blade displays the default sign in picture of the Contoso sports league text, and a person on a bicycle. Below that, the Select a file field and browse icon is selected.](media/image150.png "Configure company branding blade")
 
-6. Select the `logo-60-280.png` image file from the supplementary files for the **Banner image**.
+5. Select the `logo-60-280.png` image file from the supplementary files for the **Banner image**.
 
     ![The Contoso sports league banner text displays.](media/image151.png "Contoso sports league banner")
 
-7. Select **Save**.
+6. Select **Save**.
 
     ![The Save button is circled on the Configure company branding blade.](media/image152.png "Configure company branding blade")
 
@@ -1332,15 +1310,11 @@ The Contoso call center admin application will only be accessible by users of th
 
 3. After you log on, your browser will be redirected to the Contoso Sports League Admin webpage.
 
-    ![The Contoso Sports League Admin webpage displays with one completed order.](media/image145.png "Contoso Sports League Admin webpage")
-
-4. Verify in the upper-right corner you see the link **Logged in**.
-
-    ![Screenshot of the Logged in message.](media/image146.png "Logged in message")
+    ![The Contoso Sports League Admin webpage displays with one Completed Order.](media/contoso-sports-admin-auth.png "Contoso Sports League Admin webpage")
 
     >**Note**: If you run the app using localhost, ensure connection strings within all the appsettings.json files in the solution have the placeholders removed with actual values. Search on appsettings.json in the Visual Studio Solution Explorer to come up with the list.
 
-## Exercise 3: Enable Azure B2C for customer site
+## Exercise 9: Enable Azure B2C for customer site
 
 Duration: 75 minutes
 
@@ -1429,9 +1403,9 @@ In this exercise, you will configure an Azure AD Business to Consumer (B2C) inst
     **Multifactor authentication**:
 
     - **Type of method**: Leave **Email** selected.
-    - **MFA enforcement**: Choose **Conditional (preview)**. This will disable MFA for this exercise.
+    - **MFA enforcement**: Choose **Conditional**. This will disable MFA for this exercise.
 
-    **Conditional access (preview)**:
+    **Conditional access**:
 
     - **Enforce conditional access policies**: Ensure this box is **unchecked**.
 
@@ -1524,9 +1498,9 @@ To enable profile editing on your application, you will need to create a profile
     **Multifactor authentication**:
 
     - **Type of method**: Leave **Email** selected.
-    - **MFA enforcement**: Choose **Conditional (preview)**. This will disable MFA for this exercise.
+    - **MFA enforcement**: Choose **Conditional**. This will disable MFA for this exercise.
 
-    **Conditional access (preview)**:
+    **Conditional access**:
 
     - **Enforce conditional access policies**: Ensure this box is **unchecked**.
 
@@ -1584,9 +1558,9 @@ To enable profile editing on your application, you will need to create a profile
     **Multifactor authentication**:
 
     - **Type of method**: Leave **Email** selected.
-    - **MFA enforcement**: Choose **Conditional (preview)**. This will disable MFA for this exercise.
+    - **MFA enforcement**: Choose **Conditional**. This will disable MFA for this exercise.
 
-    **Conditional access (preview)**:
+    **Conditional access**:
 
     - **Enforce conditional access policies**: Ensure this box is **unchecked**.
 
@@ -1865,13 +1839,13 @@ When you authenticate users by using OpenID Connect, Azure AD returns an ID toke
 
 In this task, you update the configuration settings for the deployed web app in the Azure portal.
 
-1. Return to the [Azure portal](https://portal.azure.com/), navigate to the **ContosoSports** resource group, and locate the Azure AD B2C resource. Copy the name portion of the **B2C tenant** and pasted it into a text edit, such as Notepad.exe.
+1. Return to the [Azure portal](https://portal.azure.com/), navigate to the **hands-on-lab-SUFFIX** resource group, and locate the Azure AD B2C resource. Copy the name portion of the **B2C tenant** and pasted it into a text edit, such as Notepad.exe.
 
     > **Note**: The name portion of the tenant is everything leading up to the first period (.) in the resource name. So, you will exclude `.onmicrosoft.com` from what you copy and paste into the text editor.
 
-    ![List of all of the resources within the ContosoSports resource group. Pointing to the B2C tenant name.](media/resource-group-b2c-tenant.png "Locate B2C tenant name")
+    ![List of all of the resources within the hands-on-lab-SUFFIX resource group. Pointing to the B2C tenant name.](media/resource-group-b2c-tenant.png "Locate B2C tenant name")
 
-2. While still on the **ContosoSports** resource group blade in the Azure portal, select the Contoso Web App resource, and then select **Configuration** on the web app blade.
+2. While still on the **hands-on-lab-SUFFIX** resource group blade in the Azure portal, select the Contoso Web App resource, and then select **Configuration** on the web app blade.
 
 3. Add the following settings in the **Application Settings** section:
 
@@ -1905,16 +1879,13 @@ In this task, you re-deploy the web app to your App Service and test the app usi
 
     ![On the Contoso website, the following links are circled: Russell, Sign out, and Edit Profile.](media/image183.png "Contoso website, Claims information page")
 
-## Exercise 4: Enabling Telemetry with Application Insights
+## Exercise 10: Enabling Telemetry with Application Insights
 
-Duration: 30 Minutes
+**Duration**: 30 Minutes
 
 To configure the application for logging and diagnostics, you have been asked to configure Microsoft Azure Application Insights and add some custom telemetry.
 
-### Task 1: Configure the application for telemetry
-
-<!-- omit in toc -->
-#### Subtask 1: Add Application Insights Telemetry to the e-commerce website project
+### Task 1: Add Application Insights Telemetry to the e-commerce website project
 
 1. Open the Solution **Contoso.Apps.SportsLeague** in Visual Studio.
 
@@ -1951,31 +1922,27 @@ To configure the application for logging and diagnostics, you have been asked to
 
 9. Save the `TelemetryHelper.cs` file.
 
-<!-- omit in toc -->
-#### Subtask 2: Enable client side telemetry
+### Task 2: Enable client side telemetry
 
-1. Open the Azure Management Portal (<http://portal.azure.com>), and navigate to the **contososports** Resource Group.
+1. Return to the **hands-on-lab-SUFFIX** Resource Group and select the **Application Insights** resource.
 
-2. Select the **Application Insights** instance with the name that starts with **contososportsai** that is associated with the Contoso E-Commerce Site.
+    ![The Application Insights resource is highlighted in the resource group.](media/resource-group-resources-app-insights.png "Application Insights resource")
 
-3. Capture the **Instrumentation Key**.
-
-    - Select the **Overview** menu item.
-    - Copy the **Instrumentation Key** to Notepad for later use.
+2. Copy the **Instrumentation Key** value in the Essentials area of the Overview blade by selecting the **Copy to clipboard** icon to the right of the key value.
 
     ![Contoso.Apps.SportsLeague Application Insights Overview. Instrumentation Key selected.](media/2019-03-29-10-36-23.png "Instrumentation Key selected")
 
-4. In the tiles up top, select **Getting Started**.
+3. Select **Getting Started** on the toolbar of the Application Insights blade.
 
     ![From the Configure menu, Getting started is selected.](media/image196.png "Configure menu")
 
-5. In the portal, navigate to **How-to Guides** -> **Application Insights** -> **Code-based monitoring** -> **JavaScript** -> **Client-side JavaScript**, then navigate to the **Snippet based setup** section under **Adding the JavaScript SDK** within the documentation page.
+4. In the portal, navigate to **How-to Guides** -> **Application Insights** -> **Code-based monitoring** -> **JavaScript** -> **Client-side JavaScript**, then navigate to the **Snippet based setup** section under **Adding the JavaScript SDK** within the documentation page.
 
     ![Screenshot of the Monitor and Diagnose Client Side Application arrow.](media/image197.png "Monitor and Diagnose Client Side Application")
 
     > **Note**: You can find the documentation page at the following URL: <https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup>.
 
-6. Select and copy the full contents of the JavaScript under the **Snippet based setup** heading.
+5. Select and copy the full contents of the JavaScript under the **Snippet based setup** heading.
 
     ![Under Guidance in the Client application monitoring and diagnosis blade, JavaScript displays.](media/image198.png "Client application monitoring and diagnosis blade")
 
@@ -1996,22 +1963,21 @@ To configure the application for logging and diagnostics, you have been asked to
     </script>
     ```
 
-    >**Note**: Make sure to replace the `YOUR_INSTRUMENTATION_KEY_GOES_HERE` placeholder with the Application Insights Instrumentation Key.
+    > **Note**: Make sure to replace the `YOUR_INSTRUMENTATION_KEY_GOES_HERE` placeholder with the Application Insights Instrumentation Key.
 
-7. Navigate to the **Contoso.Apps.SportsLeague.Web** project located in the **Web** folder using the **Solution Explorer** in Visual Studio.
+6. Navigate to the **Contoso.Apps.SportsLeague.Web** project located in the **Web** folder using the **Solution Explorer** in Visual Studio.
 
-8. Open **Views \> Shared \> \_Layout.cshtml**.
+7. Open **Views \> Shared \> \_Layout.cshtml**.
 
     ![In Solution Explorer, under Views\\Shared, Layout.cshtml is selected.](media/2019-04-19-15-45-29.png "Solution Explorer")
 
-9. Paste in the code before the `</head>` tag. Insert your **Instrumentation Key** from Notepad into the JavaScript code ``instrumentationKey:`` value.
+8. Paste in the code before the `</head>` tag. Insert your **Instrumentation Key** from Notepad into the JavaScript code ``instrumentationKey:`` value.
 
     ![In Layout.cshtml, code displays, and several lines are selected.](media/image200.png "Layout.cshtml tab")
 
-10. Save the **\_Layout.cshtml** file.
+9. Save the `_Layout.cshtml` file.
 
-<!-- omit in toc -->
-#### Subtask 3: Deploy the e-commerce Web App from Visual Studio
+### Task 3: Deploy the e-commerce Web App from Visual Studio
 
 1. Navigate to the **Contoso.Apps.SportsLeague.Web** project located in the **Web** folder using the **Solution Explorer** in Visual Studio.
 
@@ -2025,123 +1991,136 @@ To configure the application for logging and diagnostics, you have been asked to
 
 5. Select a few links on the published E-Commerce website, and submit several orders to generate some sample telemetry.
 
-### Task 2: View the Application Insights logs
+### Task 4: View the Application Insights logs
 
-1. Using a new tab or instance of your browser, navigate to the Azure Management portal <http://portal.azure.com>.
+1. Return to the **hands-on-lab-SUFFIX** Resource Group and select the **Application Insights** resource.
 
-2. On the left menu area, select **All services**.
+    ![The Application Insights resource is highlighted in the resource group.](media/resource-group-resources-app-insights.png "Application Insights resource")
 
-3. On the **All Services** blade, filter for **Application Insights** and choose the appropriate result.
-
-4. On the **Application Insights** blade, select the Application Insights configuration you created for the e-commerce website.
-
-    ![The Application Insights configuration option Contoso.Apps.SportsLeague.Web is selected.](media/2020-06-21-11-06-31.png "Application Insights configuration option")
-
-5. Select **Application Dashboard**.  View the performance timeline to see the overall number of requests and page load time.
+2. Select **Application Dashboard**. View the performance timeline to see the overall number of requests and page load time.
 
     ![Application Insights - Contoso.Apps.SportsLeague.Web - At the top of the page, the Application Dashboard link is highlighted and has an arrow pointing to it. Failed requests and server response metrics are displayed.](media/2019-03-29-11-10-04.png "Click the Dashboard link")
 
     ![The Contoso web metrics are displayed. Usage, reliability, and responsiveness graphs are displayed.](media/2019-03-29-11-12-13.png "Application Insights Default Dashboard")
 
-6. Navigate back to the Application Insights overview for the **Application Insights** instance, then select **Performance** to see individual endpoint render performance.
+3. Navigate back to the Application Insights overview for the **Application Insights** instance, then select **Performance** in the left-hand navigation menu to see individual endpoint render performance.
   
     ![Contoso.Apps.SportsLeague.Web Performance link selected.](media/2019-03-29-11-01-14.png "Performance link selected")
 
     ![Contoso.Apps.SportsLeague.Web Performance - Endpoint performance metrics are displayed for various types of HTTP requests.](media/2019-03-29-11-20-06.png "Endpoint performance")
 
-7. Under **Usage** link area, select the **Events** menu option. Select the **View More Insights** button.
+4. Under **Usage** link area, select the **Events** menu option. Select the **View More Insights** button.
 
     ![A screenshot using the Events button under the Usage Preview section.](media/image218.png "The Usage Preview section")
 
-8. Select **View More Insights**, then scroll down to see event list.
+5. Select **View More Insights**, then scroll down to see event list.
 
     ![In the Custom events section, event metrics are displayed for users and sessions. Different web pages are listed. e.g. OrderCompleted and SuccessfulPaymentAuth.](media/2020-06-21-11-09-04.png "Event Statistics")
-    
-## Exercise 5: Automating backend processes with Azure Functions and Logic Apps
 
-Duration: 45 Minutes
+## Exercise 11: Automating backend processes with Azure Functions and Logic Apps
+
+**Duration**: 45 Minutes
 
 Contoso wants to automate the process of generating receipts in PDF format and alerting users when their orders have been processed using Azure Logic App and Functions. To run custom snippets of C\# or node.js in logic apps, you can create custom functions through Azure Functions. [Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-overview) offers server-free computing in Microsoft Azure and are useful for performing these tasks:
 
 - Advanced formatting or compute of fields in logic apps
-
 - Perform calculations in a workflow
-
 - Extend the logic app functionality with functions that are supported in C\# or node.js
 
 ### Task 1: Create an Azure Function to Generate PDF Receipts
 
-1. Open the Azure Management Portal (<http://portal.azure.com>).
-   
-2. Select the **+ Create a resource** tile, then select **Compute \> Function App**. Select **Create** button at the bottom.
+1. In the [Azure portal](https://portal.azure.com), select **Resource groups** from the Azure services list.
 
-    ![The New resource screen is shown with Compute and Function app selected.](media/newcomputefunctionapp.png "Create function app in the Portal")
-   
-3. Provision and deploy the new function app, with the following settings:
+   ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-    - **Resource Group**: Use the existing resource group, **contososports**.
+2. Select the **hands-on-lab-SUFFIX** resource group from the list.
 
-    - **Function App name**: _Choose a unique name_.
+   ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
+3. On the Resource group blade, select **Add** on the toolbar.
+
+    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
+
+4. On the create a resource blade, enter "Function App" into the search box and select **Function App** in the search results and then select **Create**.
+
+5. Provision and deploy the new function app, with the following settings:
+
+    **Project Details**:
+
+    - **Subscription**: Select the subscription you are using for this hands-on-lab.
+    - **Resource Group**: Choose the **hands-on-lab-SUFFIX** resource group.
+
+    **Instance Details**:
+
+    - **Function App name**: Enter a globally unique name, such as `contoso-function-app-SUFFIX`.
     - **Publish**: Select **Code**.
-
-    - **Runtime Stack**: Select **.NET Core**.
-    
+    - **Runtime Stack**: Select **.NET**.
     - **Version**: Select **3.1**.
+    - **Region**: Choose the same region used for the e-commerce web app in this lab.
 
-    - **Region**: _Choose the same region used for the e-commerce web apps in this lab_.
+    ![The values specified above are entered into the Create Function App basics tab.](media/create-function-app.png "Create Function App")
 
-4. Select **Next: Hosting >**.
+6. Select **Next: Hosting >** and on the **Hosting** tab, set the following:
 
-5. On the **Hosting** tab, select the following values, then select **Review + create**:
+    **Storage**:
 
     - **Storage account**: Select the lab storage account, prefixed with **contoso**.
-  
+
+    **Operating System**:
+
     - **Operating System**: Select **Windows**.
 
+    **Plan**:
+
     - **Plan type**: Select **App service plan**.
-
     - **Windows Plan**: Select **ContosoSportsPlan**.
-    
-    - **Sku and size**: Select **Standard S1**. 
+    - **Sku and size**: Select **Standard S1**.
 
-6. Select **Review + create**, then **Create**.
+    ![The values specified above are entered into the Create Function App hosting tab.](media/create-function-app-hosting.png "Create Function App")
 
-7. Navigate to the **Function App** that was just created, and select **Configuration**.
+7. Select **Review + create**, then **Create**.
+
+8. Navigate to the **Function App** that was just created, and select **Configuration**.
 
     ![Display Contoso Function App, with the Configuration link highlighted.](media/2020-06-21-11-19-23.png "Contoso Function App Application Settings")
 
-8. Add a new **Application Setting** with the following values, and select **OK**:
+9. Add a new **Application Setting** with the following values:
 
-   - Name: **AppConfigConnectionString**
-
-   - Value: **Enter the Connection String for the App Configuration Store**.
+   - **Name**: Enter `AppConfigConnectionString`.
+   - **Value**: Enter the Connection String for the App Configuration Store.
   
-9.  Select the **OK** button.
+10. Select the **OK** button.
 
-10. Select the **Save** button.
+11. Select the **Save** button.
 
-11. The function application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity. From the left menu, select **Identity**.
+## Task 2: Add Key Vault access using a managed identity
 
-12. With the **System assigned** tab selected, toggle the **Status** field to **On**, then select **Save**. 
-    
-    ![On the Identity screen, the System assigned tab is selected and the Status field is in the On position.](media/appconfig_systemidentity.png "Identity screen")
+The function application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity.
 
-13. Open the **contosokv** Key Vault resource, and from the left menu, select **Access policies**. 
+1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar.
 
-14. Select the **+ Add Access Policy** link.
+    ![The Identity item is selected in the left-hand menu. The status is set to On. The Save button is highlighted.](media/call-center-identity.png "Identity")
 
-15. In the **Add access policy** form, expand **Secret permissions** and check the box next to **Get** and **List**.  
+2. Return to the **hands-on-lab-SUFFIX** resource group and select the **Key vault** resource from the list.
 
-16. In the **Select principal** blade, search for the name of the function application you just created and choose the managed identity.
+    ![The Key Vault resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-key-vault.png "Key Vault resource")
 
-17. Select **Add**.
-    
-    ![The Add access policy form is displayed.](media/kv_addaccesspolicy_forconfig.png "The Add Access Policy Form")
+3. From the left menu, select **Access policies** and then select the **Add Access Policy** link.
 
-18. Select **Save** on the Access policies screen to commit the changes. 
+    ![Add Access Policy is highlighted on the Key Vault Access Policies blade.](media/key-vault-add-access-policy.png "Key Vault Access Policies")
 
-### Task 2: Configure and deploy the Function App
+4. In the **Add access policy** form:
+
+    - **Secret permissions**: Expand the list and check the box next to **Get**.
+    - **Select principal**: Select **None selected** and in the **Select principal** dialog, search for the name of the call center application you just created and choose the managed identity.
+
+    ![The values specified above are entered into the Add access policy form.](media/key-vault-add-access-policy-receipt-function.png "Add access policy")
+
+5. Select **Add** on the Add access policy dialog.
+
+6. Select **Save** on the Access policies toolbar to commit the changes.
+
+### Task 3: Configure and deploy the Function App
 
 1. In Visual Studio, expand the **Web** folder and right-click on the **Contoso.Apps.FunctionApp** project, and select **Manage NuGet Packages**.
 
@@ -2149,17 +2128,18 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
 3. Repeat step 2, this time for the package **Azure.Identity**.
 
-4. Within the **Contoso.Apps.FunctionApp** project, locate and open the **ContosoMakePdf.cs** source file.
+4. Within the **Contoso.Apps.FunctionApp** project, locate and open the `ContosoMakePdf.cs` source file.
 
 5. Uncomment the following **using** statements:
 
-    ```C#
+    ```csharp
     using Microsoft.Extensions.Configuration;
     using Azure.Identity;
     ```  
+
 6. Inside the static class **ContosoMakePdf**, uncomment the following code that sets up a connection to the App Configuration store and the Key Vault credential pass-through:
-   
-    ```C#
+
+    ```csharp
     private static IConfiguration Configuration { set; get; }
 
     static ContosoMakePdf()
@@ -2176,21 +2156,23 @@ Contoso wants to automate the process of generating receipts in PDF format and a
         Configuration = builder.Build();
     }
     ```
+
 7. In the **ProcessOrder** method, uncomment the following line of code:
 
-    ```C#
+    ```csharp
     Order.ReceiptUrl = await StorageMethods.UploadPdfToBlob(receipt, fileName, Configuration, log);
     ```
+
 8. To publish the Function App, open the Visual Studio solution, Right-click on the **Contoso.Apps.FunctionApp** project, then select **Publish**.
 
-9.  For **Target**, choose **Azure** and then select **Next**.
-   
+9. For **Target**, choose **Azure** and then select **Next**.
+
 10. For **Specific target**, choose **Azure Function App (Windows)**, then select **Next**.
 
 11. For **Functions instance**, expand the lab resource group and select the **Function App**, then select **Finish**.
 
     ![The App Service dialog is shown with the resource group expanded and the Function App selected.](media/deployment_appservice_functionselection.png "Publish target app service selection")
-   
+
 12. Select **Publish**.
 
     > **Note**: The publish should only take a minute or so. You can check the **Output** window for any errors that may occur.
@@ -2207,7 +2189,7 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
 15. Select **POST** for the HTTP method.
 
-16. Open the **sample.dat** file found in your lab files C:\MCW\Contoso Sports League\Contoso.CreatePDFReport directory.  Copy the contents into the **Request body** text box.
+16. Open the **sample.dat** file found in the `C:\MCW\MCW-Modern-cloud-apps-master\Hands-on lab\lab-files\src\Contoso Sports League\Contoso.CreatePDFReport` directory on your LabVM. Copy the contents into the **Request body** text box.
 
     ![A small screenshot of Windows Explorer is shown emphasizing the file path to the sample.dat file.](media/2019-04-15-15-47-39.png "Sample.dat File")
 
@@ -2240,24 +2222,18 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
     ![A sample Contoso Sports League PDF receipt is displayed.](media/2019-04-15-16-15-06.png "Sample PDF receipt")
 
-### Task 3: Create an Azure Logic App to Process Orders
+### Task 4: Create an Azure Logic App to Process Orders
 
 Without writing any code, you can automate business processes more easily and quickly when you create and run workflows with Azure Logic Apps. Logic Apps provide a way to simplify and implement scalable integrations and workflows in the cloud. It provides a visual designer to model and automate your process as a series of steps known as a workflow. There are [many connectors](https://docs.microsoft.com/azure/connectors/apis-list) across the cloud and on-premises to quickly integrate across services and protocols.
 
 The advantages of using Logic Apps include the following:
 
 - Saving time by designing complex processes using easy to understand design tools
-
 - Implementing patterns and workflows seamlessly, that would otherwise be difficult to implement in code
-
 - Getting started quickly from templates
-
 - Customizing your logic app with your own custom APIs, code, and actions
-
 - Connect and synchronize disparate systems across on-premises and the cloud
-
 - Build off BizTalk server, API Management, Azure Functions, and Azure Service Bus with first-class integration support
-
 
 1. Next, we will create a Logic App that will trigger when an item is added to the **receiptgenerator** queue. In the Azure Management Portal, select the **+ Create a resource** button, search for and select **Logic App**, then select **Create**.
 
@@ -2289,7 +2265,7 @@ The advantages of using Logic Apps include the following:
 
     ![RootManageSharedAccessKey is selected.](media/2020-03-18-12-17-17.png "RootManageSharedAccessKey is selected")
 
-9.  Select the **receiptgenerator** queue from the drop-down.
+9. Select the **receiptgenerator** queue from the drop-down.
 
     ![Under When there are messages in a queue, the Queue name is set to receiptgenerator.](media/2020-03-18-12-19-06.png "Queue name")
 
@@ -2412,7 +2388,7 @@ The advantages of using Logic Apps include the following:
 
     ![In the Logic app, all steps have green checkmarks.](media/2020-03-18-19-05-39.png "Logic app")
 
-### Task 4: Use Twilio to send SMS Order Notifications
+### Task 5: Use Twilio to send SMS Order Notifications
 
 <!-- omit in toc -->
 #### Subtask 1: Configure your Twilio trial account
@@ -2424,7 +2400,7 @@ The advantages of using Logic Apps include the following:
    ![Screenshot of the Twilio account Sign up for free webpage.](media/image268.png "Twilio account Sign up webpage")
 
 2. On the home dashboard, select **Get a Trial Number**.
-   
+
    ![The Twilio dashboard is shown with the Get a Trial Number button highlighted.](media/twilio_gettrialnumberbutton.png "The Twilio Dashboard")
 
 3. Record the **Phone Number**, select the **Choose this Number** button on the **Your first Twilio Phone Number** prompt, and select **Done**.
@@ -2438,22 +2414,27 @@ The advantages of using Logic Apps include the following:
 <!-- omit in toc -->
 #### Subtask 2: Create a new logic app
 
-1. Open **SQL Server Management Studio** and connect to the SQL Database for the **ContosoSportsDB** database.
+1. Open **Azure Data Studio** on the LabVM.
 
-    >**Note**: You can find the database server name by:
+2. In Azure Data Studio, select **New connection** and in the connection dialog enter the details to connect to the SQL Database for the **ContosoSportsDB** database, as follows:
 
-    > - Navigate the Azure ContosoSportsDB in the portal.
-    > - In the Overview, locate the **Show database connection strings** link.
-    > - Copy the **Server** parameter value.
-    e.g. Server=tcp:``contososqlserver2019th.database.windows.net,1433``
+    - **Connection Type**: Select Microsoft SQL Server.
+    - **Server**: Enter the server name of the primary **ContosoSportsDB**, which you can find in the **Server name** property within the Essentials area of the overview blade for the SQL Database.
+    - **Authentication type**: Select **SQL Login**.
+    - **User name**: Enter `demouser`.
+    - **Password**: Enter `Password.1!!`.
+    - **Remember password**: Check this box.
+    - **Database**: Select **ContosoSportsDB**.
 
-    ![In Object Explorer, ContosoSportsDBserver1234.database is selected.](media/image276.png "Object Explorer")
+    ![The values specified above are entered into the Azure Data Studio connection dialog.](media/azure-data-studio-connection.png "Azure Data Studio New connection")
 
-2. Under the **ContosoSportsDB** database, expand **Programmability**, right-click on **Stored Procedures**, select **New**, followed by **Stored Procedure...**
+3. Select **Connect** to open the connection to the database.
 
-    ![In Object Explorer, the following path is expanded: ContosoSportsDBserver1234.database\\Databases\\ContosoSportsDB\\Programmability\\Stored Procedures. From the right-click menu for the Stored Procedures, New / Stored Procedure is selected.](media/image277.png "Object Explorer")
+4. In the open connection window, select **New Query** on the toolbar.
 
-3. Replace the Stored Procedure Template code with the following:
+    ![New Query is highlighted on the Azure Data Studio toolbar.](media/azure-data-studio-new-query.png "New Query")
+
+5. In the query window that opens, paste the following code:
 
     ```sql
     CREATE PROCEDURE [dbo].[GetUnprocessedOrders]
@@ -2465,11 +2446,15 @@ The advantages of using Logic Apps include the following:
     GO
     ```
 
-4. Select **Execute** in the toolbar, or press the F5 key.
+6. Select **Run** in the toolbar to execute the query.
 
-    ![Screenshot of the Execute button.](media/image278.png "Execute button")
+    ![The Run button is highlighted on the Azure Data Studio toolbar..](media/azure-data-studio-run-query.png "Run button")
 
-5. Delete the SQL script for the Stored Procedure from the code editor, and replace it with the following:
+7. You should receive a message in the output panel that the commands completed successfully.
+
+    ![The Commands completed successfully message is highlighted in the messages panel.](media/query-executed-successfully.png "Query executed successfully")
+
+8. Delete the SQL script for the Stored Procedure from the query editor, and replace it with the following:
 
     ```sql
     CREATE PROCEDURE [dbo].[ProcessOrders]
@@ -2479,175 +2464,244 @@ The advantages of using Logic Apps include the following:
     UPDATE [dbo].[Orders] SET SMSStatus = 'sent' WHERE PaymentTransactionId is not null AND PaymentTransactionId <> '' AND Phone is not null AND Phone <> '' AND SMSOptIn = '1' AND SMSStatus is null;
     ```
 
-6. Select **Execute** in the toolbar, or press the F5 key.
+9. Select **Run** in the toolbar to execute the query.
 
-    ![Screenshot of the Execute button.](media/image278.png "Execute button")
+10. Return to the **hands-on-lab-SUFFIX** resource group and select the **Logic App** resource from the list of resources.
 
-7. In the Azure Management Portal, select the **+ Create a resource** button, then search for and select **Logic App**. Then select **Create** on the overview screen.
+    ![The Logic App resource is highlighted in the list of resources.](media/resource-group-resources-logic-app.png "Logic App resource")
 
-8. On the **Logic app** form, assign a value for **Name**, and set the Resource Group to **contososports**, then select **Review + create**. Once validation has passed, select **Create**.
-
-    ![In the Create logic app form, the Name field is set to contososportssms. Under Resource group, contososports is selected.](media/2020-03-19-11-31-05.png "Create logic app form")
-
-9. Once deployed, open the new Logic App you just created. 
-
-10. In the Logic Apps Designer, select the **Blank Logic App** Template.
+11. In the Logic Apps Designer, select the **Blank Logic App** Template.
 
     ![In the Logic Apps Designer, the Blank Logic App tile is selected.](media/image282.png "Logic Apps Designer")
 
-11. On the **Logic Apps Designer**, select the **All** tab, and choose **Schedule**. Then, select **Recurrence**.
+12. On the **Logic Apps Designer**, select the **All** tab, and choose **Schedule**. Then, select **Recurrence**.
 
     ![In the Logic Apps Designer, the Schedule tile is selected.](media/image283.png "Logic Apps Designer")
 
-12. Set the **FREQUENCY** to **MINUTE**, and **INTERVAL** to 1.
+13. Set the **FREQUENCY** to **MINUTE**, and **INTERVAL** to 1.
 
     ![Under Recurrence, the Frequency field is Minute, and the Interval field is 1.](media/image284.png "Recurrence section")
 
-13. Select the **+ New Step** button.
+14. Select the **+ New Step** button.
 
-14. Type **SQL Server** into the filter box, and select the **SQL Server -- Execute stored procedure (V2)** action.
+15. Type **SQL Server** into the filter box, and select the **SQL Server -- Execute stored procedure (V2)** action.
 
     ![Under Choose an action, sql server is typed in the search field. On the Actions tab, SQL Server (Execute stored procedure V2) is selected.](media/2020-03-19-11-34-57.png "Choose an action section")
 
-15. Select the **Server name**, **Database name**, and `'[dbo].[GetUnprocessedOrders]` **Procedure name** values.
+16. In the **SQL Server** box, enter the following to create a connection to the **ContosoSportsDB** Azure SQL Database:
 
-    ![In the Execute stored procedure section, the Procedure name is \[dbo\].\[GetUnprocessedOrders\].](media/2020-03-19-11-37-08.png "Execute stored procedure section")
+    - **Connection name**: Enter `ContosoSportsDB`.
+    - **Authentication type**: Select **SQL Server Authentication**.
+    - **SQL server name**: Enter the server name associated with the primary ContosoSportsDB database.
+    - **SQL database name**: Enter `ContosoSportsDB`.
+    - **Username**: Enter `demouser`.
+    - **Password**: Enter `Password.1!!`.
+    - **Subscription**: Select the subscription you are using for this hands-on lab.
+    - **Connection Gateway**: Select **No gateways found**.
 
-16. Select **New Step**, and search for and select the **Control** object.
+    ![The values above are entered into the SQL Server dialog.](media/logic-app-sql-server-connection.png "Create SQL Server Connection")
+
+17. Select **Create**.
+
+18. In the **Execute stored procedure (V2)** box:
+
+    - **Server name**: Select **Use connection settings**
+    - **Database name**: Select **Use connection settings**
+    - **Procedure name**: Select `[dbo].[GetUnprocessedOrders]`.
+
+    ![In the Execute stored procedure section, the Procedure name is \[dbo\].\[GetUnprocessedOrders\].](media/logic-app-execute-stored-procedure-unprocessed-orders.png "Execute stored procedure section")
+
+19. Select **Add an action** and search for and select the **Control** object.
 
     ![The Control object is highlighted on the logic app designer pick tool.](media/image289.png "Buttons")
 
-17. Select **New Step**, and search for and select the **Control -> Condition** object.
+20. Under **Control**, select the **Condition** object.
 
     ![The Control Condition object is highlighted on the logic app designer pick tool.](media/image290b.png "Buttons")  
 
-18. Select **Choose a value**, and then select **Return Code** from the Dynamic content tile.
+21. Select **Choose a value**, and then select **Return Code** from the Dynamic content tile.
 
-    ![The Choose a value box and Return Code objects are highlighte in the Dynamic content tile in the Logic Designer.](media/image290c.png "Buttons")
+    ![The Choose a value box and Return Code objects are highlighted in the Dynamic content tile in the Logic Designer.](media/image290c.png "Buttons")
 
-19. Specify **ReturnCode**, set the RELATIONSHIP to **is greater than**, and set the VALUE to **0**.
+22. Specify **ReturnCode**, set the RELATIONSHIP to **is greater than**, and set the VALUE to **0**.
 
     ![Under Condition, Object Name is ReturnCode, Relationship is greater than, and Value is 0.](media/image290.png "Condition section")
 
-20. Select the **Add an action** link on the **If true** condition.
+23. Select the **Add an action** link on the **If true** condition.
 
     ![Under If true, the Add an action button is selected.](media/image291.png "If yes section")
 
-21. Select **SQL Server**, and then select the **SQL Server -- Execute stored procedure (V2)** action.
+24. Select **SQL Server**, and then select the **SQL Server -- Execute stored procedure (V2)** action.
 
     ![Under If Yes, SQL Server - Execute stored procedure is circled.](media/2020-03-19-11-39-54.png "If yes section")
 
-22. Select the **ProcessOrders** stored procedure in the Procedure name dropdown.
+25. Select the **ProcessOrders** stored procedure in the Procedure name dropdown.
 
     ![Under If Yes, Execute stored procedure 2 is selected, and the Procedure name is \[dbo\].\[ProcessOrders\].](media/2020-03-19-11-40-49.png "If yes section")
 
-23. Select the **Add an action** link.
+26. Select the **Add an action** link.
 
     ![The Add an action button is selected.](media/image294.png "Add an action button")
 
-24. Select the **All** tab, and search for **Twilio** in the filter box, and select the **Twilio -- Send Text Message (SMS)** item in the Actions box.
+27. Select **Control** and **For each**.
+
+28. In the **Select an output from previous steps**, select **ResultsSets Table1**.
+
+    ![A for each control object is displayed with ResultSets Table1 selected in the output from previous steps box.](media/logic-app-for-each.png "For each")
+
+29. Select **Add an action** within the **For each** block, and search for **Twilio** in the filter box, and select the **Twilio -- Send Text Message (SMS)** item in the Actions box.
 
     ![In the Choose an operation tile, the Search box is set to Twilio, and below, Twilio - Send Text Message (SMS) is selected.](media/image295.png "Choose an Operation Tile.")
 
-25. Set the Connection Name to Twilio, specify your Twilio **Account SID** and **Authentication Token**, then select the **Create** button.
+30. Set the Connection Name to Twilio, specify your Twilio **Account SID** and **Authentication Token**, then select the **Create** button.
 
     ![In the Twilio - Send Text Message (SMS) section, fields are set to the previously defined settings.](media/image296.png "Twilio - Send Text Message (SMS)")
 
-26. Using the drop-down, select your Twilio number for the **FROM PHONE NUMBER** field. Specify a place holder phone number in the **TO PHONE NUMBER**, and a **TEXT** message.
+31. Using the drop-down, select your Twilio number for the **FROM PHONE NUMBER** field.
 
-    ![Under Send Text Message (SMS), the From Phone Number and To Phone Number fields are circled, and in the Text field is the message, Hello, your order has shipped!](media/2020-03-19-11-43-06.png "Send Text Message (SMS)")
+32. In the **To phone number** field, select **ResultSets Phone**.
 
-27. On the Logic App toolbar, select the **Code View** button.
+33. In the **Text** field, enter `Hello` followed by the dynamic value for **ResultsSets FirstName**, then followed by `, your order has shipped!`.
+
+    ![Under Send Text Message (SMS), the From Phone Number and To Phone Number fields are circled, and in the Text field is the message, Hello, your order has shipped!](media/logic-app-for-each-email.png "Send Text Message (SMS)")
+
+34. On the Logic App toolbar, select the **Code View** button to review the JSON code generated by the UI.
 
     ![The code view button is selected on the Logic App toolbar.](media/image298.png "Logic App toolbar")
 
-28. Find the **Send\_Text\_Message\_(SMS)** action, and modify the body property of the Twilio action:
-
-    ![The Code view displays the text message, and the from and to phone numbers.](media/image299.png "Code view")
-
-    Add the following code between Hello and the comma:
-
-    ```json
-    "@{item()['FirstName']}"
-    ```
-
-    ![The Code view now displays the added code in the text message.](media/image300.png "Code view")
-
-29. Modify the **to** property to pull the phone number from the item.
-
-    ```json
-    "to": "@{item()['Phone']}"
-    ```
-
-    ![The to phone number code now displays the updated line of code.](media/image301.png "Code view")
-
-30. Immediately before the **Send\_Text\_Message\_(SMS)** section, create a new line, and add the following code:
-
-    ```json
-        "forEach_email": {
-        "type": "Foreach",
-        "foreach": "@body('Execute_stored_procedure_(V2)_2')['ResultSets']['Table1']",
-        "actions": {
-    ```
-
-31. Remove the **runAfter** block from the **Send\_Text\_Message\_(SMS)** action.
-
-    ![The runAfter block of code displays.](media/image302.png "Code view")
-
-32. Locate the closing bracket of the **Send\_Text\_Message\_(SMS)** action, create a new line after it (be **SURE** to place a leading comma after the closing bracket), and add the following code:
-
-    ```json
-        },
-        "runAfter": {
-            "Execute_stored_procedure_(V2)_2": [
-                "Succeeded"
-            ]
-        }
-    }
-    ```
-
-33. Select **Save** on the toolbar to enable the logic app.
+35. Select **Save** on the toolbar to enable the logic app.
 
     ![On the Logic Apps Designer toolbar, the Save button is selected.](media/image304.png "Logic Apps Designer toolbar")
 
-34. After the code for the **Send\_Text\_Message\_(SMS)** has been modified to be contained within the **forEach\_email** action and you save it, it be like the following JSON with your Twilio phone number in the "from" field:
+36. The completed JSON code should look similar to the following:
 
     ```json
-    "forEach_email": {
-        "type": "Foreach",
-        "foreach": "@body('Execute_stored_procedure_(V2)_2')['ResultSets']['Table1']",
-        "actions": {
-            "Send_Text_Message_(SMS)": {
-                "inputs": {
-                    "body": {
-                        "body": "Hello @{item()['FirstName']}, your order has shipped!",
-                        "from": "+1XXXXXXXXXX",
-                        "to": "@{item()['Phone']}"
-                    },
-                    "host": {
-                        "connection": {
-                            "name": "@parameters('$connections')['twilio']['connectionId']"
+    {
+        "definition": {
+            "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+            "actions": {
+                "Condition": {
+                    "actions": {
+                        "Execute_stored_procedure_(V2)_2": {
+                            "inputs": {
+                                "body": {},
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['sql']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/procedures/@{encodeURIComponent(encodeURIComponent('[dbo].[ProcessOrders]'))}"
+                            },
+                            "runAfter": {},
+                            "type": "ApiConnection"
+                        },
+                        "For_each": {
+                            "actions": {
+                                "Send_Text_Message_(SMS)": {
+                                    "inputs": {
+                                        "body": {
+                                            "body": "Hello @{items('For_each')?['FirstName']}, your order has shipped.",
+                                            "from": "+15708869103",
+                                            "to": "@items('For_each')?['Phone']"
+                                        },
+                                        "host": {
+                                            "connection": {
+                                                "name": "@parameters('$connections')['twilio']['connectionId']"
+                                            }
+                                        },
+                                        "method": "post",
+                                        "path": "/Messages.json"
+                                    },
+                                    "runAfter": {},
+                                    "type": "ApiConnection"
+                                }
+                            },
+                            "foreach": "@body('Execute_stored_procedure_(V2)_2')?['resultsets']?['Table1']",
+                            "runAfter": {
+                                "Execute_stored_procedure_(V2)_2": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Foreach"
                         }
                     },
-                    "method": "post",
-                    "path": "/Messages.json"
+                    "expression": {
+                        "and": [
+                            {
+                                "greater": [
+                                    "@body('Execute_stored_procedure_(V2)')?['returncode']",
+                                    0
+                                ]
+                            }
+                        ]
+                    },
+                    "runAfter": {
+                        "Execute_stored_procedure_(V2)": [
+                            "Succeeded"
+                        ]
+                    },
+                    "type": "If"
                 },
-                "type": "ApiConnection"
+                "Execute_stored_procedure_(V2)": {
+                    "inputs": {
+                        "body": {},
+                        "host": {
+                            "connection": {
+                                "name": "@parameters('$connections')['sql']['connectionId']"
+                            }
+                        },
+                        "method": "post",
+                        "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/procedures/@{encodeURIComponent(encodeURIComponent('[dbo].[GetUnprocessedOrders]'))}"
+                    },
+                    "runAfter": {},
+                    "type": "ApiConnection"
+                }
+            },
+            "contentVersion": "1.0.0.0",
+            "outputs": {},
+            "parameters": {
+                "$connections": {
+                    "defaultValue": {},
+                    "type": "Object"
+                }
+            },
+            "triggers": {
+                "Recurrence": {
+                    "recurrence": {
+                        "frequency": "Minute",
+                        "interval": 1
+                    },
+                    "type": "recurrence"
+                }
             }
         },
-        "runAfter": {
-            "Execute_stored_procedure_(V2)_2": [
-                "Succeeded"
-            ]
+        "parameters": {
+            "$connections": {
+                "value": {
+                    "sql": {
+                        "connectionId": "/subscriptions/e223f1b3-d19b-4cfa-98e9-bc9be62717bc/resourceGroups/hands-on-lab/providers/Microsoft.Web/connections/sql",
+                        "connectionName": "sql",
+                        "id": "/subscriptions/e223f1b3-d19b-4cfa-98e9-bc9be62717bc/providers/Microsoft.Web/locations/eastus/managedApis/sql"
+                    },
+                    "twilio": {
+                        "connectionId": "/subscriptions/e223f1b3-d19b-4cfa-98e9-bc9be62717bc/resourceGroups/hands-on-lab/providers/Microsoft.Web/connections/twilio",
+                        "connectionName": "twilio",
+                        "id": "/subscriptions/e223f1b3-d19b-4cfa-98e9-bc9be62717bc/providers/Microsoft.Web/locations/eastus/managedApis/twilio"
+                    }
+                }
+            }
         }
     }
     ```
 
-35. Your workflow should look like the image below, and you should receive a text for each order you placed.
+37. Your workflow should look like the image below, and you should receive a text for each order you placed. If you did not use your own phone number, place another order and enter a phone number for which you can receive text messages.
 
-    ![The Workflow diagram begins with Recurrence, then flows to Execute stored procedure, then to Condition. The Condition fields are as follows: Object Name, ReturnCode; Relationship, is greater than; Value, 0. Below the Workflow diagram is an If Yes box, with a workflow that begins wtih Execute stored procedure 2, and flows to forEach email. There is also an If No, Do Nothing box.](media/image305.png "Workflow diagram")
+    ![The Workflow diagram begins with Recurrence, then flows to Execute stored procedure, then to For each. The For each contains a condition based on the ReturnCode value being greater than 0. Below the Workflow diagram is an If Yes box, with a workflow that begins with Execute stored procedure 2, and flows to forEach email. There is also an If No, Do Nothing box.](media/logic-app-designer.png "Workflow diagram")
 
-## Exercise 6: Automate deployments using GitHub actions
+38. Select **Run** on the Logic App Designer toolbar to start the workflow.
+
+## Exercise 12: Automate deployments using GitHub actions
 
 Duration: 30 minutes
 
