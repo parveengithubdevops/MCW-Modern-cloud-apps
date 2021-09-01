@@ -91,7 +91,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 4: View the Application Insights logs](#task-4-view-the-application-insights-logs)
   - [Exercise 11: Automating backend processes with Azure Functions and Logic Apps](#exercise-11-automating-backend-processes-with-azure-functions-and-logic-apps)
     - [Task 1: Create an Azure Function to Generate PDF Receipts](#task-1-create-an-azure-function-to-generate-pdf-receipts)
-    - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
+  - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
     - [Task 3: Configure and deploy the Function App](#task-3-configure-and-deploy-the-function-app)
     - [Task 4: Create an Azure Logic App to Process Orders](#task-4-create-an-azure-logic-app-to-process-orders)
     - [Task 5: Use Twilio to send SMS Order Notifications](#task-5-use-twilio-to-send-sms-order-notifications)
@@ -205,9 +205,9 @@ In this task, you retrieve the access key for your Azure Storage account and sav
 
     ![The storage account resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-storage-account.png "Storage account resource")
 
-2. On the **Storage account** blade, select the **Access keys** in the left-hand navigation menu, and on the **Access keys** blade, select the **Show keys** and then copy the **key1** **Key** value by selecting the **Copy to clipboard** icon.
+2. On the **Storage account** blade, select the **Access keys** in the left-hand navigation menu, and on the **Access keys** blade, from the top toolbar, select the **Show keys** button (text will change to **Hide keys**) and then copy the **key1** **Connection string** value by selecting the **Copy to clipboard** icon.
 
-    ![The Access keys blade is displayed, with Access keys highlighted in the left-hand menu and the copy to clipboard icon highlighted next to the key1 Key value.](media/storage-account-access-keys.png "Storage account access keys")
+    ![The Access keys blade is displayed, with Access keys highlighted in the left-hand menu and the copy to clipboard icon highlighted next to the key1 Connection string value.](media/storage-account-access-keys.png "Storage account access keys")
 
 3. Paste the copied value into your open text editor for later reference, as you did with the database connection string above.
 
@@ -255,7 +255,7 @@ In this task, you create secrets in Key Vault for each of the connection strings
     |------|-------|
     | AzureQueueConnectionString | Use the primary connection string you recorded for the Service Bus `receiptgenerator` queue |
     | ContosoSportsLeague | Use the database connection string |
-    | contososportsstorage | Use the primary connection string you recorded for the storage account |
+    | contososportsstorage | Use the storage account connection string you recorded for the storage account |
 
 4. On the **Create a secret** blade, enter the following:
 
@@ -307,6 +307,10 @@ The Contoso Sports solution contains multiple projects, each of which access the
 5. Select **Apply** on the Create dialog.
 
 6. Select **Create --> Key Vault reference** again and repeat steps 4 and 5 for the remaining two keys specified in the table above, populating the **Key** and **Secret** fields with appropriate values.
+
+7. From the left menu, select **Access keys** within the Settings section, copy the **Primary key Connection string** value using the clipboard icon. Save this value for a future task.
+
+    ![The App Configuration Access keys screen is shown with Access keys selected from the left menu and the clipboard icon highlighted next to the Primary key connection string value.](media/app_config_copy_connection_string.png "App Configuration Access keys")
 
 ## Exercise 2: Deploy e-commerce website
 
@@ -519,44 +523,41 @@ In this exercise, the attendee will provision a secondary SQL Database and confi
 
    ![The list of resources in the hands-on-lab-SUFFIX resource group are displayed, and ContosoSportsDB is highlighted.](./media/resource-group-resources-sql-db.png "ContosoSportsDB in resource group list")
 
-4. On the **SQL Database** blade, select the **Show database connection strings** link within the Essentials area.
+4. Select **Replicas** in the left-hand navigation menu, under **Data management**.
 
-    ![On the SQL Database blade, in the left pane, Overview is selected. In the right pane, under Essentials, the Connection strings (Show database connection strings) link is circled.](media/sql-db-connection-strings-link.png "SQL Database blade")
+    ![In the Data management section, Replicas is selected.](media/sql-db-geo-replication-menu.png "Data management section")
 
-5. Select **Geo-Replication** in the left-hand navigation menu, under **Data management**.
+5. On the Replicas blade, select **Create replica** from the toolbar menu.
 
-    ![In the Settings section, Geo-Replication is selected.](media/sql-db-geo-replication-menu.png "Settings section")
+    ![The Replicas blade is shown with the Create replica item selected from the toolbar.](media/sqldb_create_replica_menu.png "SQL database Replicas screen")
 
-6. On the Geo-Replication blade, select the Azure Region within which you want to run the secondary database.
+6. On the **Create SQL Database - Geo Replica** Basics tab, select **Create new** for the **Server** and in the New server blade, enter:
 
-    ![The Geo-Replication pane with list of locations. Primary location is set to West US.](media/sql-db-geo-replication-secondary-region.png "Geo-Replication blade")
+    - **Server name**: Enter a globally unique value, such as `contosodbreplicaSUFFIX`, where `SUFFIX` is a unique identifier (ensure the green checkmark appears).
+    - **Server admin login**: Enter `demouser`.
+    - **Password**: Enter `Password.1!!`.
+    - **Confirm password**: Enter `Password.1!!`.
+    - **Location**: Select a region for your secondary region, for additional guidance, see the **Important** note below.
 
-    > **Important**: The secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
+    ![The fields in the New Server blade display with the previously defined settings.](media/new-sql-server.png "New Server blade")
+
+       > **Important**: The secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
 
     >**Note**: If you choose a region that cannot be used as a secondary region, you will not be able to pick a pricing plan. Choose another region.
     >
     > ![Wrong geo-replication region selected. Not available options presented.](media/2019-03-30-16-05-25.png "Not available options presented.")
 
-7. On the **Create SQL Database - Geo Replica** Basics tab, select **Create new** for the **Server** and in the New server dialog, enter:
+7. Select **OK** on the New server blade.
 
-    - **Server name**: Enter a globally unique value, such as `contosodbreplicaSUFFIX`, where `SUFFIX` is a unique identifier (ensure the green checkmark appears).
-    - **Server admin login**: Enter `demouser`.
-    - **Password**: Enter `Password.1!!`.
-    - **Location**: Select the region you chose for your secondary region on the Geo-Replication screen.
-
-    ![The fields in the New Server blade display with the previously defined settings.](media/new-sql-server.png "New Server blade")
-
-8. Select **OK** on the New server dialog.
-
-9. Leave SQL elastic pool set to **No** and the Compute + Storage set to **Standard S1**. Select **Geo-redundant backup storage** for the **Backup storage redundancy**, and then select **Next: Networking**.
+8. Returning to the main form, leave SQL elastic pool set to **No** and the Compute + Storage set to **Standard S1**. Select **Geo-redundant backup storage** for the **Backup storage redundancy**, and then select **Next: Networking**.
 
     ![The values specified above are entered into the Create SQL Database Geo Replica basics tab.](media/create-sql-database-geo-replica.png "Create SQL Database Geo Replica")
 
-10. On the **Networking** tab, set **Allow Azure services and resources to access this server** to **Yes**.
+9. On the **Networking** tab, set **Allow Azure services and resources to access this server** to **Yes**.
 
     ![Allow Azure services and resources to access this server is set to Yes.](media/create-sql-database-geo-replica-networking.png "Create SQL Database Geo Replica Networking")
 
-11. Select **Review + create** and on the Review + create tab, select **Create** to start the deployment of the secondary database.
+10. Select **Review + create** and on the Review + create tab, select **Create** to start the deployment of the secondary database.
 
     > **Note**: Deployment of the secondary database for geo-replication takes several minutes to complete.
 
@@ -616,6 +617,10 @@ With SQL Database Geo-Replication configured, the Azure SQL Failover Groups feat
     - **Read/Write grace period (hours)**: Choose **1 hours**.
     - **Database within group**: Select **Configure database**, check the box next to the **ContosoSportsDB** database on the replica, and then select **Select**.
 
+    ![The Failover group form is shown with the Configure database link highlighted.](media/failover_group_configure_database_link.png "Failover group configure database")
+
+    ![The failover database selection form is displayed with the ContosoSportsDB selected.](media/failover_group_select_database.png "Failover group database selection")
+
     ![The values specified above are entered in to the Failover group dialog.](media/failover-group-settings.png "Failover group")
 
 5. Select **Create** to create the SQL Failover Group.
@@ -651,7 +656,7 @@ In this task, you update the database connection string in Key Vault to use the 
 4. Copy the original connection string to the **ContosoSportsDB**, but replace the server name with the **Azure SQL Failover Group Read/Write Listener Endpoint** that was copied previously, then select **Create**. The new version of the connection string should look similar to the following:
 
     ```sh
-    Server=tcp:{failover_group_endpoint};Initial Catalog=ContosoSportsDB;Persist Security Info=False;User ID=demouser;Password=demo@pass123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+    Server=tcp:{failover_group_endpoint},1433;Initial Catalog=ContosoSportsDB;Persist Security Info=False;User ID=demouser;Password=Password.1!!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
     ```
 
     ![The ContosoSportsLeague secret Versions screen is shown with a current and older version present in the list. ](media/new-secret-version.png "Secrets version list")
@@ -743,8 +748,6 @@ In this exercise, you provision a website via the Azure Web App template using t
 ### Task 2: Update the configuration in the starter project
 
 1. Navigate to the **App Service** blade for the Call Center Admin App just provisioned.
-
-    ![The App Service blade displays.](media/2020-03-17-19-59-03.png "App Service blade")
 
 2. On the **App Service** blade, select **Configuration** in the left-hand navigation menu.
 
@@ -915,13 +918,11 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![Publish button is highlighted](media/2020-06-19-22-33-57.png "Publish button is highlighted")
 
-8. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully.
+8. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully. Copy and paste the gateway **URL** of the deployed **API App** from the Visual Studio **Output** into Notepad for later use.
 
     ![The Visual Studio output shows that the web app was published successfully.](media/image99.png "Visual Studio output")
 
-9. Copy and paste the gateway **URL** of the deployed **API App** into Notepad for later use.
-
-10. Viewing the Web App in a browser will display the Swagger UI for the API.
+9. Viewing the Web App in a browser will display the Swagger UI for the API.
 
    ![Payment Gateway is up and running and the Swagger UI is displayed.](media/2019-04-11-04-58-04.png "Swagger UI")
 
@@ -1084,25 +1085,17 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
     ![Publish button is highlighted](media/offerapi_vspublishbutton.png "Publish button is highlighted")
 
-15. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully.
+15. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully.Copy and paste the offer api **URL** of the deployed **API App** into Notepad for later use.
 
     ![The Visual Studio output shows that the web app was published successfully.](media/offerapi_publishsuccessoutput.png "Visual Studio output")
 
-16. Copy and paste the offer api **URL** of the deployed **API App** into Notepad for later use.
-
-17. Viewing the Web App in a browser will display the Swagger UI for the API.
-
-18. In the Visual Studio **Output** view, you will see a status the API app was published successfully.
-
-19. Record the value of the deployed API app URL into Notepad for later use.
-
-20. Viewing the Web App in a browser will display the Swagger UI for the API.
+16. Viewing the Web App in a browser will display the Swagger UI for the API.
 
     ![The Offers API is up and running and the Swagger UI is displayed.](media/2019-04-11-05-20-40.png "Swagger UI")
 
     > **Note**: When opening the Swagger UI using the Internet Explorer browser you will see a "Resolver error" error message. This is a result of the Swagger UI no longer supporting Internet Explorer. In another browser, the Swagger UI will work as expected.
 
-21. Within the Swagger UI for the Offers API, select the `/api/get` method on the API. Then select the **Try it out** button, and then **Execute** to test out the API call from within the Swagger UI in the web browser. Once it executes, scroll down to view the results of the API call execution.
+17. Within the Swagger UI for the Offers API, select the `/api/get` method on the API. Then select the **Try it out** button, and then **Execute** to test out the API call from within the Swagger UI in the web browser. Once it executes, scroll down to view the results of the API call execution (the actual results of the call may be different).
 
     ![Swagger UI displaying API call response.](media/offers-swagger-response.png "Swagger UI")
 
@@ -1116,22 +1109,18 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
     ![The App Configuration resource is highlighted in the hands-on-lab-SUFFIX resource group.](media/resource-group-resources-app-configuration.png "App Configuration resource")
 
-2. Select **Configuration explorer** from the left-hand navigation menu and then select **Create** and **Key Vault reference**.
-
-    ![Configuration explorer is highlighted in the left-hand menu and Create --> Key Vault reference is highlighted on the Configuration explorer blade.](media/app-configuration-explorer.png "Configuration explorer")
-
-3. Expand the **Create** button, and select **Key-value**. This API endpoint does not contain any secret values, thus is not required to be stored as a Key Vault value.
+2. Select **Configuration explorer** from the left-hand navigation menu and then expand **Create** and select **Key-value**. This API endpoint does not contain any secret values, thus is not required to be stored as a Key Vault value.
 
     ![The + Create button is expanded with the Key-value item selected.](media/app-config-create-key-value-menu.png "Create key value menu item")
 
-4. Create the new key-value entry with the following values:
+3. Create the new key-value entry with the following values:
 
    - **Name**: `APIEndpoints:PaymentsAPI`
    - Value: Enter the **HTTPS** URL for the Payments API App with `/api/nvp` appended to the end. This is the value that you recorded when deploying the API. Alternatively, this value can be retrieved by opening the API resource in the Azure Portal and copying the URL value on the Overview screen.
 
         >**Example**: `https://contoso-payments-api.azurewebsites.net/api/nvp`
 
-5. Create another Key-value setting with the following values:
+4. Create another Key-value setting with the following values:
 
    - App Setting Name: `APIEndpoints:OffersAPI`
 
@@ -1157,13 +1146,13 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
     ![On the Contoso Sports League webpage, Today\'s offers display: Baseball socks, Road bike, and baseball mitt.](media/image121.png "Contoso Sports League webpage")
 
-    > **Note**: The page may be cached, if Today's Offers are not displayed, you can try re-publishing the e-commerce app service from Visual Studio (Contoso.Apps.SportsLeague.Web).
+    > **Note**: The page may be cached, if Today's Offers are not displayed, **you may need to re-publish the e-commerce app service from Visual Studio (Contoso.Apps.SportsLeague.Web)**.
 
 4. Submit several test orders to ensure all pieces of the site are functional. **Accept the default data during the payment processing.**
 
     ![On the Contoso Sports League webpage, the message Order Completed displays.](media/image122.png "Contoso Sports League webpage")
 
-> **Note**: If you are still experiencing CORS errors, ensure the URLs to the Web App in Azure local host are exact.
+> **Note**: If you are still experiencing CORS errors, review that all URLs in the application configuration resource are correct and are using SSL.
 
 ## Exercise 8: Identity and Security
 
@@ -2073,7 +2062,7 @@ Contoso wants to automate the process of generating receipts in PDF format and a
     **Plan**:
 
     - **Plan type**: Select **App service plan**.
-    - **Windows Plan**: Select **ContosoSportsPlan**.
+    - **Windows Plan**: Select **contoso-asp-{SUFFIX}**.
     - **Sku and size**: Select **Standard S1**.
 
     ![The values specified above are entered into the Create Function App hosting tab.](media/create-function-app-hosting.png "Create Function App")
@@ -2179,7 +2168,7 @@ The function application resource needs access to the Key Vault. The App Configu
 
     ![The build Output window is displayed. Publish succeeded message is shown.](media/2019-04-15-15-33-20.png "Output window.")
 
-13. To test your newly published Function App, start by navigating back to your Contoso Function App in the Azure Portal. Select the newly created **ContosoMakePDF** function listed in the functions.
+13. To test your newly published Function App, start by navigating back to your Contoso Function App in the Azure Portal. From the left menu, select **Functions** then select the newly created **ContosoMakePDF** function. You may need to use the **Refresh** button on the toolbar for the function to be listed.
 
     ![The Azure Functions shows the ContosoMakePDF function listed.](media/2020-06-21-11-25-59.png "Azure Functions")
 
