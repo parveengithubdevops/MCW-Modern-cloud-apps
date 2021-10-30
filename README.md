@@ -1,6 +1,3 @@
-## Microsoft Cloud Workshops - Retirement Survey  
-As we look to streamline content and improve training, we are considering retiring the Microsoft Cloud Workshop (MCW) program. Please take a moment to fill out the [Microsoft Cloud Workshop Survey](https://forms.office.com/r/834zwtaNtK) and give us your feedback.
-
 # Modern cloud apps
 
 The Contoso Sports League Association (CSLA) is one of the largest sports franchises and is struggling to keep up with demand from their growing user base. They currently host an e-commerce website and have a backend website that supports their call center, allowing employees to view order information.
