@@ -57,9 +57,9 @@ In this task, you create an Azure resource group to serve as a container for the
 
    ![Resource groups is highlighted in the Azure services list.](media/azure-services-resource-groups.png "Azure services")
 
-2. On the Resource groups blade, select **Add**.
+2. On the Resource groups blade, select **Create**.
 
-   ![Add is highlighted in the toolbar on Resource groups blade.](media/resource-groups-add.png "Resource groups")
+   ![Create is highlighted in the toolbar on Resource groups blade.](media/resource-groups-add.png "Resource groups")
 
 3. On the Create a resource group **Basics** tab, enter the following:
 
