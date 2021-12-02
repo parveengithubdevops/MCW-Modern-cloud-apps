@@ -4,7 +4,7 @@ The Contoso Sports League Association (CSLA) is one of the largest sports franch
 
 CSLA would like to modernize their websites and move to the cloud, ultimately moving away from managing infrastructure. They are interested in whether Platform-as-a-Service (PaaS) will meet their needs so they can completely remove the infrastructure management overhead. However, they are concerned about securing their websites and data to meet the stringent PCI (Payment Card Industry) compliance requirements.
 
-May 2021
+December 2021
 
 ## Target audience
 
