@@ -497,7 +497,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
     >**Note**: Your URL will differ from the one shown in the Output screenshot because it must be globally unique.
 
-7. A new browser should automatically open the new web applications. Validate the website by choosing the **Store** link on the menu. You should see product items. If products are returned, then the connection to the database was successful.
+7. A new browser should automatically open the deployed web application. Validate the website by choosing the **Store** link on the menu. You should see product items. If products are returned, then the connection to the database was successful.
 
     ![Screenshot of the Store link.](media/contoso-web-site-store-products.png "Store link")
 
@@ -531,23 +531,22 @@ In this exercise, the attendee will provision a secondary SQL Database and confi
 
     ![The Replicas blade is shown with the Create replica item selected from the toolbar.](media/sqldb_create_replica_menu.png "SQL database Replicas screen")
 
-6. On the **Create SQL Database - Geo Replica** Basics tab, select **Create new** for the **Server** and in the New server blade, enter:
+6. On the **Create SQL Database - Geo Replica** Basics tab, select **Create new** for the **Server** and in the **Create SQL Database Server** form, enter the following values:
 
     - **Server name**: Enter a globally unique value, such as `contosodbreplicaSUFFIX`, where `SUFFIX` is a unique identifier (ensure the green checkmark appears).
+    - **Location**: Select a region for your secondary region, for additional guidance, see the **Important** note below.
+    - Check **Allow Azure services to access server**.
     - **Server admin login**: Enter `demouser`.
     - **Password**: Enter `Password.1!!`.
     - **Confirm password**: Enter `Password.1!!`.
-    - **Location**: Select a region for your secondary region, for additional guidance, see the **Important** note below.
 
-    ![The fields in the New Server blade display with the previously defined settings.](media/new-sql-server.png "New Server blade")
+    ![The Create SQL Database Server form displays with the previously defined settings.](media/new-sql-server.png "Create SQL Database Server")
 
        > **Important**: The secondary Azure Region should be the Region Pair for the region the SQL Database is hosted in. Consult <https://docs.microsoft.com/azure/best-practices-availability-paired-regions> to see which region pair the location you are using for this lab is in.
 
-    >**Note**: If you choose a region that cannot be used as a secondary region, you will not be able to pick a pricing plan. Choose another region.
-    >
-    > ![Wrong geo-replication region selected. Not available options presented.](media/2019-03-30-16-05-25.png "Not available options presented.")
+    >**Note**: If you choose a region that cannot be used as a secondary region, you will receive a validation error.
 
-7. Select **OK** on the New server blade.
+7. Select **OK**.
 
 8. Returning to the main form, leave SQL elastic pool set to **No** and the Compute + Storage set to **Standard S1**. Select **Geo-redundant backup storage** for the **Backup storage redundancy**, and then select **Next: Networking**.
 
@@ -625,7 +624,7 @@ With SQL Database Geo-Replication configured, the Azure SQL Failover Groups feat
 
 5. Select **Create** to create the SQL Failover Group.
 
-6. Once the Failover Group has been created, select it in the list.
+6. Once the Failover Group has been created, select it in the list. You may need to select **Refresh** from the toolbar menu to see the group.
 
     ![Failover Group is highlighted.](media/failover-group-list.png "Failover Group is highlighted")
 
@@ -681,7 +680,7 @@ In this task, you update the database connection string in Key Vault to use the 
 
     ![The Forced failover button is highlighted on the toolbar and the confirmation message is displayed.](media/failover-group-forced-failover.png "Forced failover")
 
-> **Note**: The failover may take a few minutes to complete. You can continue with the next task.
+> **Note**: The failover may take a few minutes to complete. You can continue with the next exercise and return later to complete the next task.
 
 ### Task 6: Test e-commerce Web App after Failover
 
@@ -765,7 +764,7 @@ In this exercise, you provision a website via the Azure Web App template using t
 
 5. Select the **OK** button.
 
-6. Select the **Save** button.
+6. Select the **Save** button. Select **Continue** if prompted to verify your action.
 
     ![the Save button is circled on the App Service blade.](media/2019-03-28-05-36-38.png "App Service blade")
 
@@ -773,7 +772,7 @@ In this exercise, you provision a website via the Azure Web App template using t
 
 The call center web application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity.
 
-1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar.
+1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar. Select **Yes** if prompted to verify your action.
 
     ![The Identity item is selected in the left-hand menu. The status is set to On. The Save button is highlighted.](media/call-center-identity.png "Identity")
 
@@ -819,7 +818,7 @@ The call center web application resource needs access to the Key Vault. The App 
     using Azure.Identity;
     ```
 
-8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource.
+8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the **contosoapp** application service to point to the centralized App Configuration resource. Once complete, save the file.
 
     ```csharp
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
@@ -856,7 +855,7 @@ The call center web application resource needs access to the Key Vault. The App 
 
     ![Publish button is highlighted](media/2020-06-19-22-25-36.png "Publish button")
 
-15. Once deployment is complete, navigate to the Web App. It should look like the following:
+15. Once deployment is complete, the Web App should open in a browser. It should look like the following:
 
     ![The Contoso website displays the Contoso Sports League Admin webpage, which says that orders that display below are sorted by date, and you can select an order to see its details. However, at this time, there is no data available under Completed Orders.](media/contoso-admin-app.png "Contoso website")
 
@@ -878,23 +877,35 @@ In this exercise, the attendee will provision an Azure API app template using th
 
    ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-3. On the Resource group blade, select **Add** on the toolbar.
+3. On the Resource group blade, select **Create** on the toolbar.
 
-    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
+    ![The Create button is highlighted on the resource group toolbar.](media/resource-group-add.png "Create resource in the resource group")
 
 4. On the create a resource blade, enter "API App" into the search box and select **API App** in the search results and then select **Create**.
 
-5. On the new **API App** create form, create the following values:
+5. On the new **Create API App** Basics tab, populate the form with the following values:
 
-   - **App name:** Specify a unique name for the App Name.
    - **Subscription:** Your Azure subscription.
-   - **Resource Group:** Select the lab resource group.
-   - **App Service Plan/Location:** Select the **contoso-asp-UNIQUEID** plan.
-   - **Application Insights:** Enter the configuration, and select **Disabled**
+   - **Resource Group:** Select the lab resource group
+   - **Name:** Specify a unique name for the App Name, like **contososportspaymentgateway{{SUFFIX}}**.
+   - **Publish:** Select **Code**.
+   - **Runtime stack:** Select **.NET Core 3.1 (LTS)**.
+   - **Operating System:** Select **Windows**.
+   - **Region:** Select the lab region.
+   - **App Service Plan:** Select the **contoso-asp-UNIQUEID** plan.
+   - **Sku and size:** Retain the default value.
 
     ![On the API App create form, the Configuration fields are displayed.](media/create-api-app.png "Configuration fields are displayed")
 
-6. Select **Create**.
+6. Select the **Monitoring** tab.
+
+7. In the **Enable Application Insights** field, select **No**.
+
+    ![The Enable Application insights field is set to No.](media/apiapp_disableapplicationinsights.png "Disable Application Insights")
+
+8. Select **Review + create**, then **Create**.
+
+9. Wait until the deployment completes to move on to the next task.
 
 ### Task 2: Deploy the Payment Gateway from Visual Studio
 
@@ -944,25 +955,33 @@ In this exercise, the attendee will provision an Azure API app template using th
 
    ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-3. On the Resource group blade, select **Add** on the toolbar.
+3. On the Resource group blade, select **Create** on the toolbar.
 
-    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
+    ![The Create button is highlighted on the resource group toolbar.](media/resource-group-add.png "Create resource in resource group")
 
-4. On the create a resource blade, enter "API App" into the search box and select **API App** in the search results and then select **Create**.
+4. On the new **Create API App** Basics tab, populate the form with the following values:
 
-5. On the new **API App** create form, create the following values:
-
-   - **App name:** Specify a unique name, such as `contoso-offers-api-SUFFIX`.
    - **Subscription:** Your Azure subscription.
-   - **Resource Group:** Select the lab resource group.
-   - **App Service Plan/Location:** Select the **contoso-asp-UNIQUEID** plan.
-   - **Application Insights:** Enter the configuration, and select **Disabled**
+   - **Resource Group:** Select the lab resource group
+   - **Name:** Specify a unique name for the App Name, such as **contoso-offers-api-{{SUFFIX}}**.
+   - **Publish:** Select **Code**.
+   - **Runtime stack:** Select **.NET Core 3.1 (LTS)**.
+   - **Operating System:** Select **Windows**.
+   - **Region:** Select the lab region.
+   - **App Service Plan:** Select the **contoso-asp-UNIQUEID** plan.
+   - **Sku and size:** Retain the default value.
 
     ![On the API App create form, the Configuration fields are displayed.](media/create-offers-api-app.png "Configuration fields are displayed")
 
-6. Select **Create**.
+5. Select the **Monitoring** tab.
 
-7. When the API App has completed provisioning, return to the resource group, then select the new API App from the list of resources.
+6. In the **Enable Application Insights** field, select **No**.
+
+    ![The Enable Application insights field is set to No.](media/apiapp_disableapplicationinsights.png "Disable Application Insights")
+
+7. Select **Review + create**, then **Create**.
+
+8. When the API App has completed provisioning, return to the resource group, then select the new API App from the list of resources.
 
 ### Task 2: Configure Cross-Origin Resource Sharing (CORS)
 
@@ -1048,7 +1067,7 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
     using Azure.Identity;
     ```
 
-8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the API application service to point to the centralized App Configuration resource.
+8. In the **CreateHostBuilder** method, uncomment the following code - this tells the application to utilize the AppConfig connection string that you've already setup on the API application service to point to the centralized App Configuration resource. Once complete, save the file.
 
     ```csharp
     webBuilder.ConfigureAppConfiguration((hostingContext, config) =>
@@ -1203,11 +1222,7 @@ The Contoso call center admin application will only be accessible by users of th
 
     ![Under Manage, All users is selected.](media/image130.png "Azure Active Directory blade")
 
-4. Select **New user** to add a new user.
-
-    ![The + New User button is boxed in red on the Azure Active Directory blade.](media/image131.png "Azure Active Directory blade")
-
-5. On the **User** blade, enter the following:
+4. On the **User** blade, enter the following:
 
     **Identity**:
 
@@ -1217,7 +1232,7 @@ The Contoso call center admin application will only be accessible by users of th
 
     ![On the User blade, the two previously defined fields (Name and User name) are circled.](media/azure-active-directory-new-user.png "User blade")
 
-6. Select **Create**.
+4. Select **Create**.
 
 ### Task 3: Configure access control for the call center administration Web Application
 
@@ -1245,7 +1260,7 @@ The Contoso call center admin application will only be accessible by users of th
 
 4. Select **Add**.
 
-5. Launch a new **InPrivate or Incognito mode** browser window and navigate to the **Call Center Administration** website. You can find the URL in the Essentials area of the web app's blade in the Azure portal.
+5. Launch a new **In-Private or Incognito mode** browser window and navigate to the **Call Center Administration** website. You can find the URL in the Essentials area of the web app's blade in the Azure portal.
 
 6. The browser will redirect to the non-branded Access Control logon URL. You can log on with your Microsoft account or the **Contoso test user** you created earlier.
 
@@ -1313,9 +1328,11 @@ In this exercise, you will configure an Azure AD Business to Consumer (B2C) inst
 
 1. Navigate to the [Azure portal](https://portal.azure.com/) and in the left-hand navigation menu, select **+Create a resource**. Then, search for and select **Azure Active Directory B2C** and select **Create** on the new blade that pops up.
 
-    ![In the Everything blade, the active directory B2C text is in the Search field, and under Results, Azure Active Directory B2C displays.](media/image156.png "Everything blade")
+2. On the **Create new B2C Tenant or Link to existing Tenant**, select **Create a new Azure AD B2C Tenant**.
 
-2. On the **Create a tenant** blade's **Configuration** tab, enter the following:
+    ![The Create a new Azure AD B2C Tenant option is selected on the Create new B2C Tenant or Link to existing Tenant screen.](media/create_new_b2c_tenant_selection.png "Create new B2C Tenant")
+
+3. On the **Create a tenant** blade's **Configuration** tab, enter the following:
 
     **Directory details**:
 
@@ -1330,13 +1347,13 @@ In this exercise, you will configure an Azure AD Business to Consumer (B2C) inst
 
     ![On the Azure Active Directory create a tenant configuration blade, ContosoB2C is entered and highlighted in the organization name field and a unique name is entered and highlighted in the initial domain name field. The unique name is indicated in the initial domain name by a green checkmark at the right-hand side of the field.](media/create-aad-b2c-tenant.png "Create Azure Active Directory B2C tenant")
 
-3. Select **Review + create**, then **Create** on the review + create tab.
+4. Select **Review + create**, then **Create** on the review + create tab.
 
-4. After directory creation completes, select the link in the new information tile that reads **Click here to navigate to your new directory**.
+5. After directory creation completes, select the link in the new information tile that reads **Click here to navigate to your new directory**.
 
     ![On the Azure Active Directory create a tenant blade, the tenant creation was successful, click here to navigate to your new tenant link is highlighted.](media/create-aad-b2c-tenant-success-link.png)
 
-5. The new Azure AD Directory that was created will now be open in new browser tab.
+6. The new Azure AD Directory that was created will now be open in new browser tab.
 
 ### Task 2: Add a new application
 
@@ -1925,9 +1942,9 @@ To configure the application for logging and diagnostics, you have been asked to
 
     ![From the Configure menu, Getting started is selected.](media/image196.png "Configure menu")
 
-4. In the portal, navigate to **How-to Guides** -> **Application Insights** -> **Code-based monitoring** -> **JavaScript** -> **Client-side JavaScript**, then navigate to the **Snippet based setup** section under **Adding the JavaScript SDK** within the documentation page.
+4. In the portal, navigate to **How-to Guides** -> **Application Insights** -> **Application Insights SDKs** -> **JavaScript** -> **Client-side JavaScript**, then navigate to the **Snippet based setup** section under **Adding the JavaScript SDK** within the documentation page.
 
-    ![Screenshot of the Monitor and Diagnose Client Side Application arrow.](media/image197.png "Monitor and Diagnose Client Side Application")
+    ![Tree view navigation of the above menu location.](media/image197.png "Client-side JavaScript monitoring")
 
     > **Note**: You can find the documentation page at the following URL: <https://docs.microsoft.com/azure/azure-monitor/app/javascript#snippet-based-setup>.
 
@@ -1939,16 +1956,17 @@ To configure the application for logging and diagnostics, you have been asked to
 
     ```javascript
     <script type="text/javascript">
-        !function(T,l,y){var S=T.location,u="script",k="instrumentationKey",D="ingestionendpoint",C="disableExceptionTracking",E="ai.device.",I="toLowerCase",b="crossOrigin",w="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"4",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[I](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,p,l,u;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][I]()]=i[1])}if(!e[D]){var r=e.endpointsuffix,o=r?e.location:null;e[D]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[k]||d[k]||"",p=s[D],l=p?p+"/v2/track":config.endpointUrl,(u=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=l,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),u.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,l)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:w,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(w,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(u,l))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(u);n.src=h;var e=y[b];return!e&&""!==e||"undefined"==n[b]||(n[b]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(u)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[C]&&!0!==s[C]){method="onerror",t(["_"+method]);var c=T[method];T[method]=function(e,t,n,a,i){var r=c&&c(e,t,n,a,i);return!0!==r&&m["_"+method]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);(T[t]=n).queue&&0===n.queue.length&&n.trackPageView({})}(window,document,{
-        src: "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js", // The SDK URL Source
-        //name: "appInsights", // Global SDK Instance name defaults to "appInsights" when not supplied
-        //ld: 0, // Defines the load delay (in ms) before attempting to load the sdk. -1 = block page load and add to head. (default) = 0ms load after timeout,
-        //useXhr: 1, // Use XHR instead of fetch to report failures (if available),
-        //crossOrigin: "anonymous", // When supplied this will add the provided value as the cross origin attribute on the script tag 
-        cfg: { // Application Insights Configuration
-            instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
-            /* ...Other Configuration Options... */
-        }});
+    !function(T,l,y){var S=T.location,k="script",D="instrumentationKey",C="ingestionendpoint",I="disableExceptionTracking",E="ai.device.",b="toLowerCase",w="crossOrigin",N="POST",e="appInsightsSDK",t=y.name||"appInsights";(y.name||T[e])&&(T[e]=t);var n=T[t]||function(d){var g=!1,f=!1,m={initialize:!0,queue:[],sv:"5",version:2,config:d};function v(e,t){var n={},a="Browser";return n[E+"id"]=a[b](),n[E+"type"]=a,n["ai.operation.name"]=S&&S.pathname||"_unknown_",n["ai.internal.sdkVersion"]="javascript:snippet_"+(m.sv||m.version),{time:function(){var e=new Date;function t(e){var t=""+e;return 1===t.length&&(t="0"+t),t}return e.getUTCFullYear()+"-"+t(1+e.getUTCMonth())+"-"+t(e.getUTCDate())+"T"+t(e.getUTCHours())+":"+t(e.getUTCMinutes())+":"+t(e.getUTCSeconds())+"."+((e.getUTCMilliseconds()/1e3).toFixed(3)+"").slice(2,5)+"Z"}(),iKey:e,name:"Microsoft.ApplicationInsights."+e.replace(/-/g,"")+"."+t,sampleRate:100,tags:n,data:{baseData:{ver:2}}}}var h=d.url||y.src;if(h){function a(e){var t,n,a,i,r,o,s,c,u,p,l;g=!0,m.queue=[],f||(f=!0,t=h,s=function(){var e={},t=d.connectionString;if(t)for(var n=t.split(";"),a=0;a<n.length;a++){var i=n[a].split("=");2===i.length&&(e[i[0][b]()]=i[1])}if(!e[C]){var r=e.endpointsuffix,o=r?e.location:null;e[C]="https://"+(o?o+".":"")+"dc."+(r||"services.visualstudio.com")}return e}(),c=s[D]||d[D]||"",u=s[C],p=u?u+"/v2/track":d.endpointUrl,(l=[]).push((n="SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)",a=t,i=p,(o=(r=v(c,"Exception")).data).baseType="ExceptionData",o.baseData.exceptions=[{typeName:"SDKLoadFailed",message:n.replace(/\./g,"-"),hasFullStack:!1,stack:n+"\nSnippet failed to load ["+a+"] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: "+(S&&S.pathname||"_unknown_")+"\nEndpoint: "+i,parsedStack:[]}],r)),l.push(function(e,t,n,a){var i=v(c,"Message"),r=i.data;r.baseType="MessageData";var o=r.baseData;return o.message='AI (Internal): 99 message:"'+("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) ("+n+")").replace(/\"/g,"")+'"',o.properties={endpoint:a},i}(0,0,t,p)),function(e,t){if(JSON){var n=T.fetch;if(n&&!y.useXhr)n(t,{method:N,body:JSON.stringify(e),mode:"cors"});else if(XMLHttpRequest){var a=new XMLHttpRequest;a.open(N,t),a.setRequestHeader("Content-type","application/json"),a.send(JSON.stringify(e))}}}(l,p))}function i(e,t){f||setTimeout(function(){!t&&m.core||a()},500)}var e=function(){var n=l.createElement(k);n.src=h;var e=y[w];return!e&&""!==e||"undefined"==n[w]||(n[w]=e),n.onload=i,n.onerror=a,n.onreadystatechange=function(e,t){"loaded"!==n.readyState&&"complete"!==n.readyState||i(0,t)},n}();y.ld<0?l.getElementsByTagName("head")[0].appendChild(e):setTimeout(function(){l.getElementsByTagName(k)[0].parentNode.appendChild(e)},y.ld||0)}try{m.cookie=l.cookie}catch(p){}function t(e){for(;e.length;)!function(t){m[t]=function(){var e=arguments;g||m.queue.push(function(){m[t].apply(m,e)})}}(e.pop())}var n="track",r="TrackPage",o="TrackEvent";t([n+"Event",n+"PageView",n+"Exception",n+"Trace",n+"DependencyData",n+"Metric",n+"PageViewPerformance","start"+r,"stop"+r,"start"+o,"stop"+o,"addTelemetryInitializer","setAuthenticatedUserContext","clearAuthenticatedUserContext","flush"]),m.SeverityLevel={Verbose:0,Information:1,Warning:2,Error:3,Critical:4};var s=(d.extensionConfig||{}).ApplicationInsightsAnalytics||{};if(!0!==d[I]&&!0!==s[I]){var c="onerror";t(["_"+c]);var u=T[c];T[c]=function(e,t,n,a,i){var r=u&&u(e,t,n,a,i);return!0!==r&&m["_"+c]({message:e,url:t,lineNumber:n,columnNumber:a,error:i}),r},d.autoExceptionInstrumented=!0}return m}(y.cfg);function a(){y.onInit&&y.onInit(n)}(T[t]=n).queue&&0===n.queue.length?(n.queue.push(a),n.trackPageView({})):a()}(window,document,{
+    src: "https://js.monitor.azure.com/scripts/b/ai.2.min.js", // The SDK URL Source
+    // name: "appInsights", // Global SDK Instance name defaults to "appInsights" when not supplied
+    // ld: 0, // Defines the load delay (in ms) before attempting to load the sdk. -1 = block page load and add to head. (default) = 0ms load after timeout,
+    // useXhr: 1, // Use XHR instead of fetch to report failures (if available),
+    crossOrigin: "anonymous", // When supplied this will add the provided value as the cross origin attribute on the script tag
+    // onInit: null, // Once the application insights instance has loaded and initialized this callback function will be called with 1 argument -- the sdk instance (DO NOT ADD anything to the sdk.queue -- As they won't get called)
+    cfg: { // Application Insights Configuration
+        instrumentationKey: "YOUR_INSTRUMENTATION_KEY_GOES_HERE"
+        /* ...Other Configuration Options... */
+    }});
     </script>
     ```
 
