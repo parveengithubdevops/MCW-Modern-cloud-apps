@@ -91,7 +91,7 @@ Microsoft and the trademarks listed at <https://www.microsoft.com/legal/intellec
     - [Task 4: View the Application Insights logs](#task-4-view-the-application-insights-logs)
   - [Exercise 11: Automating backend processes with Azure Functions and Logic Apps](#exercise-11-automating-backend-processes-with-azure-functions-and-logic-apps)
     - [Task 1: Create an Azure Function to Generate PDF Receipts](#task-1-create-an-azure-function-to-generate-pdf-receipts)
-  - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
+    - [Task 2: Add Key Vault access using a managed identity](#task-2-add-key-vault-access-using-a-managed-identity)
     - [Task 3: Configure and deploy the Function App](#task-3-configure-and-deploy-the-function-app)
     - [Task 4: Create an Azure Logic App to Process Orders](#task-4-create-an-azure-logic-app-to-process-orders)
     - [Task 5: Use Twilio to send SMS Order Notifications](#task-5-use-twilio-to-send-sms-order-notifications)
@@ -382,7 +382,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
    ![In the Remote Desktop Connection Dialog Box, the Connect button is highlighted.](./media/remote-desktop-connection.png "Remote Desktop Connection dialog")
 
-7. Enter the following credentials when prompted, and then select **OK**:
+7. Enter the following credentials when prompted and select **OK**:
 
    - **User name**: demouser
    - **Password**: Password.1!!
@@ -399,7 +399,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
 2. From the **Contoso Sports League** folder, open the Visual Studio solution by double-clicking on the `Contoso.Apps.SportsLeague.sln` file.
 
-3. If prompted about how to open the file, select **Visual Studio 2019** and then select **OK**.
+3. If prompted about how to open the file, select **Visual Studio 2019**, and then select **OK**.
 
    ![Visual Studio 2019 is highlighted in the How do you want to open this file? dialog.](media/solution-file-open-with.png "Visual Studio 2019")
 
@@ -429,9 +429,9 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
     ![The Web project is highlighted in Visual Studio Solution Explorer.](media/visual-studio-web-app.png "Solution Explorer")
 
-2. Right-click the `Contoso.Apps.SportsLeague.Web` project, and select **Manage NuGet Packages** from the context menu.
+2. Right-click the `Contoso.Apps.SportsLeague.Web` project and select **Manage NuGet Packages** from the context menu.
 
-3. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
+3. Select the **Browse** tab and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
 
 4. Select **Microsoft.Azure.AppConfiguration.AspNetCore** from the search results, and in the next pane, select **Install** to install the latest stable version.
 
@@ -501,7 +501,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
     ![Screenshot of the Store link.](media/contoso-web-site-store-products.png "Store link")
 
-    >**Troubleshooting**: If the web site fails to start up or show products, go back and double check all your connection string entries and passwords web application settings. If you get a message indicating the Service is unavailable. Give it a moment, and refresh your browser.
+    >**Troubleshooting**: If the web site fails to start up or show products, go back and double check all your connection string entries and passwords web application settings. If you get a message indicating the Service is unavailable. Give it a moment and refresh your browser.
 
 ## Exercise 3: Setup SQL Database Geo-Replication
 
@@ -752,7 +752,7 @@ In this exercise, you provision a website via the Azure Web App template using t
 
     ![In the App Service blade, under Settings, select Configuration link.](media/2019-04-19-16-38-54.png "Configuration link")
 
-3. Scroll down, and locate the **Connection strings** section.
+3. Scroll down and locate the **Connection strings** section.
 
 4. Add a new **Connection String** with the following values, and select **OK**:
 
@@ -799,7 +799,7 @@ The call center web application resource needs access to the Key Vault. The App 
 
 1. Return to Visual Studio on the LabVM and navigate to the **Contoso.Apps.SportsLeague.Admin** project located in the **Web** folder using the **Solution Explorer**.
 
-2. Right-click the **Contoso.Apps.SportsLeague.Admin** project, and select **Manage NuGet Packages**.
+2. Right-click the **Contoso.Apps.SportsLeague.Admin** project and select **Manage NuGet Packages**.
 
 3. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
 
@@ -837,7 +837,7 @@ The call center web application resource needs access to the Key Vault. The App 
     .UseStartup<Startup>();
     ```
 
-9. Right-click the `Contoso.Apps.SportsLeague.Admin` project, and select **Publish**.
+9. Right-click the `Contoso.Apps.SportsLeague.Admin` project and select **Publish**.
 
     ![In Solution Explorer, the right-click menu for Contoso.Apps.SportsLeague.Admin displays, and Publish is selected.](media/2019-04-19-14-30-03.png "Right-Click menu")
 
@@ -911,7 +911,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 
 1. In Visual Studio, navigate to the **Contoso.Apps.PaymentGateway** project located in the **APIs** folder using the **Solution Explorer**.
 
-2. Right-click the **Contoso.Apps.PaymentGateway** project, and select **Publish**.
+2. Right-click the **Contoso.Apps.PaymentGateway** project and select **Publish**.
 
     ![In Solution Explorer, Contoso.Apps.PaymentGateway is selected, and in its right-click menu, Publish is selected.](media/2019-04-19-14-52-22.png "Solution Explorer")
 
@@ -1001,7 +1001,7 @@ In this exercise, the attendee will provision an Azure API app template using th
 
     ![In the App Service blade, under Settings, select Configuration link.](media/2019-04-19-16-38-54.png "Configuration link")
 
-2. Scroll down, and locate the **Connection strings** section.
+2. Scroll down and locate the **Connection strings** section.
 
 3. Add a new **Connection String** with the following values, and select **OK**:
 
@@ -1048,7 +1048,7 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
 1. Navigate to the **Contoso.Apps.SportsLeague.Offers** project located in the **APIs** folder using the **Solution Explorer** in Visual Studio.
 
-2. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Manage NuGet Packages**.
+2. Right-click the **Contoso.Apps.SportsLeague.Offers** project and select **Manage NuGet Packages**.
 
 3. Select the **Browse** tab, and search for **Microsoft.Azure.AppConfiguration.AspNetCore**.
 
@@ -1086,7 +1086,7 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
     .UseStartup<Startup>();
     ```
 
-9. Right-click the **Contoso.Apps.SportsLeague.Offers** project, and select **Publish**.
+9. Right-click the **Contoso.Apps.SportsLeague.Offers** project and select **Publish**.
 
     ![In Solution Explorer, from the Contoso.Apps.SportsLeague.Admin right-click menu, Publish is selected.](media/2019-04-19-15-03-45.png "Solution Explorer")
 
@@ -1104,7 +1104,7 @@ The offers api resource needs access to the Key Vault. The App Configuration wil
 
     ![Publish button is highlighted](media/offerapi_vspublishbutton.png "Publish button is highlighted")
 
-15. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully.Copy and paste the offer api **URL** of the deployed **API App** into Notepad for later use.
+15. In the Visual Studio **Output** view, you will see a status indicating the Web App was published successfully. Copy and paste the offer api **URL** of the deployed **API App** into Notepad for later use.
 
     ![The Visual Studio output shows that the web app was published successfully.](media/offerapi_publishsuccessoutput.png "Visual Studio output")
 
@@ -1185,7 +1185,7 @@ The Contoso call center admin application will only be accessible by users of th
 
 1. Navigate to the home page of the [Azure portal](http://portal.azure.com/) and select **Azure Active Directory**. under Azure Services.
 
-    > **Note**: If you do not see Azure Active Directory, select More Services and then select it there.
+    > **Note**: If you do not see Azure Active Directory, select More Services, and then select it there.
 
     ![The Azure Active Directory menu option.](media/azure-home-active-directory.png "Azure Portal")
 
@@ -1280,7 +1280,7 @@ The Contoso call center admin application will only be accessible by users of th
 
 1. Navigate to the home page of the [Azure portal](http://portal.azure.com/) and select **Azure Active Directory**. under Azure Services.
 
-    > **Note**: If you do not see Azure Active Directory, select More Services and then select it there.
+    > **Note**: If you do not see Azure Active Directory, select More Services, and then select it there.
 
     ![The Azure Active Directory menu option.](media/azure-home-active-directory.png "Azure Portal")
 
@@ -1633,9 +1633,9 @@ To enable profile editing on your application, you will need to create a profile
 
 ### Task 7: Send authentication requests to Azure AD
 
-Your app is now configured to communicate with Azure AD B2C by using ASP.NET Core Identity. OWIN has taken care of all of the details of crafting authentication messages, validating tokens from Azure AD, and maintaining user session. All that remains is to initiate each user's flow.
+Your app is now configured to communicate with Azure AD B2C by using ASP.NET Core Identity. OWIN has taken care of all the details of crafting authentication messages, validating tokens from Azure AD, and maintaining user session. All that remains is to initiate each user's flow.
 
-1. Right select the **Controllers** folder, and select **Add** -> **Controller**.
+1. Right select the **Controllers** folder and select **Add** -> **Controller**.
 
     ![In Solution Explorer, in the right-click menu for the Controllers folder, Add is selected, and from its menu, Controller is selected.](media/image177.png "Solution Explorer")
 
@@ -1849,7 +1849,7 @@ In this task, you update the configuration settings for the deployed web app in 
 
     > **Note**: The name portion of the tenant is everything leading up to the first period (.) in the resource name. So, you will exclude `.onmicrosoft.com` from what you copy and paste into the text editor.
 
-    ![List of all of the resources within the hands-on-lab-SUFFIX resource group. Pointing to the B2C tenant name.](media/resource-group-b2c-tenant.png "Locate B2C tenant name")
+    ![List of all the resources within the hands-on-lab-SUFFIX resource group. Pointing to the B2C tenant name.](media/resource-group-b2c-tenant.png "Locate B2C tenant name")
 
 2. While still on the **hands-on-lab-SUFFIX** resource group blade in the Azure portal, select the Contoso Web App resource, and then select **Configuration** on the web app blade.
 
@@ -1869,7 +1869,7 @@ In this task, you update the configuration settings for the deployed web app in 
 
 In this task, you re-deploy the web app to your App Service and test the app using Azure AD B2C.
 
-1. Go back to Visual Studio, right-click on the **Contoso.Apps.SportsLeague.Web** project, and select **Publish**. Follow the steps to deploy the updated application to the Microsoft Azure Web App.
+1. Go back to Visual Studio, right-click on the **Contoso.Apps.SportsLeague.Web** project and select **Publish**. Follow the steps to deploy the updated application to the Microsoft Azure Web App.
 
     Launch a browser outside of Visual Studio for testing if the page loads in Visual Studio.
 
@@ -1988,7 +1988,7 @@ To configure the application for logging and diagnostics, you have been asked to
 
 1. Navigate to the **Contoso.Apps.SportsLeague.Web** project located in the **Web** folder using the **Solution Explorer** in Visual Studio.
 
-2. Right-click on the **Contoso.Apps.SportsLeague.Web** project, and select **Publish**.
+2. Right-click on the **Contoso.Apps.SportsLeague.Web** project and select **Publish**.
 
     ![From the Contoso.Apps.SportsLeague.Web right-click menu, Publish is selected.](media/image202.png "Solution Explorer")
 
@@ -1996,7 +1996,7 @@ To configure the application for logging and diagnostics, you have been asked to
 
 4. Launch a browser **outside of Visual Studio** for testing if the page is loaded in Visual Studio.
 
-5. Select a few links on the published E-Commerce website, and submit several orders to generate some sample telemetry.
+5. Select a few links on the published E-Commerce website and submit several orders to generate some sample telemetry.
 
 ### Task 4: View the Application Insights logs
 
@@ -2087,7 +2087,7 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
 7. Select **Review + create**, then **Create**. Wait for the deployment to complete.
 
-8. Navigate to the **Function App** that was just created, and select **Configuration**.
+8. Navigate to the **Function App** that was just created and select **Configuration**.
 
     ![Display Contoso Function App, with the Configuration link highlighted.](media/2020-06-21-11-19-23.png "Contoso Function App Application Settings")
 
@@ -2100,7 +2100,7 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
 11. Select the **Save** button, select **Continue** when prompted to verify the save action.
 
-## Task 2: Add Key Vault access using a managed identity
+### Task 2: Add Key Vault access using a managed identity
 
 The function application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity.
 
@@ -2129,7 +2129,7 @@ The function application resource needs access to the Key Vault. The App Configu
 
 ### Task 3: Configure and deploy the Function App
 
-1. In Visual Studio, expand the **Web** folder and right-click on the **Contoso.Apps.FunctionApp** project, and select **Manage NuGet Packages**.
+1. In Visual Studio, expand the **Web** folder and right-click on the **Contoso.Apps.FunctionApp** project and select **Manage NuGet Packages**.
 
 2. On the **Browse** tab, search for and select **Microsoft.Extensions.Configuration.AzureAppConfiguration**. In the right pane, select **Install**.
 
@@ -2244,7 +2244,7 @@ The advantages of using Logic Apps include the following:
 - Connect and synchronize disparate systems across on-premises and the cloud
 - Build off BizTalk server, API Management, Azure Functions, and Azure Service Bus with first-class integration support
 
-1. Open the lab resource group, and select the **logic-app-{{SUFFIX}}** Logic app resource.
+1. Open the lab resource group and select the **logic-app-{{SUFFIX}}** Logic app resource.
 
 2. This will bring up a **Logic Apps Designer** screen. Beneath the **Start with a common trigger** heading, choose **When a message is received in a Service Bus queue** item.
 
@@ -2326,7 +2326,7 @@ The advantages of using Logic Apps include the following:
 
     ![The SQL Server item displays the previously defined settings.](media/2020-03-18-12-37-03.png "SQL Server connection")
 
-18. Select the **Server name** and **Database name** previously specified, then from the drop-down select the name of the **Orders** table, and enter `OrderId` into the **Row id** field.
+18. Select the **Server name** and **Database name** previously specified, then from the drop-down select the name of the **Orders** table and enter `OrderId` into the **Row id** field.
 
     ![In the Update row section, under Table name, Orders is selected.](media/2020-03-18-12-41-11.png "Update row section")
 
@@ -2373,7 +2373,7 @@ The advantages of using Logic Apps include the following:
 
 24. Select Run on the Logic App Designer, and then run the Contoso sports Web App and check out an Item.
 
-25. Run the call center website app, and select the last Details link in the list.
+25. Run the call center website app and select the last Details link in the list.
 
     ![Screenshot of the Details link.](media/image264.png "Details link")
 
@@ -2473,7 +2473,7 @@ The advantages of using Logic Apps include the following:
 
     ![The Create Logic App form displays populated with the preceding values.](media/logicapp_createform.png "Create Logic App")
 
-13. Once deployment has completed, return to the **hands-on-lab-SUFFIX** resource group and select the **NotificationApp{{SUFFIX}}** Logic app resource from the list of resources.
+13. Once deployment has completed, return to the **hands-on-lab-SUFFIX** resource group, and select the **NotificationApp{{SUFFIX}}** Logic app resource from the list of resources.
 
 14. In the Logic Apps Designer, select the **Blank Logic App** Template.
 
@@ -2489,7 +2489,7 @@ The advantages of using Logic Apps include the following:
 
 17. Select the **+ New Step** button.
 
-18. Type **SQL Server** into the filter box, and select the **SQL Server -- Execute stored procedure (V2)** action.
+18. Type **SQL Server** into the filter box and select the **SQL Server -- Execute stored procedure (V2)** action.
 
     ![Sql server is typed in the search field. On the Actions tab, Execute stored procedure V2 is selected.](media/2020-03-19-11-34-57.png "Choose an operation")
 
@@ -2535,7 +2535,7 @@ The advantages of using Logic Apps include the following:
 
 28. Select **Control** and **For each**.
 
-29. In the **Select an output from previous steps**, select **ResultsSets Table1**.
+29. In the **Select an output from previous steps**, select **ResultSets Table1**.
 
     ![A for each control object is displayed with ResultSets Table1 selected in the output from previous steps box.](media/logic-app-for-each.png "For each")
 
@@ -2551,7 +2551,7 @@ The advantages of using Logic Apps include the following:
 
 33. In the **To phone number** field, select **ResultSets Phone**.
 
-34. In the **Text** field, enter `Hello` followed by the dynamic value for **ResultsSets FirstName**, then followed by `, your order has shipped!`.
+34. In the **Text** field, enter `Hello` followed by the dynamic value for **ResultSets FirstName**, then followed by `, your order has shipped!`.
 
     ![Under Send Text Message (SMS), the From Phone Number and To Phone Number fields are circled, and in the Text field is the message, Hello, your order has shipped!](media/logic-app-for-each-email.png "Send Text Message (SMS)")
 
@@ -2685,7 +2685,7 @@ The advantages of using Logic Apps include the following:
     }
     ```
 
-38. Your workflow should look like the image below, and you should receive a text for each order you placed. If you did not use your own phone number, place another order and enter a phone number for which you can receive text messages.
+38. Your workflow should look like the image below, and you should receive a text for each order you placed. If you did not use your own phone number, place another order, and enter a phone number for which you can receive text messages.
 
     ![The Workflow diagram begins with Recurrence, then flows to Execute stored procedure, then to For each. The For each contains a condition based on the ReturnCode value being greater than 0. Below the Workflow diagram is an If Yes box, with a workflow that begins with Execute stored procedure 2, and flows to forEach email. There is also an If No, Do Nothing box.](media/logic-app-designer.png "Workflow diagram")
 
@@ -2699,7 +2699,7 @@ The Contoso Sports League would like to move their existing source control to Gi
 
 ### Task 1: Create a GitHub repository
 
-1. Open a web browser, and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
+1. Open a web browser and navigate to <https://www.github.com>. Log in using your GitHub account credentials.
 
 2. In the upper-right corner, expand the user drop down menu and select **Your repositories**.
 
@@ -2753,7 +2753,7 @@ One method to deploy code using GitHub actions is to create a Service Principal 
 
     > **Note**: You may be prompted to create a storage account to support cloud shell activities, this is required in order to utilize the cloud shell.
 
-2. Obtain the Subscription ID and Resource Group name by opening the resource group where you have deployed all of the applications in this lab. The Subscription ID is available in the Overview pane.
+2. Obtain the Subscription ID and Resource Group name by opening the resource group where you have deployed all the applications in this lab. The Subscription ID is available in the Overview pane.
 
 3. In the Cloud Shell, execute the following to create the service principal scoped by the resource group we've been using in this lab (replace Subscription ID and resource group name):
 
@@ -3038,7 +3038,7 @@ In this task, we will be making a modification to the e-commerce web application
 
     ![The code listing for Views/Home/Index.cshtml is shown with some modified text highlighted.](media/visualstudio_edithomeindex.png "Visual Studio file editor")
 
-4. Return to the command window, and execute the following commands to commit the text change to the branch.
+4. Return to the command window and execute the following commands to commit the text change to the branch:
 
     ```shell
     git commit -am "Changed some text"
@@ -3079,6 +3079,6 @@ Duration: 10 minutes
 
 1. Since the HOL is now complete, go ahead and delete all the Resource Groups that were created for this HOL. You will no longer need those resources and it will be beneficial to clean up your Azure Subscription.
 
-2. In GitHub, open the ContosoSports repository and select **Settings**. Scroll to the bottom of the screen, and select the **Delete this repository** button in the **Danger Zone** section.
+2. In GitHub, open the ContosoSports repository and select **Settings**. Scroll to the bottom of the screen and select the **Delete this repository** button in the **Danger Zone** section.
 
 You should follow all steps provided *after* attending the hands-on lab.
