@@ -395,7 +395,7 @@ In this task, you create an RDP connection to your Lab virtual machine (VM).
 
 ### Task 3: Open the Contoso Sports League starter solution in Visual Studio
 
-1. On the LabVM, open File Explorer and navigate to the `C:\MCW\MCW-Modern-cloud-apps-master\Hands-on lab\lab-files\src\Contoso Sports League` folder.
+1. On the LabVM, open File Explorer and navigate to the `C:\MCW\MCW-Modern-cloud-apps-main\Hands-on lab\lab-files\src\Contoso Sports League` folder.
 
 2. From the **Contoso Sports League** folder, open the Visual Studio solution by double-clicking on the `Contoso.Apps.SportsLeague.sln` file.
 
@@ -1232,7 +1232,7 @@ The Contoso call center admin application will only be accessible by users of th
 
     ![On the User blade, the two previously defined fields (Name and User name) are circled.](media/azure-active-directory-new-user.png "User blade")
 
-4. Select **Create**.
+5. Select **Create**.
 
 ### Task 3: Configure access control for the call center administration Web Application
 
@@ -2044,9 +2044,9 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
    ![The "hands-on-lab-SUFFIX" resource group is highlighted.](./media/resource-groups.png "Resource groups list")
 
-3. On the Resource group blade, select **Add** on the toolbar.
+3. On the Resource group blade, select **Create** on the toolbar.
 
-    ![The Add button is highlighted on the resource group toolbar.](media/resource-group-add.png "Add resource to resource group")
+    ![The Create button is highlighted on the resource group toolbar.](media/resource-group-add.png "Create resource in resource group")
 
 4. On the create a resource blade, enter "Function App" into the search box and select **Function App** in the search results and then select **Create**.
 
@@ -2085,7 +2085,7 @@ Contoso wants to automate the process of generating receipts in PDF format and a
 
     ![The values specified above are entered into the Create Function App hosting tab.](media/create-function-app-hosting.png "Create Function App")
 
-7. Select **Review + create**, then **Create**.
+7. Select **Review + create**, then **Create**. Wait for the deployment to complete.
 
 8. Navigate to the **Function App** that was just created, and select **Configuration**.
 
@@ -2098,13 +2098,13 @@ Contoso wants to automate the process of generating receipts in PDF format and a
   
 10. Select the **OK** button.
 
-11. Select the **Save** button.
+11. Select the **Save** button, select **Continue** when prompted to verify the save action.
 
 ## Task 2: Add Key Vault access using a managed identity
 
 The function application resource needs access to the Key Vault. The App Configuration will use pass-through authentication to the Key Vault. To authenticate the application, it will utilize a system managed identity.
 
-1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar.
+1. From the left-hand navigation menu, select **Identity**, and on the Identity blade, change the status to **On** and select **Save** on the toolbar. When prompted to verify the save action, select **Yes**.
 
     ![The Identity item is selected in the left-hand menu. The status is set to On. The Save button is highlighted.](media/call-center-identity.png "Identity")
 
@@ -2170,37 +2170,39 @@ The function application resource needs access to the Key Vault. The App Configu
     Order.ReceiptUrl = await StorageMethods.UploadPdfToBlob(receipt, fileName, Configuration, log);
     ```
 
-8. To publish the Function App, open the Visual Studio solution, Right-click on the **Contoso.Apps.FunctionApp** project, then select **Publish**.
+8. Save all files.
 
-9. For **Target**, choose **Azure** and then select **Next**.
+9. To publish the Function App, open the Visual Studio solution, Right-click on the **Contoso.Apps.FunctionApp** project, then select **Publish**.
 
-10. For **Specific target**, choose **Azure Function App (Windows)**, then select **Next**.
+10. For **Target**, choose **Azure** and then select **Next**.
 
-11. For **Functions instance**, expand the lab resource group and select the **Function App**, then select **Finish**.
+11. For **Specific target**, choose **Azure Function App (Windows)**, then select **Next**.
+
+12. For **Functions instance**, expand the lab resource group and select the **Function App**, then select **Finish**.
 
     ![The App Service dialog is shown with the resource group expanded and the Function App selected.](media/deployment_appservice_functionselection.png "Publish target app service selection")
 
-12. Select **Publish**.
+13. Select **Publish**.
 
     > **Note**: The publish should only take a minute or so. You can check the **Output** window for any errors that may occur.
 
     ![The build Output window is displayed. Publish succeeded message is shown.](media/2019-04-15-15-33-20.png "Output window.")
 
-13. To test your newly published Function App, start by navigating back to your Contoso Function App in the Azure Portal. From the left menu, select **Functions** then select the newly created **ContosoMakePDF** function. You may need to use the **Refresh** button on the toolbar for the function to be listed.
+14. To test your newly published Function App, start by navigating back to your Contoso Function App in the Azure Portal. From the left menu, select **Functions** then select the newly created **ContosoMakePDF** function. You may need to use the **Refresh** button on the toolbar for the function to be listed.
 
     ![The Azure Functions shows the ContosoMakePDF function listed.](media/2020-06-21-11-25-59.png "Azure Functions")
 
-14. Select the **Code + Test** link, then select the **Test/Run** button.
+15. Select the **Code + Test** link, then select the **Test/Run** button.
 
     ![The Code + Test link and Test/Run button are highlighted](media/2020-06-21-11-27-28.png "Function Test link")
 
-15. Select **POST** for the HTTP method.
+16. Select **POST** for the HTTP method.
 
-16. Open the **sample.dat** file found in the `C:\MCW\MCW-Modern-cloud-apps-master\Hands-on lab\lab-files\src\Contoso Sports League\Contoso.CreatePDFReport` directory on your LabVM. Copy the contents into the **Request body** text box.
+17. Open the **sample.dat** file found in the `C:\MCW\MCW-Modern-cloud-apps-main\Hands-on lab\lab-files\src\Contoso Sports League\Contoso.CreatePDFReport` directory on your LabVM. Copy the contents into the **Request body** text box.
 
     ![A small screenshot of Windows Explorer is shown emphasizing the file path to the sample.dat file.](media/2019-04-15-15-47-39.png "Sample.dat File")
 
-17. Select the **Run** button located at the bottom of the blade.
+18. Select the **Run** button located at the bottom of the blade.
 
     ![The screenshot displays the Test blade with sample.dat contents. The Request body field shows the Order JSON. There is an arrow pointing to Run button.](media/2020-06-21-11-29-48.png "Display Test blade with sample.dat contents")
 
@@ -2210,22 +2212,22 @@ The function application resource needs access to the Key Vault. The App Configu
 
     ![There is a screenshot displaying the Function App test result log.  A status code of 200 OK is displayed on the right side pane.](media/2020-06-21-11-30-54.png "Function App test result log.")
 
-18. Check your receipt PDF in the storage account blob.
+19. Check your receipt PDF in the storage account blob.
 
     - Navigate to the ContosoSports storage account.
     - Select the **Blobs** link.
 
     ![The Settings options are displayed. There is an arrow pointing to the Blobs link.](media/2020-06-21-11-32-12.png "Containers link")
 
-19. Choose the newly created **receipts** blob container.
+20. Choose the newly created **receipts** blob container.
 
     ![The storage account blobs are listed. The receipts blob container is highlighted.](media/2019-04-15-16-08-35.png "Click the Blobs link")
 
-20. Open **ContosoSportsLeague-Store-Receipt-XX.pdf** link.
+21. Open **ContosoSportsLeague-Store-Receipt-XX.pdf** link.
 
     ![There is a screenshot displaying a list of the newly created PDF receipts. An arrow pointing to the Download link is located on the right side of the screen.](media/2019-04-15-16-11-24.png "PDF Receipts")
 
-21. Open the `...` link and choose download menu item.
+22. Open the `...` link and choose **Download**.
 
     ![A sample Contoso Sports League PDF receipt is displayed.](media/2019-04-15-16-15-06.png "Sample PDF receipt")
 
@@ -2242,55 +2244,45 @@ The advantages of using Logic Apps include the following:
 - Connect and synchronize disparate systems across on-premises and the cloud
 - Build off BizTalk server, API Management, Azure Functions, and Azure Service Bus with first-class integration support
 
-1. Next, we will create a Logic App that will trigger when an item is added to the **receiptgenerator** queue. In the Azure Management Portal, select the **+ Create a resource** button, search for and select **Logic App**, then select **Create**.
+1. Open the lab resource group, and select the **logic-app-{{SUFFIX}}** Logic app resource.
 
-2. Fill out the name as **ContosoLogicApplication** along with your subscription, and use the existing resource group **contososports**. Choose the **same region** that you have been using for this lab. Select **Review + create**, then **Create** once validation has passed.
+2. This will bring up a **Logic Apps Designer** screen. Beneath the **Start with a common trigger** heading, choose **When a message is received in a Service Bus queue** item.
 
-    ![In the Create logic app blade, ContosoLogicApplication is in the Name field. Under Resource group, the Use existing radio button is selected, and contososports is the name.](media/image237.png "Create logic app blade")
+    ![The Logic Apps Designer screen displays with When a message is received in a Service Bus queue item selected.](media/logicapp_commontrigger_whenmessagereceivedqueu.png "Start with a common trigger")
 
-3. Open the newly created **ContosoLogicApplication** logic app resource after it is deployed.
+3. On the design surface, select the **Create** link next to the **Service Bus** item.
 
-4. In the Logic Apps Designer, under **Templates**, select **Blank Logic App**.
+    ![The Create link is highlighted on the Service Bus item.](media/logicapp_createservicebusconnection.png "Create Service Bus connection")
 
-    ![In the Logic Apps Designer, the Blank Logic App tile is selected.](media/2019-03-29-12-56-10.png "Logic Apps Designer")
+4. Specify **ContosoQueue** as the connection name, select the Contoso Service Bus item **contoso-sb-{{SUFFIX}}** from the list of Service Bus Namespaces.
 
-    >**Note**: The first time you access the Logic App resource, it will automatically enter the Logic App Designer. Otherwise, you can open the logic app designer by selecting the **Logic app designer** link from the left menu of the resource screen (beneath **Development Tools**).
+    ![In the Service Bus item, the Connection Name is ContosoQueue, and under Service Bus Namespace, contosooiyxeonvhew7u is selected.](media/2020-03-18-12-15-23.png "When there are messages in a queue ")
 
-5. Select the **All** tab, then select **Service Bus**.
+5. Select the **RootManageSharedAccessKey** from the list of Service Bus Policies, then select **Create**.
 
-    ![In the Services section, the Service Bus tile is selected.](media/2020-03-18-12-12-10.png "Services section")
+    ![The service bus policy RootManageSharedAccessKey is selected along with the Create button.](media/2020-03-18-12-17-17.png "RootManageSharedAccessKey")
 
-6. Select **Service Bus - When a message is received in a queue (auto-complete)**.
+6. Select **Continue** beneath the Service Bus item.
 
-    ![In the Search all triggers section, Service Bus - When a message is received in a queue (auto-complete).](media/2020-03-18-12-13-24.png "Search all triggers section")
-
-7. Specify **ContosoQueue** as the connection name, select the Contoso storage account from the list.
-
-    ![In When there are messages in a queue, the Connection Name is ContosoQueue, and under Service Bus Namespace, contosooiyxeonvhew7u is selected.](media/2020-03-18-12-15-23.png "When there are messages in a queue ")
-
-8. Select the **RootManageSharedAccessKey** from the list of Service Bus Policies, then select **Create**.
-
-    ![RootManageSharedAccessKey is selected.](media/2020-03-18-12-17-17.png "RootManageSharedAccessKey is selected")
-
-9. Select the **receiptgenerator** queue from the drop-down.
+7. In the **When a message is received in a queue (autocomplete)** item, select the **receiptgenerator** queue from the drop-down.
 
     ![Under When there are messages in a queue, the Queue name is set to receiptgenerator.](media/2020-03-18-12-19-06.png "Queue name")
 
     >**Note**: If you wish, you can set the **Interval** and **Frequency** to check for new items to a shorter interval than the default; such as every 30 seconds. This could help reduce delay for when the Logic App is triggered when new messages are sent to the Service Bus Queue while you progress through this lab.
 
-10. Select the **+ New step** button, choose the **All** tab, then select **Azure Functions**.
+8. Select the **+ New step** button, choose the **All** tab, then search for and select **Azure Functions**. In the **Actions** section, select the **Choose an Azure Function** item.
 
-    ![In the Choose an action section, under Services ,the Azure Functions tile is selected.](media/2020-03-18-12-21-44.png "Choose an action")
+    ![In the Choose an operation dialog, Azure Functions is selected and beneath the Actions header the Choose an Azure function item is highlighted.](media/2020-03-18-12-21-44.png "Choose an operation")
 
-11. Select the **Azure Function App** you just created.
+9. Select the Function App that you created earlier in this lab.
 
-    ![Under Azure Functions, on the Actions tab, a single Action, the Azure function ContosoFunctionApp, is listed.](media/2020-03-18-12-22-46.png "Azure Functions")
+    ![The ContosoFunctionApp selected from the list of Azure Functions.](media/2020-03-18-12-22-46.png "Azure Functions")
 
-12. Select the Azure function **ContosoMakePDF**.
+10. Beneath the Actions, select the Azure function **ContosoMakePDF**.
 
-    ![Under Azure Functions, on the Actions tab, a single Action, the Azure function ContosoMakePDF, is listed.](media/2020-03-18-12-23-39.png "Azure Functions")
+    ![On the Actions tab the Azure function ContosoMakePDF is selected.](media/2020-03-18-12-23-39.png "Azure Functions Action")
 
-13. Type this in the Request Body:
+11. Type this in the Request Body:
 
     ```json
     {"Order": pick Content from list (see picture below) }
@@ -2300,27 +2292,27 @@ The advantages of using Logic Apps include the following:
 
     ![Under ContosoMakePDF, the previous JSON code is typed in the Request Body, and to the right of this, in Insert parameters from previous steps, Content is selected.](media/2020-03-18-12-25-29.png "ContosoMakePDF")
 
-14. Select **Save** to save the Logic App.
+12. Select **Save** to save the Logic App.
 
-15. Run the logic app by selecting the **Run** button of the Logic app designer toolbar. It should process the orders you have submitted previously to test PDF generation. Using Azure Storage Explorer or Visual Studio Cloud Explorer you can navigate to the storage account and open the receipts container to see the created PDFs.
+13. Run the logic app by expanding the **Run trigger** button of the Logic app designer toolbar and selecting **Run**. It should process the orders you have submitted previously to test PDF generation. Using Azure Storage Explorer or Visual Studio Cloud Explorer you can navigate to the storage account and open the receipts container to see the created PDFs.
+
+    ![A portion of the Logic Apps Designer toolbar displays with the Run Trigger button expanded and the Run item selected.](media/logicapp_runtrigger.png "Run Trigger")
 
     ![In Azure Storage Explorer, on the left, the following tree view is expanded: Storage Accounts\\contososportsstorage01r\\Blob Containers. Under Blob Containers, receipts is selected. On the right, the ContosoSportsLeague-Store-Receipt-72.pdf is selected.](media/image252.png "Azure Storage Explorer")
 
-16. Double-click the PDF document to download and see the Purchase receipt.
+14. Double-click the PDF document to download and see the Purchase receipt.
 
-17. Open the **ContosoLogicApplication** Logic Apps Designer. We will be adding another to the flow for updating the database. In the designer, select **+ New step**.
+15. Open the **ContosoLogicApplication** Logic Apps Designer. We will be adding another to the flow for updating the database. In the designer, select **+ New step**.
 
     ![In Designer, the New Step link is circled. Under New step, the Add an action tile is circled.](media/image254.png "Designer")
 
-18. Select the **All** tab, then choose **SQL Server**.
+16. In the **Choose an operation** item, Select the **All** tab, then search for and select **SQL Server**. In the **Actions** section, select **Update row (V2)**.
 
-    ![In the Services section, under Services, SQL Server is selected.](media/image255.png "Services section")
+    ![SQL Server is selected along with the Update row (V2) action.](media/image255.png "Choose an operation")
 
-19. Select **Update row (V2)**.
+17. Enter the following values, then select **Create**:
 
-    ![In the SQL Server section, on the Actions tab, SQL Server - Update row (V2) is selected.](media/2020-03-18-12-35-07.png "SQL Server section")
-
-20. Enter the following values, then select **Create**:
+    - Connection name: **ContosoSportsDB**
 
     - Authentication Type: **SQL Server Authentication**
 
@@ -2330,17 +2322,17 @@ The advantages of using Logic Apps include the following:
 
     - Username: `demouser`
 
-    - Password: `demo@pass123`
+    - Password: `Password.1!!`
 
-    ![The Update row section displays the previously defined settings.](media/2020-03-18-12-37-03.png "Update row")
+    ![The SQL Server item displays the previously defined settings.](media/2020-03-18-12-37-03.png "SQL Server connection")
 
-21. Select the **Server name** and **Database name** previously specified, then from the drop-down select the name of the **Orders** table, and enter `OrderId` into the **Row id** field.
+18. Select the **Server name** and **Database name** previously specified, then from the drop-down select the name of the **Orders** table, and enter `OrderId` into the **Row id** field.
 
     ![In the Update row section, under Table name, Orders is selected.](media/2020-03-18-12-41-11.png "Update row section")
 
-22. Press **Save**, then select the **Code View** button.
+19. Press **Save**, then select the **Code View** button.
 
-23. Add the following JSON within the `Update_row_(V2).inputs` object:
+20. Add the following JSON within the `Update_row_(V2).inputs` object:
 
     ```json
     "body": {
@@ -2367,31 +2359,31 @@ The advantages of using Logic Apps include the following:
 
     ![JSON edits have been made.](media/2020-03-18-18-21-47.png "JSON edits have been made")
 
-24. And modify the `path` variable for the `Update_row_(V2)` action to include the index key or OrderId as follows:
+21. And modify the `path` variable for the `Update_row_(V2)` action to include the index key or OrderId as follows:
 
     ```json
     "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('default'))},@{encodeURIComponent(encodeURIComponent('default'))}/tables/@{encodeURIComponent(encodeURIComponent('[dbo].[Orders]'))}/items/@{encodeURIComponent(encodeURIComponent(body('ContosoMakePDF')['OrderId']))}"
     ```
 
-25. **Save** and return to the designer.
+22. **Save** and return to the designer.
 
-26. Your updated designer view should look like this:
+23. Your updated designer view should look like this:
 
     ![The Update row section displays the purchase fields.](media/image261.png "Update row section")
 
-27. Select Run on the Logic App Designer, and then run the Contoso sports Web App and check out an Item.
+24. Select Run on the Logic App Designer, and then run the Contoso sports Web App and check out an Item.
 
-28. Run the call center website app, and select the last Details link in the list.
+25. Run the call center website app, and select the last Details link in the list.
 
     ![Screenshot of the Details link.](media/image264.png "Details link")
 
-29. You should now see a Download receipt link because the database has been updated.
+26. You should now see a Download receipt link because the database has been updated.
 
     ![In the Order Details window, the Download receipt link is circled.](media/image265.png "Order Details window")
 
-30. Select the Download receipt link to see the receipt.
+27. Select the Download receipt link to see the receipt.
 
-31. Return to the Logic app and you should see all green check marks for each step. If not, select the yellow status icon to find out details.
+28. Return to the Logic app and you should see all green check marks for each step. If not, select the yellow status icon to find out details.
 
     ![In the Logic app, all steps have green checkmarks.](media/2020-03-18-19-05-39.png "Logic app")
 
@@ -2414,9 +2406,9 @@ The advantages of using Logic Apps include the following:
 
     ![On the Your first Twilio Phone Number prompt, the number is obscured.](media/image274.png "Your first Twilio Phone Number prompt")
 
-4. Select **Home**, then **Settings**. Authenticate if needed and then record the **Account SID** and **Auth Token** for use when configuring the Twilio Connector.
+4. Remaining on the dashboard, in the **Project Info** section, record the **Account SID** and **Auth Token** for use when configuring the Twilio Connector.
 
-    ![On the Console, on the left, the Home button and the Settings menu tab are selected. On the right, under API Credentials, Account SID and Auth Token are circled.](media/image275.png "Console")
+    ![The Project Info card is displayed with the Copy buttons highlighted next to ACCOUNT SID and AUTH TOKEN fields.](media/image275.png "Project Info")
 
 <!-- omit in toc -->
 #### Subtask 2: Create a new logic app
@@ -2426,7 +2418,7 @@ The advantages of using Logic Apps include the following:
 2. In Azure Data Studio, select **New connection** and in the connection dialog enter the details to connect to the SQL Database for the **ContosoSportsDB** database, as follows:
 
     - **Connection Type**: Select Microsoft SQL Server.
-    - **Server**: Enter the server name of the primary **ContosoSportsDB**, which you can find in the **Server name** property within the Essentials area of the overview blade for the SQL Database.
+    - **Server**: Enter the failover read/write listener endpoint.
     - **Authentication type**: Select **SQL Login**.
     - **User name**: Enter `demouser`.
     - **Password**: Enter `Password.1!!`.
@@ -2473,44 +2465,35 @@ The advantages of using Logic Apps include the following:
 
 9. Select **Run** in the toolbar to execute the query.
 
-10. Return to the **hands-on-lab-SUFFIX** resource group and select the **Logic App** resource from the list of resources.
+10. Return to the **hands-on-lab-SUFFIX** resource group and select **Create**.
 
-    ![The Logic App resource is highlighted in the list of resources.](media/resource-group-resources-logic-app.png "Logic App resource")
+11. Search for and select the **Logic App** item. Select **Create**.
 
-11. In the Logic Apps Designer, select the **Blank Logic App** Template.
+12. Name the logic app **NotificationApp{{SUFFIX}}**, **Consumption** instance type, and select the lab Azure Region. The remaining fields retain their default values. Select **Review + create**, then **Create**.
+
+    ![The Create Logic App form displays populated with the preceding values.](media/logicapp_createform.png "Create Logic App")
+
+13. Once deployment has completed, return to the **hands-on-lab-SUFFIX** resource group and select the **NotificationApp{{SUFFIX}}** Logic app resource from the list of resources.
+
+14. In the Logic Apps Designer, select the **Blank Logic App** Template.
 
     ![In the Logic Apps Designer, the Blank Logic App tile is selected.](media/image282.png "Logic Apps Designer")
 
-12. On the **Logic Apps Designer**, select the **All** tab, and choose **Schedule**. Then, select **Recurrence**.
+15. On the **Logic Apps Designer**, select the **All** tab, and choose **Schedule**. Then, select **Recurrence**.
 
     ![In the Logic Apps Designer, the Schedule tile is selected.](media/image283.png "Logic Apps Designer")
 
-13. Set the **FREQUENCY** to **MINUTE**, and **INTERVAL** to 1.
+16. Set the **FREQUENCY** to **MINUTE**, and **INTERVAL** to 1.
 
     ![Under Recurrence, the Frequency field is Minute, and the Interval field is 1.](media/image284.png "Recurrence section")
 
-14. Select the **+ New Step** button.
+17. Select the **+ New Step** button.
 
-15. Type **SQL Server** into the filter box, and select the **SQL Server -- Execute stored procedure (V2)** action.
+18. Type **SQL Server** into the filter box, and select the **SQL Server -- Execute stored procedure (V2)** action.
 
-    ![Under Choose an action, sql server is typed in the search field. On the Actions tab, SQL Server (Execute stored procedure V2) is selected.](media/2020-03-19-11-34-57.png "Choose an action section")
+    ![Sql server is typed in the search field. On the Actions tab, Execute stored procedure V2 is selected.](media/2020-03-19-11-34-57.png "Choose an operation")
 
-16. In the **SQL Server** box, enter the following to create a connection to the **ContosoSportsDB** Azure SQL Database:
-
-    - **Connection name**: Enter `ContosoSportsDB`.
-    - **Authentication type**: Select **SQL Server Authentication**.
-    - **SQL server name**: Enter the server name associated with the primary ContosoSportsDB database.
-    - **SQL database name**: Enter `ContosoSportsDB`.
-    - **Username**: Enter `demouser`.
-    - **Password**: Enter `Password.1!!`.
-    - **Subscription**: Select the subscription you are using for this hands-on lab.
-    - **Connection Gateway**: Select **No gateways found**.
-
-    ![The values above are entered into the SQL Server dialog.](media/logic-app-sql-server-connection.png "Create SQL Server Connection")
-
-17. Select **Create**.
-
-18. In the **Execute stored procedure (V2)** box:
+19. In the **Execute stored procedure (V2)** box, we'll be reusing the established connection to the failover Read/write listener endpoint of our ContosoSportsDB:
 
     - **Server name**: Select **Use connection settings**
     - **Database name**: Select **Use connection settings**
@@ -2518,69 +2501,69 @@ The advantages of using Logic Apps include the following:
 
     ![In the Execute stored procedure section, the Procedure name is \[dbo\].\[GetUnprocessedOrders\].](media/logic-app-execute-stored-procedure-unprocessed-orders.png "Execute stored procedure section")
 
-19. Select **Add an action** and search for and select the **Control** object.
+20. Select **+ New step** and search for and select the **Control** object.
 
-    ![The Control object is highlighted on the logic app designer pick tool.](media/image289.png "Buttons")
+    ![The Control object is highlighted on the logic app designer pick tool.](media/image289.png "Control")
 
-20. Under **Control**, select the **Condition** object.
+21. Under **Actions**, select the **Condition** object.
 
-    ![The Control Condition object is highlighted on the logic app designer pick tool.](media/image290b.png "Buttons")  
+    ![The Control Condition object is highlighted on the logic app designer pick tool.](media/image290b.png "Control Condition object")  
 
-21. Select **Choose a value**, and then select **Return Code** from the Dynamic content tile.
+22. Select **Choose a value**, and then select **Return Code** from the Dynamic content tile.
 
     ![The Choose a value box and Return Code objects are highlighted in the Dynamic content tile in the Logic Designer.](media/image290c.png "Buttons")
 
-22. Specify **ReturnCode**, set the RELATIONSHIP to **is greater than**, and set the VALUE to **0**.
+23. Specify **ReturnCode**, set the RELATIONSHIP to **is greater than**, and set the VALUE to **0**.
 
     ![Under Condition, Object Name is ReturnCode, Relationship is greater than, and Value is 0.](media/image290.png "Condition section")
 
-23. Select the **Add an action** link on the **If true** condition.
+24. Select the **Add an action** link on the **If true** condition.
 
     ![Under If true, the Add an action button is selected.](media/image291.png "If yes section")
 
-24. Select **SQL Server**, and then select the **SQL Server -- Execute stored procedure (V2)** action.
+25. Select **SQL Server**, and then select the **SQL Server -- Execute stored procedure (V2)** action.
 
     ![Under If Yes, SQL Server - Execute stored procedure is circled.](media/2020-03-19-11-39-54.png "If yes section")
 
-25. Select the **ProcessOrders** stored procedure in the Procedure name dropdown.
+26. Select the **ProcessOrders** stored procedure in the Procedure name dropdown.
 
     ![Under If Yes, Execute stored procedure 2 is selected, and the Procedure name is \[dbo\].\[ProcessOrders\].](media/2020-03-19-11-40-49.png "If yes section")
 
-26. Select the **Add an action** link.
+27. Select the **Add an action** link.
 
     ![The Add an action button is selected.](media/image294.png "Add an action button")
 
-27. Select **Control** and **For each**.
+28. Select **Control** and **For each**.
 
-28. In the **Select an output from previous steps**, select **ResultsSets Table1**.
+29. In the **Select an output from previous steps**, select **ResultsSets Table1**.
 
     ![A for each control object is displayed with ResultSets Table1 selected in the output from previous steps box.](media/logic-app-for-each.png "For each")
 
-29. Select **Add an action** within the **For each** block, and search for **Twilio** in the filter box, and select the **Twilio -- Send Text Message (SMS)** item in the Actions box.
+30. Select **Add an action** within the **For each** block, and search for **Twilio** in the filter box, and select the **Twilio -- Send Text Message (SMS)** item in the Actions box.
 
     ![In the Choose an operation tile, the Search box is set to Twilio, and below, Twilio - Send Text Message (SMS) is selected.](media/image295.png "Choose an Operation Tile.")
 
-30. Set the Connection Name to Twilio, specify your Twilio **Account SID** and **Authentication Token**, then select the **Create** button.
+31. Set the Connection Name to Twilio, specify your Twilio **Account SID** and **Authentication Token**, then select the **Create** button.
 
     ![In the Twilio - Send Text Message (SMS) section, fields are set to the previously defined settings.](media/image296.png "Twilio - Send Text Message (SMS)")
 
-31. Using the drop-down, select your Twilio number for the **FROM PHONE NUMBER** field.
+32. Using the drop-down, select your Twilio number for the **FROM PHONE NUMBER** field.
 
-32. In the **To phone number** field, select **ResultSets Phone**.
+33. In the **To phone number** field, select **ResultSets Phone**.
 
-33. In the **Text** field, enter `Hello` followed by the dynamic value for **ResultsSets FirstName**, then followed by `, your order has shipped!`.
+34. In the **Text** field, enter `Hello` followed by the dynamic value for **ResultsSets FirstName**, then followed by `, your order has shipped!`.
 
     ![Under Send Text Message (SMS), the From Phone Number and To Phone Number fields are circled, and in the Text field is the message, Hello, your order has shipped!](media/logic-app-for-each-email.png "Send Text Message (SMS)")
 
-34. On the Logic App toolbar, select the **Code View** button to review the JSON code generated by the UI.
+35. On the Logic App toolbar, select the **Code View** button to review the JSON code generated by the UI.
 
     ![The code view button is selected on the Logic App toolbar.](media/image298.png "Logic App toolbar")
 
-35. Select **Save** on the toolbar to enable the logic app.
+36. Select **Save** on the toolbar to enable the logic app.
 
     ![On the Logic Apps Designer toolbar, the Save button is selected.](media/image304.png "Logic Apps Designer toolbar")
 
-36. The completed JSON code should look similar to the following:
+37. The completed JSON code should look similar to the following:
 
     ```json
     {
@@ -2702,17 +2685,17 @@ The advantages of using Logic Apps include the following:
     }
     ```
 
-37. Your workflow should look like the image below, and you should receive a text for each order you placed. If you did not use your own phone number, place another order and enter a phone number for which you can receive text messages.
+38. Your workflow should look like the image below, and you should receive a text for each order you placed. If you did not use your own phone number, place another order and enter a phone number for which you can receive text messages.
 
     ![The Workflow diagram begins with Recurrence, then flows to Execute stored procedure, then to For each. The For each contains a condition based on the ReturnCode value being greater than 0. Below the Workflow diagram is an If Yes box, with a workflow that begins with Execute stored procedure 2, and flows to forEach email. There is also an If No, Do Nothing box.](media/logic-app-designer.png "Workflow diagram")
 
-38. Select **Run** on the Logic App Designer toolbar to start the workflow.
+39. Expand the **Run Trigger** button on the Logic App Designer toolbar and select **Run** to start the workflow.
 
 ## Exercise 12: Automate deployments using GitHub actions
 
 Duration: 30 minutes
 
-The Contoso Sports League would like to move their existing source control to GitHub. In addition to this, they wish to implement automatic deployments of their projects into production. The desired workflow is that features are developed in their own branch and once complete, pull requests are issued to the master branch. The pull requests are then reviewed for quality assurance, and once approved, the pull request is then merged into the master branch of the repository. Upon this merge, the projects in the solution should be automatically released into the production Azure environment using the code from the master branch. In this exercise, you will learn how to deploy code to Azure from GitHub Actions in two different ways: via a Service Principal created in Active Directory, as well as via Application Service Publish Profiles.
+The Contoso Sports League would like to move their existing source control to GitHub. In addition to this, they wish to implement automatic deployments of their projects into production. The desired workflow is that features are developed in their own branch and once complete, pull requests are issued to the main branch. The pull requests are then reviewed for quality assurance, and once approved, the pull request is then merged into the main branch of the repository. Upon this merge, the projects in the solution should be automatically released into the production Azure environment using the code from the main branch. In this exercise, you will learn how to deploy code to Azure from GitHub Actions in two different ways: via a Service Principal created in Active Directory, as well as via Application Service Publish Profiles.
 
 ### Task 1: Create a GitHub repository
 
@@ -2736,7 +2719,7 @@ The Contoso Sports League would like to move their existing source control to Gi
 
 ### Task 2: Commit the existing lab files to source control
 
-1. Open a command prompt and change directory to the folder that contains the lab files solution file (Contoso.Apps.SportsLeague.sln).
+1. Open a command prompt and change directory to the folder that contains the lab files solution file (Contoso.Apps.SportsLeague.sln), `C:\MCW\MCW-Modern-cloud-apps-main\Hands-on lab\lab-files\src\Contoso Sports League`.
 
 2. At the command prompt, issue the following command to initialize the git repository:
 
@@ -2750,12 +2733,14 @@ The Contoso Sports League would like to move their existing source control to Gi
    git remote add origin <your GitHub Url>
    ```
 
-4. Commit the initial code, and push it to the master branch by issuing the following commands:
+4. Commit the initial code, and push it to the main branch by issuing the following commands:
 
     ```shell
-    git add -a
+    git config --global user.email "<ENTER YOUR GITHUB EMAIL HERE>"
+    git add -A
     git commit -m "initial commit"
-    git push -u origin master
+    git branch -m main
+    git push -u origin main
     ```
 
 ### Task 3: Create a service principal in Active Directory
@@ -2838,11 +2823,11 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
     ```yml
     name: Contoso Sports Production Deployment
 
-    # This workflow is triggered on push to the master branch of the repository
+    # This workflow is triggered on push to the main branch of the repository
     on:
     push:
         branches:
-        - master
+        - main
 
     # Environment variables are defined so that they can be used throughout the job definitions.
     # Be sure to replace the tokens in the AZURE_*_NAME variables with the names of the resources in Azure
@@ -2868,7 +2853,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
 
     DOTNET_VERSION: '3.1.102'
 
-    # Jobs define the actions that take place when code is pushed to the master branch
+    # Jobs define the actions that take place when code is pushed to the main branch
     jobs:
 
     # Build and deploy the E-Commerce Web Application using the Publish Profile
@@ -2876,7 +2861,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
         runs-on: ubuntu-latest
         steps:
         # Checkout the repo
-        - uses: actions/checkout@master
+        - uses: actions/checkout@main
 
         # Setup .NET Core SDK
         - name: Setup .NET Core
@@ -2903,7 +2888,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
         runs-on: ubuntu-latest
         steps:
         # Checkout the repo
-        - uses: actions/checkout@master
+        - uses: actions/checkout@main
 
         # Setup .NET Core SDK
         - name: Setup .NET Core
@@ -2941,7 +2926,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
         runs-on: ubuntu-latest
         steps:
         # Checkout the repo
-        - uses: actions/checkout@master
+        - uses: actions/checkout@main
 
         # Setup .NET Core SDK
         - name: Setup .NET Core
@@ -2968,7 +2953,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
         runs-on: ubuntu-latest
         steps:
         # Checkout the repo
-        - uses: actions/checkout@master
+        - uses: actions/checkout@main
 
         # Setup .NET Core SDK
         - name: Setup .NET Core
@@ -2995,7 +2980,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
         runs-on: ubuntu-latest
         steps:
         # Checkout the repo
-        - uses: actions/checkout@master
+        - uses: actions/checkout@main
 
         # Setup .NET Core SDK
         - name: Setup .NET Core
@@ -3025,7 +3010,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
 
     ![The Commit new file dialog is shown with the title and description populated.](media/github_commitworkflowform.png "Commit new file dialog")
 
-7. Committing this file is a push to the master branch. This means that the workflow that we just created is triggered. Select the **Actions** tab to view the currently running/historical record of workflow executions.
+7. Committing this file is a push to the main branch. This means that the workflow that we just created is triggered. Select the **Actions** tab to view the currently running/historical record of workflow executions.
 
     ![The workflow we just defined is triggered and is displayed on the Actions tab.](media/github_workflowsstatus.png "GitHub repository Actions tab")
 
@@ -3037,7 +3022,7 @@ Repeat Subtask 2 for the remaining projects by obtaining the publish profiles fr
 
 ### Task 6: Trigger the Production Deployment Workflow
 
-In this task, we will be making a modification to the e-commerce web application in a branch and issuing a pull request to the master branch. We will manually merge the pull request into the master branch to trigger the production deployment workflow.
+In this task, we will be making a modification to the e-commerce web application in a branch and issuing a pull request to the main branch. We will manually merge the pull request into the main branch to trigger the production deployment workflow.
 
 1. Open a command prompt, and change directory to where the Visual Studio solution file is found.
 
