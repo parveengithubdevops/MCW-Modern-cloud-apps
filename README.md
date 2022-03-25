@@ -1,3 +1,8 @@
+# Retirement notice
+This workshop will be retired effective June 30, 2022. At that time the repository will be archived, and the materials will not be maintained.
+
+For questions or concerns regarding the MCW library, email us at [AskMCW](mailto:AskMCW@microsoft.com). Please remember to include the title of the workshop in your email.
+
 # Modern cloud apps
 
 The Contoso Sports League Association (CSLA) is one of the largest sports franchises and is struggling to keep up with demand from their growing user base. They currently host an e-commerce website and have a backend website that supports their call center, allowing employees to view order information.
